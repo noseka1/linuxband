@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+# Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
+#
+# This file is part of LinuxBand.
+#
+# LinuxBand is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+import sys
+import logging
+import pygtk
+pygtk.require("2.0")
+import gobject
+
+# substituted by autoconf
+PACKAGE_NAME = "@PACKAGE_NAME@"
+PACKAGE_VERSION = "@PACKAGE_VERSION@"
+PACKAGE_BUGREPORT = "@PACKAGE_BUGREPORT@"
+PACKAGE_URL = "@PACKAGE_URL@"
+PACKAGE_TITLE = "@PACKAGE_TITLE@"
+PACKAGE_COPYRIGHT = "@PACKAGE_COPYRIGHT@"
+PKG_DATA_DIR = "@pkgdatadir@"
+PKG_LIB_DIR = "@pkglibdir@"
+
+# python version
+PYTHON_MAJOR = 2
+PYTHON_MINOR = 5
+
+def main():
+    if not check_python_version():
+        sys.exit(1)
+    gobject.threads_init()
+    sys.path.insert(0, PKG_DATA_DIR)
+    from linuxband.glob import Glob
+    Glob.PACKAGE_VERSION = PACKAGE_VERSION
+    Glob.PACKAGE_BUGREPORT = PACKAGE_BUGREPORT
+    Glob.PACKAGE_URL = PACKAGE_URL
+    Glob.PACKAGE_TITLE = PACKAGE_TITLE
+    Glob.PACKAGE_COPYRIGHT = PACKAGE_COPYRIGHT
+    Glob.LINE_MARKER = "%s/line-pointer.png" % PKG_DATA_DIR
+    Glob.ERROR_MARKER = "%s/error-pointer.png" % PKG_DATA_DIR
+    Glob.DEFAULT_CONFIG_FILE = "%s/linuxband.rc" % PKG_DATA_DIR
+    Glob.GLADE = "%s/gui.glade" % PKG_DATA_DIR
+    Glob.LICENSE = "%s/license.txt" % PKG_DATA_DIR
+    Glob.PLAYER_PROGRAM = "%s/linuxband-player" % PKG_LIB_DIR
+    # initialize logging
+    from linuxband.logger import Logger
+    console_log_level = logging.INFO
+    # enable debugging
+    if ('-d' in sys.argv[1:] or '--debug' in sys.argv[1:]):
+        console_log_level = logging.DEBUG
+    Glob.CONSOLE_LOG_LEVEL = console_log_level
+    Logger.initLogging(console_log_level)
+    logging.debug("%s %s" % (PACKAGE_NAME, PACKAGE_VERSION))
+	# start the gui
+    from linuxband.gui.gui import Gui
+    Gui()
+
+def check_python_version():
+    if sys.version_info[0] != PYTHON_MAJOR or sys.version_info[1] < PYTHON_MINOR:
+        print "This program requires Python version 2.x, where x >= %i" % PYTHON_MINOR
+        print "Found Python version %s" % sys.version
+        return False
+    return True
+
+if __name__ == "__main__":
+    main()

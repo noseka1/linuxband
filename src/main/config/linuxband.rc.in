@@ -1,0 +1,15 @@
+[Saved]
+intro_length = 0
+jack_transport = False
+loop = True
+work_dir = 
+
+[Preferences]
+jack_connect_startup = True
+mma_grooves_path = /usr/share/mma/lib/stdlib
+chord_sheet_font = Verdana 12
+mma_path = /usr/bin/mma
+template_file = @pkgdatadir@/default.mma
+
+[Version]
+program_version = @PACKAGE_VERSION@

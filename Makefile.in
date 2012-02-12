@@ -1,0 +1,151 @@
+# Package-specific substitution variables
+PACKAGE_NAME      = @PACKAGE_NAME@
+PACKAGE_TARNAME   = @PACKAGE_TARNAME@
+PACKAGE_VERSION   = @PACKAGE_VERSION@
+PACKAGE_STRING    = @PACKAGE_STRING@
+PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
+PACKAGE_URL       = @PACKAGE_URL@
+PACKAGE_TITLE     = Linux Band
+PACKAGE_COPYRIGHT = (c) 2012 Ales Nosek
+PACKAGE_FULL_NAME = ${PACKAGE_NAME}-${PACKAGE_VERSION}
+
+# Prefix-specific substitution variables
+prefix      = @prefix@
+exec_prefix = @exec_prefix@
+bindir      = @bindir@
+datarootdir = @datarootdir@
+pkgdatadir  = @pkgdatadir@
+pkglibdir   = @pkglibdir@
+
+# Compiler 
+GLIB_CFLAGS    = @GLIB_CFLAGS@
+GLIB_LIBS      = @GLIB_LIBS@
+GTHREAD_CFLAGS = @GTHREAD_CFLAGS@
+GTHREAD_LIBS   = @GTHREAD_LIBS@
+JACK_CFLAGS    = @JACK_CFLAGS@
+JACK_LIBS      = @JACK_LIBS@
+SMF_CFLAGS     = @SMF_CFLAGS@
+SMF_LIBS       = @SMF_LIBS@
+
+# Utilities
+INSTALL  = @INSTALL@
+
+EXTRA_CFLAGS = ${GLIB_CFLAGS} ${GTHREAD_CFLAGS} ${JACK_CFLAGS} ${SMF_CFLAGS} -I.
+EXTRA_LIBS   = ${GLIB_LIBS} ${GTHREAD_LIBS} ${JACK_LIBS} ${SMF_LIBS}
+
+PY_SOURCE_DIR  = src/main/python
+C_SOURCE_DIR   = src/main/c
+CONFIG_DIR     = src/main/config
+GLADE_DIR      = src/main/glade
+RESOURCES_DIR  = src/main/resources
+PY_TEST_DIR    = src/test/python
+TARGET_DIR     = target
+DIST_DIR       = target
+DIST_CHECK_DIR = target/dist-check
+
+linuxband_player_SOURCES = $(addprefix ${C_SOURCE_DIR}/,linuxband-player.c midi.c remote_control.c)
+linuxband_player_HEADERS = $(addprefix ${C_SOURCE_DIR}/,midi.h remote_control.h)
+
+CLEAN_FILES           = ${TARGET_DIR}/linuxband-player ${TARGET_DIR}/linuxband
+DISTCLEAN_FILES       = ${TARGET_DIR} Makefile config.status config.cache config.log config.h
+MAINTAINERCLEAN_FILES = ${DISTCLEAN_FILES} aclocal.m4 autom4te.cache configure config.h.in install-sh
+
+AUTOCONF_FILES = aclocal.m4 autogen.sh autom4te.cache config.h.in configure configure.ac install-sh
+SOURCE_FILES   = src
+MISC_FILES     = Makefile.in COPYING README.md
+DIST_FILES     = ${AUTOCONF_FILES} ${SOURCE_FILES} ${MISC_FILES}
+
+.SUFFIXES:  # disable built-in rules
+
+all: ${TARGET_DIR}/linuxband-player ${TARGET_DIR}/linuxband ${TARGET_DIR}/linuxband.rc
+
+${TARGET_DIR}/linuxband-player: ${linuxband_player_SOURCES} ${linuxband_player_HEADERS}
+	@mkdir -p ${@D}
+	${CC} -o $@ ${CFLAGS} ${EXTRA_CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${EXTRA_LIBS} ${linuxband_player_SOURCES}
+
+${TARGET_DIR}/linuxband: ${PY_SOURCE_DIR}/linuxband.py.in
+	@mkdir -p ${@D}
+	sed \
+          -e 's#[@]PACKAGE_NAME@#${PACKAGE_NAME}#g' \
+          -e 's#[@]PACKAGE_VERSION@#${PACKAGE_VERSION}#g' \
+          -e 's#[@]PACKAGE_BUGREPORT@#${PACKAGE_BUGREPORT}#g' \
+          -e 's#[@]PACKAGE_URL@#${PACKAGE_URL}#g' \
+          -e 's#[@]PACKAGE_TITLE@#${PACKAGE_TITLE}#g' \
+          -e 's#[@]PACKAGE_COPYRIGHT@#${PACKAGE_COPYRIGHT}#g' \
+          -e 's#[@]pkgdatadir@#${pkgdatadir}#g' \
+          -e 's#[@]pkglibdir@#${pkglibdir}#g' \
+          < "$<" > "$@"
+
+${TARGET_DIR}/linuxband.rc: ${CONFIG_DIR}/linuxband.rc.in
+	@mkdir -p ${@D}
+	sed \
+          -e 's#[@]PACKAGE_VERSION@#${PACKAGE_VERSION}#g' \
+          -e 's#[@]pkgdatadir@#${pkgdatadir}#g' \
+          < "$<" > "$@"
+
+check:
+	export PYTHONPATH=${PY_SOURCE_DIR}:${PY_TEST_DIR}; \
+	python ${PY_TEST_DIR}/linuxband/mma/test_bar_chords.py
+
+install: all
+	${INSTALL} -d ${DESTDIR}${bindir}
+	${INSTALL} -d ${DESTDIR}${pkglibdir}
+	${INSTALL} -d ${DESTDIR}${pkgdatadir}
+	${INSTALL} -t ${DESTDIR}${bindir} ${TARGET_DIR}/linuxband
+	${INSTALL} -t ${DESTDIR}${pkglibdir} ${TARGET_DIR}/linuxband-player
+	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${TARGET_DIR}/linuxband.rc 
+	PY_SOURCE=$$(cd ${PY_SOURCE_DIR} && find . -name '*.py'); \
+        for F in $${PY_SOURCE}; do \
+          ${INSTALL} -D ${PY_SOURCE_DIR}/$$F ${DESTDIR}${pkgdatadir}/$$F; done
+	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${CONFIG_DIR}/default.mma
+	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${GLADE_DIR}/gui.glade
+	${INSTALL} COPYING ${DESTDIR}${pkgdatadir}/license.txt
+	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${RESOURCES_DIR}/*
+
+uninstall:
+	rm ${DESTDIR}${bindir}/linuxband
+	rm -rf ${DESTDIR}${pkglibdir}
+	rm -rf ${DESTDIR}${pkgdatadir}
+
+dist:
+	@mkdir -p ${DIST_DIR}/${PACKAGE_FULL_NAME}
+	@for F in ${DIST_FILES}; do \
+          T="${DIST_DIR}/${PACKAGE_FULL_NAME}/$$F"; mkdir -p $$(dirname $$T); cp -r $$F $$T; done
+	find ${DIST_DIR}/${PACKAGE_FULL_NAME} -name '*.pyc' -delete
+	cd ${DIST_DIR} && tar cfz ${PACKAGE_FULL_NAME}.tar.gz ${PACKAGE_FULL_NAME}
+	rm -rf ${DIST_DIR}/${PACKAGE_FULL_NAME}
+
+dist-check: dist
+	@mkdir -p ${DIST_CHECK_DIR}
+	tar xfz ${DIST_DIR}/${PACKAGE_FULL_NAME}.tar.gz -C ${DIST_CHECK_DIR} 
+	cd ${DIST_CHECK_DIR}/${PACKAGE_FULL_NAME} && \
+          ./configure --prefix=${PWD}/${DIST_CHECK_DIR}/${PACKAGE_FULL_NAME}-install && \
+          make && \
+          make install
+
+clean:
+	rm -rf ${CLEAN_FILES}
+
+dist-clean:
+	rm -rf ${DISTCLEAN_FILES}
+
+maintainer-clean:
+	rm -rf ${MAINTAINERCLEAN_FILES}
+
+Makefile: Makefile.in config.status
+	./config.status $@
+
+config.status: configure
+	./config.status --recheck
+
+.PHONY: \
+all \
+check \
+install \
+uninstall \
+dist \
+dist-check \
+clean \
+dist-clean \
+maintainer-clean
+

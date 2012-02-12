@@ -1,0 +1,7 @@
+*.pyc
+aclocal.m4
+config.h.in
+config.status
+configure
+install-sh
+Makefile
