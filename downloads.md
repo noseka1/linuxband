@@ -8,6 +8,7 @@ order: 3
 
 ## Source code
 
+*  [linuxband-12.02.1.tar.gz](assets/sources/linuxband-12.02.1.tar.gz) \[[SHA1](assets/sources/linuxband-12.02.1.tar.gz.sha1)\] \[[MD5](assets/sources/linuxband-12.02.1.tar.gz.md5)\]
 *  [linuxband-12.02.tar.gz](assets/sources/linuxband-12.02.tar.gz) \[[SHA1](assets/sources/linuxband-12.02.tar.gz.sha1)\] \[[MD5](assets/sources/linuxband-12.02.tar.gz.md5)\]
 
 ## Binary packages
