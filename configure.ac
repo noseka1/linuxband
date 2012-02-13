@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.65)
-AC_INIT([linuxband], [12.02], [ales.nosek@gmail.com], [linuxband], [http://linuxband.org])
+AC_INIT([linuxband], [12.02.1], [ales.nosek@gmail.com], [linuxband], [http://linuxband.org])
 AC_CONFIG_SRCDIR([src/main/c/linuxband-player.c])
 AC_CONFIG_HEADER([config.h])
 

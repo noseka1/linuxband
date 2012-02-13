@@ -25,6 +25,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 For installation and usage documentation please see: <http://linuxband.org>
 
+### Release Notes 12.02.1 Beta
+
+#### Bugs
+
+*  Fix the compilation on Ubuntu 11.10
+
+#### Known Issues
+
+*  The linuxband-player is not yet stable. When playing 60sRock, 8Beat, JazzGuitar and a couple of other grooves the incorrect playback position can be displayed. The LinuxBand can even get disconnected from the JACK audio server. When this happens stop the playback and press the JACK reconnect button. Then select some other groove for your song.
+
 ### Release Notes 12.02 Beta
 
 This is the first release.

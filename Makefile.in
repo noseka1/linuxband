@@ -61,7 +61,7 @@ all: ${TARGET_DIR}/linuxband-player ${TARGET_DIR}/linuxband ${TARGET_DIR}/linuxb
 
 ${TARGET_DIR}/linuxband-player: ${linuxband_player_SOURCES} ${linuxband_player_HEADERS}
 	@mkdir -p ${@D}
-	${CC} -o $@ ${CFLAGS} ${EXTRA_CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${EXTRA_LIBS} ${linuxband_player_SOURCES}
+	${CC} -o $@ ${linuxband_player_SOURCES} ${CFLAGS} ${EXTRA_CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${EXTRA_LIBS}
 
 ${TARGET_DIR}/linuxband: ${PY_SOURCE_DIR}/linuxband.py.in
 	@mkdir -p ${@D}
