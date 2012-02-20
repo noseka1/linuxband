@@ -5,6 +5,8 @@ group: navigation
 order: 2
 ---
 {% include JB/setup %}
+<a href="http://linuxaudio.org"><img style="float:right" src="/assets/images/lao_compact_06_trans_w100.png" /></a>
+
 ## Requirements
 Following are the requirements for build and runtime:
 
