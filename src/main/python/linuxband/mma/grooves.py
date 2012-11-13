@@ -102,6 +102,7 @@ class Grooves(object):
                     song_data = self.__parseGrooves(full_name)
                     if not song_data: continue
                     song_bar_info = song_data.get_bar_info_all()
+                    doc = author = time = ''
                     for line in song_bar_info[0].get_lines():
                         action = line[0]
                         if action == Glob.A_BEGIN_BLOCK and line[1] == Glob.A_DOC:
