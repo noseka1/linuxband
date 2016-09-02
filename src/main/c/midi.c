@@ -32,6 +32,7 @@
 #include "config.h"
 #include "smf.h"
 #include "midi.h"
+#include <ctype.h>
 
 int
 strcmp_min(char *s1, char *s2) {
