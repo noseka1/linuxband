@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -26,7 +28,7 @@ class Glob:
     A_DEF_GROOVE = "DEFGROOVE"
     A_DOC = "DOC"
     A_GROOVE = "GROOVE"
-    A_REMARK = "REMARK" # comment line with song title
+    A_REMARK = "REMARK"  # comment line with song title
     A_REPEAT = "REPEAT"
     A_REPEAT_END = "REPEATEND"
     A_REPEAT_ENDING = "REPEATENDING"
@@ -36,12 +38,12 @@ class Glob:
     A_UNKNOWN = "UNKNOWN"
 
     # list of supported events, order of Add event menulist
-    EVENTS = [ A_GROOVE, A_TEMPO, A_REPEAT, A_REPEAT_ENDING, A_REPEAT_END ]
+    EVENTS = [A_GROOVE, A_TEMPO, A_REPEAT, A_REPEAT_ENDING, A_REPEAT_END]
 
     OUTPUT_FILE_DEFAULT = "untitled.mma"
     UNTITLED_SONG_NAME = "Untitled Song"
 
-        # user's home dir - works for windows/unix/linux
+    # user's home dir - works for windows/unix/linux
     HOME_DIR = os.getenv('USERPROFILE') or os.getenv('HOME')
     CONFIG_DIR = HOME_DIR + '/.linuxband'
 
@@ -60,4 +62,3 @@ class Glob:
     LICENSE = ""
     PLAYER_PROGRAM = ""
     CONSOLE_LOG_LEVEL = None
-

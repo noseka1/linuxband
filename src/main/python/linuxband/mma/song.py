@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -17,9 +19,11 @@
 
 import cStringIO
 import logging
+
+from linuxband.mma.bar_info import BarInfo
 from linuxband.mma.parse import parse
 from linuxband.mma.song_data import SongData
-from linuxband.mma.bar_info import BarInfo
+
 
 class Song(object):
 
@@ -38,7 +42,7 @@ class Song(object):
                 mma_data = mma_file.read()
             finally:
                 mma_file.close()
-        except:
+        except IOError:
             logging.exception("Unable to open '" + file_name + "' for input")
             return -2
         self.__pending_mma_data = mma_data
@@ -49,10 +53,12 @@ class Song(object):
         self.__song_data.set_save_needed(True)
 
     def compile_song(self):
-        if not self.__song_data.is_save_needed() and self.__pending_mma_data == None and self.__invalid_mma_data == None:
+        if (not self.__song_data.is_save_needed()
+                and self.__pending_mma_data is None
+                and self.__invalid_mma_data is None):
             logging.debug('No compilation needed')
             return self.__last_compile_result
-        if self.__pending_mma_data == None:
+        if self.__pending_mma_data is None:
             mma_data = self.write_to_string()
             res = self.__midi_generator.check_mma_syntax(mma_data)
         else:
@@ -68,21 +74,22 @@ class Song(object):
     def write_to_midi_file(self, file_name):
         mma_data = self.write_to_string()
         res, midi = self.__midi_generator.generate_smf(mma_data)
-        if res == 0: self.__do_write_to_file(file_name, midi)
+        if res == 0:
+            self.__do_write_to_file(file_name, midi)
 
     def write_to_string(self):
-        """ 
+        """
         If the mma was parsed correctly return it. Otherwise give the invalid mma data back.
         """
-        if self.__invalid_mma_data == None:
+        if self.__invalid_mma_data is None:
             return self.__song_data.write_to_string()
         else:
             return self.__invalid_mma_data
 
     def get_playback_midi_data(self):
-        """ 
+        """
         Get midi file which will be sent to the client.
-        
+
         Than create mma file with markers for tracking and generate the resulting midi from it.
         """
         mma_data_marks = self.__song_data.write_to_string_with_midi_marks()
@@ -91,13 +98,13 @@ class Song(object):
     def __clear_song(self):
         """
         Called when parsing of mma data failed.
-        
+
         E.g. during opening the new file or parsing data from the source editor.
         The song must have minimum one BarInfo on which the cursor is located.
-        
+
         bar_count = number of bar_chords in the song, number of bar_info is bar_count + 1
         """
-        self.__song_data = SongData([ BarInfo() ], [], 0)
+        self.__song_data = SongData([BarInfo()], [], 0)
         self.__invalid_mma_data = None
         self.__pending_mma_data = None
         self.__last_compile_result = None
@@ -128,5 +135,5 @@ class Song(object):
                 f.write(data)
             finally:
                 f.close()
-        except:
+        except IOError:
             logging.exception("Failed to save data to '" + file_name + "'.")

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,14 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import threading
-import os
 import fcntl
+import logging
+import os
 import select
 import subprocess
+import threading
+
 import gobject
-import logging
+
 from linuxband.glob import Glob
+
 
 class MidiPlayer:
 
@@ -71,17 +76,17 @@ class MidiPlayer:
         self.__pipew = pipew
 
         pipeName = '/proc/' + str(Glob.PID) + '/fd/' + str(pipew)
-        command = [ Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName ]
+        command = [Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName]
         if Glob.CONSOLE_LOG_LEVEL == logging.DEBUG:
             command.insert(1, '-d')
         try:
             self.__player = subprocess.Popen(command, stdin=subprocess.PIPE)
-        except:
+        except subprocess.CalledProcessError:
             logging.exception("Failed to run command '%s'", ' '.join(command))
             os.close(piper)
             os.close(pipew)
             return
-        # sending data to midi player should not block    
+        # sending data to midi player should not block
         out = self.__player.stdin.fileno()
         flags = fcntl.fcntl(out, fcntl.F_GETFL)
         fcntl.fcntl(out, fcntl.F_SETFL, flags | os.O_NONBLOCK)
@@ -105,15 +110,15 @@ class MidiPlayer:
         # descriptors could have been already closed
         try:
             os.close(self.__piper)
-        except:
+        except IOError:
             pass
         try:
             os.close(self.__pipew)
-        except:
+        except IOError:
             pass
         try:
             os.close(self.__pout)
-        except:
+        except IOError:
             pass
 
     def load_smf_data(self, midi_data, offset):
@@ -167,7 +172,7 @@ class MidiPlayer:
         return self.__playing
 
     def __resend_data(self):
-        if self.__saved_midi_data != None:
+        if self.__saved_midi_data is not None:
             self.load_smf_data(self.__saved_midi_data, self.__saved_offset)
         self.set_intro_length(self.__saved_intro_length)
         self.set_pause(self.__saved_pause)
@@ -194,7 +199,7 @@ class MidiPlayer:
                 gobject.idle_add(self.__gui.move_playhead_to_bar, bar_num)
                 self.__playing = True
             elif token == MidiPlayer.__EVENT_LINE_NUM:
-                # move the playhead2 to the new position 
+                # move the playhead2 to the new position
                 lineNum = int(self.__read_token(self.__piper))
                 gobject.idle_add(self.__gui.move_playhead_to_line, lineNum - self.__mma_line_offset - 1)
                 self.__playing = True
@@ -219,11 +224,13 @@ class MidiPlayer:
             try:
                 timeout = 2
                 if not select.select([], [self.__pout], [], timeout)[1]:
-                    logging.error("Cannot send data to midi player. Timeout after " \
-                              + str(timeout) + " seconds.")
+                    logging.error("Cannot send data to midi player. Timeout "
+                                  "after " + str(timeout) + " seconds.")
                 else:
                     os.write(self.__pout, data)
-            except:
-                logging.error("Failed to send data to midi player. Ensure the JACK server is running and hit the JACK reconnect button.")
+            except IOError:
+                logging.error("Failed to send data to midi player. Ensure the "
+                              "JACK server is running and hit the JACK reconnect "
+                              "button.")
         else:
             logging.debug("Not yet connected.")

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -16,8 +18,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-from linuxband.gui.common import Common
+
 from linuxband.glob import Glob
+from linuxband.gui.common import Common
 
 
 class AboutDialog(object):
@@ -36,7 +39,7 @@ class AboutDialog(object):
                 license_text = infile.read()
             finally:
                 infile.close()
-        except:
+        except IOError:
             logging.exception("Unable to read license file '" + fname + "'")
         dialog.set_license(license_text)
         Common.connect_signals(glade, self)

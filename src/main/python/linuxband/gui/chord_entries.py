@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,9 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
 import gobject
+import gtk
+
 from gtk.gdk import CONTROL_MASK
+
 from linuxband.gui.common import Common
 from linuxband.mma.chord_table import chordlist
 
@@ -32,7 +36,8 @@ class ChordEntries(object):
 
     def refresh(self):
         """ Refresh chord entries. """
-        if self.__chord_sheet.is_cursor_on_bar_info(): return
+        if self.__chord_sheet.is_cursor_on_bar_info():
+            return
         barnum = self.__chord_sheet.get_current_bar_number()
 
         for entry in self.__entries:
@@ -42,7 +47,7 @@ class ChordEntries(object):
             chords = self.__song.get_data().get_bar_chords(barnum).get_chords()
             for i in range(len(chords)):
                 chord = chords[i][0]
-                if chord == '/': # don't show '/' as chord
+                if chord == '/':  # don't show '/' as chord
                     self.__entries[i].set_text('')
                 else:
                     self.__entries[i].set_text(chord)
@@ -52,8 +57,8 @@ class ChordEntries(object):
 
     def on_entry_key_release_event_callback(self, widget, event):
         key = event.keyval
-        if key == gtk.keysyms.Escape \
-            or (event.state & CONTROL_MASK and key == gtk.keysyms.bracketright):
+        if (key == gtk.keysyms.Escape
+                or (event.state & CONTROL_MASK and key == gtk.keysyms.bracketright)):
             # cancel chord editing
             self.__chord_sheet.render_current_field()
             self.refresh()
@@ -89,7 +94,7 @@ class ChordEntries(object):
         gobject.idle_add(self.__entries[num].grab_focus)
 
     def has_focus(self):
-        return self.__find_focused_entry() != None
+        return self.__find_focused_entry() is not None
 
     def hide(self):
         self.__hbox6.hide()
@@ -120,14 +125,16 @@ class ChordEntries(object):
     def __init_gui(self, glade, chord_names):
         Common.connect_signals(glade, self)
         self.__hbox6 = glade.get_widget("hbox6")
-        self.__entries = [ glade.get_widget("entry1"),
-                         glade.get_widget("entry2"),
-                         glade.get_widget("entry3"),
-                         glade.get_widget("entry4"),
-                         glade.get_widget("entry5"),
-                         glade.get_widget("entry6"),
-                         glade.get_widget("entry7"),
-                         glade.get_widget("entry8") ]
+        self.__entries = [
+            glade.get_widget("entry1"),
+            glade.get_widget("entry2"),
+            glade.get_widget("entry3"),
+            glade.get_widget("entry4"),
+            glade.get_widget("entry5"),
+            glade.get_widget("entry6"),
+            glade.get_widget("entry7"),
+            glade.get_widget("entry8")
+        ]
         # Initialize chord entry completion
         model = gtk.ListStore(str)
         for chord in chord_names:
@@ -152,10 +159,10 @@ class ChordEntries(object):
     def __get_chord_names(self):
         """
         Generate a list with all possible chords.
-        
+
         It is used for entry completion
         """
-        base = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
+        base = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
         base_ext = []
         for c in base:
             base_ext.append(c)
@@ -164,7 +171,7 @@ class ChordEntries(object):
 
         chord_names = []
         for c in base_ext:
-            for k, v in chordlist.iteritems(): #@UnusedVariable
+            for k, v in chordlist.iteritems():
                 chord_names.append(c + k)
 
         chord_names.sort()

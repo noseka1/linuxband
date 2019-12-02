@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,14 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import copy
+import logging
+
 import gtk
 import pango
-import copy
+
 from gtk.gdk import CONTROL_MASK, SHIFT_MASK, BUTTON1_MASK
-import logging
+
+from linuxband.gui.common import Common
 from linuxband.mma.bar_chords import BarChords
 from linuxband.mma.bar_info import BarInfo
-from linuxband.gui.common import Common
 
 
 class ChordSheet(object):
@@ -55,7 +60,7 @@ class ChordSheet(object):
         self.drawable = self.__area.window
         self.gc = self.drawable.new_gc()
         # Create a new backing pixmap of the appropriate size
-        self.pixmap = gtk.gdk.Pixmap(self.drawable, self.__drawing_area_width, self.__drawing_area_height, depth= -1)
+        self.pixmap = gtk.gdk.Pixmap(self.drawable, self.__drawing_area_width, self.__drawing_area_height, depth=-1)
         gc = self.drawable.new_gc()
         gc.copy(self.gc)
         green = self.__colormap.alloc_color(ChordSheet.__color_no_song, True, True)
@@ -65,15 +70,15 @@ class ChordSheet(object):
 
     def drawing_area_expose_event_callback(self, widget, event):
         """ Redraw the screen from the backing pixmap. """
-        x , y, width, height = event.area
+        x, y, width, height = event.area
         widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
-        self.pixmap, x, y, x, y, width, height)
+                                    self.pixmap, x, y, x, y, width, height)
         return True
 
     def move_playhead_to(self, pos):
         new_pos = pos * 2 + 1 if pos > -1 else -1
         old_pos = self.__playhead_pos
-        if  old_pos != new_pos:
+        if old_pos != new_pos:
             self.__playhead_pos = new_pos
             self.__render_field(old_pos)
             self.__render_field(new_pos)
@@ -111,15 +116,15 @@ class ChordSheet(object):
                 self.__move_cursor_to(self.__cursor_pos + 2)
                 self.__destroy_selection()
         # adjust selection
-        if key in [ gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up, gtk.keysyms.Down,
-                         gtk.keysyms.Home, gtk.keysyms.End ]:
+        if key in [gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up,
+                   gtk.keysyms.Down, gtk.keysyms.Home, gtk.keysyms.End]:
             if event.state & SHIFT_MASK:
                 self.__adjust_selection(old_pos)
             else:
                 self.__destroy_selection()
-        if key in [ gtk.keysyms.H, gtk.keysyms.L, gtk.keysyms.K, gtk.keysyms.J ]:
+        if key in [gtk.keysyms.H, gtk.keysyms.L, gtk.keysyms.K, gtk.keysyms.J]:
             self.__adjust_selection(old_pos)
-        if key in [ gtk.keysyms.h, gtk.keysyms.l, gtk.keysyms.k, gtk.keysyms.j ]:
+        if key in [gtk.keysyms.h, gtk.keysyms.l, gtk.keysyms.k, gtk.keysyms.j]:
             self.__destroy_selection()
         # the event has been handled
         return True
@@ -157,7 +162,7 @@ class ChordSheet(object):
             self.__destroy_selection()
             old_pos = self.__cursor_pos
             new_pos = old_pos + length - 1
-            self.__move_cursor_to(new_pos) # if needed new fields will be appended
+            self.__move_cursor_to(new_pos)  # if needed new fields will be appended
             bar_num = old_pos / 2
             for field in clipboard:
                 if isinstance(field, BarChords):
@@ -165,8 +170,9 @@ class ChordSheet(object):
                     bar_num = bar_num + 1
                 else:
                     self.__song.get_data().set_bar_info(bar_num, field)
-            self.__adjust_selection(old_pos) # refreshes affected fields
-            if old_pos > 0: self.__render_field(old_pos - 1) # refresh barNumber
+            self.__adjust_selection(old_pos)  # refreshes affected fields
+            if old_pos > 0:
+                self.__render_field(old_pos - 1)  # refresh barNumber
 
     def delete_selection(self):
         """ Delete selected fields """
@@ -184,7 +190,8 @@ class ChordSheet(object):
         for field_num in sel:
             self.__render_field(field_num)
         m = min(sel)
-        if m > 0: self.__render_field(m - 1)
+        if m > 0:
+            self.__render_field(m - 1)
         # if deleted bars from the end, shorten the song
         if max(sel) == self.__end_position:
             first = min(sel)
@@ -238,12 +245,14 @@ class ChordSheet(object):
         new_end = bar_count * 2
         if new_end == self.__end_position:
             return
-        elif new_end > self.__end_position: # render affected fields
+        elif new_end > self.__end_position:  # render affected fields
             fields_to_render = range(self.__end_position, new_end + 1)
-            for field in fields_to_render: self.__render_field(field)
+            for field in fields_to_render:
+                self.__render_field(field)
         elif new_end < self.__end_position:
             fields_to_render = range(new_end, self.__end_position + 1)
-            for field in fields_to_render: self.__render_field(field)
+            for field in fields_to_render:
+                self.__render_field(field)
         self.__end_position = new_end
 
         if new_end == 0:
@@ -258,7 +267,8 @@ class ChordSheet(object):
         new_end = bar_count * 2
         maxlast = max(self.__end_position, new_end)
         fields_to_render = range(0, maxlast + 1)
-        for field in fields_to_render: self.__render_field(field)
+        for field in fields_to_render:
+            self.__render_field(field)
         self.__end_position = new_end
 
         if new_end == 0:
@@ -279,7 +289,7 @@ class ChordSheet(object):
         return self.__cursor_pos / 2
 
     def new_song_loaded(self):
-        self.__move_cursor_to(0) # cursor on field 0 => global buttons get refreshed
+        self.__move_cursor_to(0)  # cursor on field 0 => global buttons get refreshed
         self.__destroy_selection()
 
     def render_current_field(self, chords=None):
@@ -302,13 +312,15 @@ class ChordSheet(object):
 
     def __render_chord_xy(self, chord, x, y, width, height, playhead):
         """ Render one chord on position x,y. """
-        if playhead: color = self.__colormap.alloc_color('white')
-        else: color = self.__colormap.alloc_color('black')
+        if playhead:
+            color = self.__colormap.alloc_color('white')
+        else:
+            color = self.__colormap.alloc_color('black')
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
-        #gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
+        # gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
         gc.set_foreground(color)
-        #self.pixmap.draw_rectangle(gc, False, x , y, width, height)
+        # self.pixmap.draw_rectangle(gc, False, x , y, width, height)
 
         pango_layout = self.__area.create_pango_layout("")
         pango_layout.set_text(chord)
@@ -323,7 +335,7 @@ class ChordSheet(object):
             if text_width <= width and text_height <= height:
                 break
 
-        ink, logical = pango_layout.get_pixel_extents() #@UnusedVariable
+        ink, logical = pango_layout.get_pixel_extents()
         self.pixmap.draw_layout(gc, x, y + (height - ink[1] - ink[3]), pango_layout)
 
     def __render_chords_xy(self, bar_num, chords, bar_x, bar_y, playhead, cursor, selection):
@@ -342,11 +354,15 @@ class ChordSheet(object):
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
         gc.set_foreground(color)
-        self.pixmap.draw_rectangle(gc, True, bar_x , bar_y, self.__bar_chords_width, ChordSheet.__bar_height)
-        if cursor: # black border
+        self.pixmap.draw_rectangle(
+            gc, True, bar_x, bar_y, self.__bar_chords_width, ChordSheet.__bar_height
+        )
+        if cursor:  # black border
             color = self.__colormap.alloc_color("black")
             gc.set_foreground(color)
-            self.pixmap.draw_rectangle(gc, False, bar_x , bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1)
+            self.pixmap.draw_rectangle(
+                gc, False, bar_x, bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1
+            )
 
         if not chords:
             return
@@ -357,7 +373,9 @@ class ChordSheet(object):
             color = self.__colormap.alloc_color("black")
         gc.set_foreground(color)
 
-        bar_chords_width = self.__bar_chords_width - (self.__song.get_data().get_beats_per_bar()) * ChordSheet.__cell_padding
+        bar_chords_width = (self.__bar_chords_width
+                            - (self.__song.get_data().get_beats_per_bar())
+                            * ChordSheet.__cell_padding)
         bar_chords_height = ChordSheet.__bar_height - 2 * ChordSheet.__cell_padding
         chord_width = bar_chords_width / self.__song.get_data().get_beats_per_bar()
         i = 0
@@ -366,23 +384,27 @@ class ChordSheet(object):
                 i = i + 1
                 continue
             # there is a chord on this beat
-            if i % 2 == 0 \
-                and i + 1 < self.__song.get_data().get_beats_per_bar() \
-                and (i + 1 >= len(chords) or chords[i + 1][0] == '/' or chords[i + 1][0] == ''):
+            if (i % 2 == 0
+                    and i + 1 < self.__song.get_data().get_beats_per_bar()
+                    and (i + 1 >= len(chords) or chords[i + 1][0] == '/' or chords[i + 1][0] == '')):
                 # the next beat has no chord we can expand us
-                self.__render_chord_xy(chords[i][0],
-                                bar_x + (chord_width + ChordSheet.__cell_padding) * i,
-                                bar_y + ChordSheet.__cell_padding,
-                                chord_width + ChordSheet.__cell_padding + chord_width,
-                                bar_chords_height,
-                                playhead)
+                self.__render_chord_xy(
+                    chords[i][0],
+                    bar_x + (chord_width + ChordSheet.__cell_padding) * i,
+                    bar_y + ChordSheet.__cell_padding,
+                    chord_width + ChordSheet.__cell_padding + chord_width,
+                    bar_chords_height,
+                    playhead
+                )
             else:
-                self.__render_chord_xy(chords[i][0],
-                                bar_x + (chord_width + ChordSheet.__cell_padding) * i,
-                                bar_y + ChordSheet.__cell_padding,
-                                chord_width,
-                                bar_chords_height,
-                                playhead)
+                self.__render_chord_xy(
+                    chords[i][0],
+                    bar_x + (chord_width + ChordSheet.__cell_padding) * i,
+                    bar_y + ChordSheet.__cell_padding,
+                    chord_width,
+                    bar_chords_height,
+                    playhead
+                )
             i = i + 1
 
     def __draw_repetition(self, x, y, gc, end):
@@ -396,8 +418,10 @@ class ChordSheet(object):
         point_size = ChordSheet.__cell_padding * 2
         upper_y = y + ChordSheet.__bar_height / 4
         lower_y = y + ChordSheet.__bar_height * 3 / 4 - point_size
-        if end: x = x + self.__bar_info_width / 5
-        else: x = x + self.__bar_info_width * 4 / 5 - point_size
+        if end:
+            x = x + self.__bar_info_width / 5
+        else:
+            x = x + self.__bar_info_width * 4 / 5 - point_size
         self.pixmap.draw_arc(self.gc, True, x, upper_y, point_size, point_size, 0, 360 * 64)
         self.pixmap.draw_arc(self.gc, True, x, lower_y, point_size, point_size, 0, 360 * 64)
 
@@ -418,8 +442,8 @@ class ChordSheet(object):
         gc = self.drawable.new_gc()
         gc.copy(self.gc)
         gc.set_foreground(color)
-        self.pixmap.draw_rectangle(gc, True, x , y, self.__bar_info_width, ChordSheet.__bar_height)
-        if cursor: # black border
+        self.pixmap.draw_rectangle(gc, True, x, y, self.__bar_info_width, ChordSheet.__bar_height)
+        if cursor:  # black border
             color = self.__colormap.alloc_color('black')
             gc.set_foreground(color)
             self.pixmap.draw_rectangle(gc, False, x, y, self.__bar_info_width - 1, ChordSheet.__bar_height - 1)
@@ -428,22 +452,27 @@ class ChordSheet(object):
         gc.set_foreground(color)
         repeat_begin = bar_info.has_repeat_begin() if bar_info else False
         repeat_end = bar_info.has_repeat_end() if bar_info else False
-        if repeat_begin or repeat_end: # draw repetitions
-            if repeat_begin: self.__draw_repetition(x, y, gc, False)
-            if repeat_end: self.__draw_repetition(x, y, gc, True)
+        if repeat_begin or repeat_end:  # draw repetitions
+            if repeat_begin:
+                self.__draw_repetition(x, y, gc, False)
+            if repeat_end:
+                self.__draw_repetition(x, y, gc, True)
         else:
-            if bar_num < self.__song.get_data().get_bar_count() and chord_num: # draw bar number
+            if bar_num < self.__song.get_data().get_bar_count() and chord_num:  # draw bar number
                 pango_layout = self.__area.create_pango_layout("")
                 pango_layout.set_text(str(chord_num))
                 fd = pango.FontDescription('Monospace Bold 8')
                 pango_layout.set_font_description(fd)
-                ink, logical = pango_layout.get_pixel_extents() #@UnusedVariable
-                self.pixmap.draw_layout(gc, x + ChordSheet.__cell_padding,
-                                    y + (ChordSheet.__bar_height - ink[1] - ink[3]) - ChordSheet.__cell_padding, pango_layout)
+                ink, logical = pango_layout.get_pixel_extents()
+                self.pixmap.draw_layout(
+                    gc, x + ChordSheet.__cell_padding,
+                    y + (ChordSheet.__bar_height - ink[1] - ink[3]) - ChordSheet.__cell_padding,
+                    pango_layout
+                )
 
     def __get_pos_x(self, pos):
-        return (pos / 2 % ChordSheet.__bars_per_line) * self.__bar_width \
-                                        + (pos % 2 * self.__bar_info_width)
+        return ((pos / 2 % ChordSheet.__bars_per_line) * self.__bar_width
+                + (pos % 2 * self.__bar_info_width))
 
     def __get_pos_y(self, pos):
         return (pos / 2 / ChordSheet.__bars_per_line) * ChordSheet.__bar_height
@@ -464,7 +493,7 @@ class ChordSheet(object):
         bar_num = field_num / 2
 
         if self.__is_bar_chords(field_num):
-            if chords == None and bar_num < self.__song.get_data().get_bar_count():
+            if chords is None and bar_num < self.__song.get_data().get_bar_count():
                 chords = self.__song.get_data().get_bar_chords(bar_num).get_chords()
 
             self.__render_chords_xy(bar_num, chords, field_x, field_y, playhead, cursor, selection)
@@ -514,7 +543,7 @@ class ChordSheet(object):
 
     def __adjust_selection(self, old_pos):
         """ Begins or adjusts field selection, redraws affected fields. """
-        if self.__selection_start == None:
+        if self.__selection_start is None:
             # beginning a new selection
             self.__selection_start = old_pos
             self.__selection = self.__get_selection_set(old_pos, self.__cursor_pos)
@@ -527,7 +556,7 @@ class ChordSheet(object):
 
     def __adjust_selection_bar_count_changed(self):
         """ Number of bars has changed, maybe destroy the selection or shorten it. """
-        if self.__selection_start == None:
+        if self.__selection_start is None:
             return
         elif self.__selection_start > self.__end_position:
             self.__destroy_selection()
@@ -536,7 +565,8 @@ class ChordSheet(object):
             self.__selection = set([elem for elem in self.__selection if elem <= self.__end_position])
 
     def __destroy_selection(self):
-        if self.__selection_start == None: return
+        if self.__selection_start is None:
+            return
         old_selection = self.__selection
         self.__selection_start = None
         self.__selection = set([])
@@ -564,4 +594,3 @@ class ChordSheet(object):
         pos = self.__song.get_data().get_beats_per_bar() * 2 * bar_y + bar_x * 2 + bar_chords
 
         return pos
-

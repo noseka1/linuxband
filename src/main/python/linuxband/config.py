@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -17,8 +19,9 @@
 
 import ConfigParser
 import logging
-from linuxband.glob import Glob
 import os
+
+from linuxband.glob import Glob
 
 
 class Config(object):
@@ -47,7 +50,7 @@ class Config(object):
             try:
                 logging.debug("Opening config")
                 self.__config.read(Config.__rc_file)
-            except:
+            except IOError:
                 logging.exception("Error reading configuration file '%s', loading defaults." % Config.__rc_file)
                 self.__load_default_config()
         else:
@@ -66,7 +69,7 @@ class Config(object):
                 self.__config.write(out_file)
             finally:
                 out_file.close()
-        except:
+        except IOError:
             logging.exception("Unable to save configuration file '" + fname + "'")
 
     def get_work_dir(self):
@@ -127,7 +130,7 @@ class Config(object):
         try:
             self.__config.read(Config.__default_config)
             self.set_work_dir(Config.__home_dir)
-        except:
+        except IOError:
             logging.exception("Failed to read default configuration from '" + Config.__default_config + "'")
 
     def __ensure_dir(self, newdir):
@@ -138,6 +141,6 @@ class Config(object):
             return True
         try:
             os.mkdir(newdir)
-        except:
+        except OSError:
             logging.exception("Unable to create directory '" + newdir + "'")
         return False

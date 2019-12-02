@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,11 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+
 import gobject
 import gtk
 import gtksourceview2
 import pango
-import logging
+
 from linuxband.glob import Glob
 
 
@@ -60,7 +64,7 @@ class SourceEditor(object):
             iter1 = buff.get_iter_at_line(line)
             iter2 = buff.get_iter_at_line(line + 1)
             buff.apply_tag_by_name("error", iter1, iter2)
-            # error marker    
+            # error marker
             it = buff.get_iter_at_line(line)
             buff.create_source_mark(None, self.ERROR_MARKER, it)
         self.__error_mark_pos = line

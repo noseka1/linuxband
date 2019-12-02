@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -16,8 +18,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from linuxband.glob import Glob
-from linuxband.mma.bar_info import BarInfo
 from linuxband.gui.common import Common
+from linuxband.mma.bar_info import BarInfo
 
 
 class EventTempo(object):
@@ -52,8 +54,10 @@ class EventTempo(object):
 
     def init_window(self, button, event):
         # hide back, forward, remove buttons
-        if button is self.__togglebutton2: self.__alignment15.hide()
-        else: self.__alignment15.show()
+        if button is self.__togglebutton2:
+            self.__alignment15.hide()
+        else:
+            self.__alignment15.show()
         self.__toggled_button = button
         self.__curr_event = event
         self.__new_event = None

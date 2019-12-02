@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,14 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
-import pickle
-import logging
 import fnmatch
+import logging
 import os
+import pickle
+
+import gtk
+
 from linuxband.glob import Glob
-from linuxband.mma.parse import parse
 from linuxband.mma.bar_info import BarInfo
+from linuxband.mma.parse import parse
 
 
 class Grooves(object):
@@ -51,7 +55,7 @@ class Grooves(object):
             return 1
         elif a == b:
             return 0
-        else: # x<y
+        else:  # x<y
             return -1
 
     def __create_grooves_model(self, grooves_list):
@@ -68,9 +72,9 @@ class Grooves(object):
                 march_sub_liststore.append(groove)
             elif index == 0 \
                     or not groove[0].upper().startswith(pgroove) \
-                    or groove[0].startswith('Metronome'):   # metronome hack    
+                    or groove[0].startswith('Metronome'):   # metronome hack
                 sub_liststore = gtk.ListStore(str, str, str, str, str, str)
-                grooves_model.append(groove + [ sub_liststore ])
+                grooves_model.append(groove + [sub_liststore])
                 pgroove = groove[0].upper()
                 # March hack
                 if groove[0] == 'March':
@@ -80,9 +84,9 @@ class Grooves(object):
         return grooves_model
 
     def __load_grooves(self):
-        """ 
+        """
         Load grooves from /usr/share/mma/lib/stdlib (configurable).
-        
+
         Sort grooves and store them in grooves_list
         Call __create_grooves_model()
         """
@@ -95,12 +99,13 @@ class Grooves(object):
         """
         Load grooves and recurse into subdirectories.
         """
-        for dirname, dirnames, filenames in os.walk(path): #@UnusedVariable            
+        for dirname, dirnames, filenames in os.walk(path):
             for name in filenames:
                 if fnmatch.fnmatch(name, '*.mma'):
                     full_name = os.path.join(dirname, name)
                     song_data = self.__parseGrooves(full_name)
-                    if not song_data: continue
+                    if not song_data:
+                        continue
                     song_bar_info = song_data.get_bar_info_all()
                     doc = author = time = ''
                     for line in song_bar_info[0].get_lines():
@@ -128,14 +133,14 @@ class Grooves(object):
             except ValueError:
                 logging.exception("Failed to parse the file.")
             mma_file.close()
-        except:
+        except IOError:
             logging.exception("Failed to load grooves from file '" + file_name + "'")
         return song_data
 
     def __load_grooves_from_cache(self):
         """
         Load grooves from file or cache.
-        
+
         Call createGroovesModel()
         """
         fname = Grooves.__grooves_cache_file
@@ -145,7 +150,7 @@ class Grooves(object):
                 grooves_list = pickle.load(infile)
             finally:
                 infile.close()
-        except:
+        except IOError:
             logging.exception("Unable to load grooves from cache '" + fname + "'")
             return
         logging.info("Loaded %d groove patterns from cache '%s'" % (len(grooves_list), fname))
@@ -163,5 +168,5 @@ class Grooves(object):
                 pickle.dump(grooves_list, outfile, True)
             finally:
                 outfile.close()
-        except:
+        except IOError:
             logging.exception("Unable to store grooves into cache '" + fname + "'")

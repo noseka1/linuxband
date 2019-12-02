@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -24,12 +26,14 @@ class SaveButtonStatus(object):
         button = glade.get_widget("toolbutton9")
         menuitem = glade.get_widget("imagemenuitem3")
         mainwindow = glade.get_widget("mainWindow")
-        self.__sourceId = gobject.timeout_add(800, self.__refresh_save_button_status, song, button, menuitem, mainwindow)
+        self.__sourceId = gobject.timeout_add(
+            800, self.__refresh_save_button_status, song, button, menuitem, mainwindow
+        )
 
     def __refresh_save_button_status(self, song, button, menuitem, mainwindow):
         save_needed = song.get_data().is_save_needed()
         button.set_sensitive(save_needed)
         menuitem.set_sensitive(save_needed)
-        prefix = "*"  if save_needed else ""
+        prefix = "*" if save_needed else ""
         mainwindow.set_title(prefix + song.get_data().get_title() + " | Linux Band")
         return True

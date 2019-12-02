@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,25 +17,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import pango
 import logging
-import gtk.glade
+
 import gobject
-from linuxband.glob import Glob
-from linuxband.gui.gui_logger import GuiLogger
+import gtk.glade
+import pango
+
 from linuxband.config import Config
-from linuxband.midi.midi_player import MidiPlayer
-from linuxband.gui.chord_sheet import ChordSheet
-from linuxband.gui.source_editor import SourceEditor
+from linuxband.glob import Glob
+from linuxband.gui.about_dialog import AboutDialog
 from linuxband.gui.chord_entries import ChordEntries
-from linuxband.gui.events_bar import EventsBar
+from linuxband.gui.chord_sheet import ChordSheet
 from linuxband.gui.common import Common
+from linuxband.gui.gui_logger import GuiLogger
+from linuxband.gui.events_bar import EventsBar
+from linuxband.gui.save_button_status import SaveButtonStatus
+from linuxband.gui.source_editor import SourceEditor
+from linuxband.gui.preferences import Preferences
+from linuxband.midi.midi_player import MidiPlayer
+from linuxband.midi.mma2smf import MidiGenerator
 from linuxband.mma.song import Song
 from linuxband.mma.grooves import Grooves
-from linuxband.gui.about_dialog import AboutDialog
-from linuxband.midi.mma2smf import MidiGenerator
-from linuxband.gui.preferences import Preferences
-from linuxband.gui.save_button_status import SaveButtonStatus
 
 
 class Gui:
@@ -97,7 +101,7 @@ class Gui:
             if self.__chord_sheet.has_focus() and self.__chord_sheet.is_cursor_on_bar_chords():
                 self.__chord_entries.begin_writing(keyname)
                 return True
-        elif keyname == 'e' and self.__chord_sheet.has_focus(): # TODO: doesn't work
+        elif keyname == 'e' and self.__chord_sheet.has_focus():  # TODO: doesn't work
             self.__events_bar.grab_focus()
             return True
         elif (self.__chord_sheet.has_focus() or self.__notebook3.has_focus()) and keyname == 'space':
@@ -154,6 +158,7 @@ class Gui:
         self.__preferences.run()
 
     __ignore_toggle2 = False
+
     def switch_view_callback(self, item=None):
         if Gui.__ignore_toggle2:
             Gui.__ignore_toggle2 = False
@@ -186,7 +191,7 @@ class Gui:
     def change_song_bar_count(self, bar_count):
         """
         Set the count of song bars to bar_count.
-        
+
         Redraw affected fields
         Move cursor if it is necessary
         """
@@ -210,7 +215,7 @@ class Gui:
     def open_file_callback(self, menutime):
         """ Open. """
         if self.__handle_unsaved_changes():
-            if (self.__open_file_dialog.get_current_folder() <> self.__config.get_work_dir()):
+            if (self.__open_file_dialog.get_current_folder() != self.__config.get_work_dir()):
                 self.__open_file_dialog.set_current_folder(self.__config.get_work_dir())
             result = self.__open_file_dialog.run()
             self.__open_file_dialog.hide()
@@ -244,7 +249,7 @@ class Gui:
     def export_midi_callback(self, menuitem):
         """ Export MIDI. """
         if self.__compile_song(True) == 0:
-            if (self.__export_midi_dialog.get_current_folder() <> self.__config.get_work_dir()):
+            if (self.__export_midi_dialog.get_current_folder() != self.__config.get_work_dir()):
                 self.__export_midi_dialog.set_current_folder(self.__config.get_work_dir())
             out_file = self.__output_file if self.__output_file else Glob.OUTPUT_FILE_DEFAULT
             out_file = self.__change_extension(out_file, "mid")
@@ -269,13 +274,14 @@ class Gui:
             if res == 0:
                 res, midi_data = self.__song.get_playback_midi_data()
                 player.playback_stop()
-                if res != 0: # generate SMF failed
-                    if res > 0 or res == -1: self.__show_mma_error(res)
+                if res != 0:  # generate SMF failed
+                    if res > 0 or res == -1:
+                        self.__show_mma_error(res)
                     return
                 player.load_smf_data(midi_data, self.__song.get_data().get_mma_line_offset())
             else:
                 return
-            self.__enable_pause_button();
+            self.__enable_pause_button()
             if event.state & gtk.gdk.CONTROL_MASK:
                 player.playback_start_bar(self.__chord_sheet.get_current_bar_number())
             elif event.state & gtk.gdk.SHIFT_MASK:
@@ -285,25 +291,26 @@ class Gui:
 
     def playback_stop_callback(self, button=None):
         """ Stop. """
-        self.__enable_pause_button();
+        self.__enable_pause_button()
         self.__midi_player.playback_stop()
 
     __ignore_toggle = False
+
     def playback_pause_callback(self, button=None):
         """ Pause. """
         if Gui.__ignore_toggle:
             Gui.__ignore_toggle = False
         else:
-            self.__midi_player.set_pause(button.get_active());
+            self.__midi_player.set_pause(button.get_active())
 
     def jack_reconnect_callback(self, button):
         self.__midi_player.shutdown()
-        self.__midi_player.startup();
+        self.__midi_player.startup()
 
     def switch_page_callback(self, notebook, page, pageNum):
         """ Called when clicked on notebook tab. """
         logging.debug("")
-        if pageNum == 1: # switching to source editor
+        if pageNum == 1:  # switching to source editor
             self.__source_editor.refresh_source(self.__song.write_to_string())
             self.__source_editor.grab_focus()
             self.__notebook2.set_current_page(pageNum)
@@ -312,7 +319,7 @@ class Gui:
                 Gui.__ignore_toggle2 = True
                 self.__menuitem7.set_active(True)
             self.__global_buttons.hide()
-        else: # switching to chord sheet
+        else:  # switching to chord sheet
             res = self.__compile_song(True)
             if res > 0 or res == -1:
                 logging.error("Cannot switch to chord sheet view. Fix the errors and try again.")
@@ -329,7 +336,7 @@ class Gui:
 
     def loop_toggle_callback(self, button):
         """ Loop check button. """
-        self.__midi_player.set_loop(button.get_active());
+        self.__midi_player.set_loop(button.get_active())
         self.__config.set_loop(button.get_active())
 
     def jack_transport_toggle_callback(self, button):
@@ -370,10 +377,11 @@ class Gui:
         self.__source_editor.new_song_loaded(self.__song.write_to_string())
         self.refresh_chord_sheet()
         self.__refresh_song_title()
-        if res > 0 or res == -1: self.__show_mma_error(res)
+        if res > 0 or res == -1:
+            self.__show_mma_error(res)
 
     def __do_save_as(self):
-        if (self.__save_as_dialog.get_current_folder() <> self.__config.get_work_dir()):
+        if (self.__save_as_dialog.get_current_folder() != self.__config.get_work_dir()):
             self.__save_as_dialog.set_current_folder(self.__config.get_work_dir())
         self.__save_as_dialog.set_current_name(Glob.OUTPUT_FILE_DEFAULT)
         result = self.__save_as_dialog.run()
@@ -389,7 +397,7 @@ class Gui:
             return False
 
     def __do_save_file(self):
-        if self.__output_file == None:
+        if self.__output_file is None:
             return self.__do_save_as()
         else:
             self.__compile_song(False)
@@ -398,8 +406,12 @@ class Gui:
 
     def __handle_unsaved_changes(self):
         if self.__song.get_data().is_save_needed():
-            self.__save_changes_dialog.set_property("text", "Save changes to " + self.__song.get_data().get_title() + "?")
-            self.__save_changes_dialog.set_property("secondary_text", "Your changes will be lost if you don't save them.")
+            self.__save_changes_dialog.set_property(
+                "text", "Save changes to " + self.__song.get_data().get_title() + "?"
+            )
+            self.__save_changes_dialog.set_property(
+                "secondary_text", "Your changes will be lost if you don't save them."
+            )
             result = self.__save_changes_dialog.run()
             self.__save_changes_dialog.hide()
             if (result == gtk.RESPONSE_YES):
@@ -433,7 +445,7 @@ class Gui:
         # code here comes from http://lescannoniers.blogspot.com/2008/11/pygtk-recent-file-chooser.html
         # add a recent files menu item
         manager = gtk.recent_manager_get_default()
-        # define a RecentChooserMenu object 
+        # define a RecentChooserMenu object
         recent_menu_chooser = gtk.RecentChooserMenu(manager)
         # define a file filter, otherwise all file types will show up
         file_filter = gtk.RecentFilter()
@@ -481,7 +493,7 @@ class Gui:
         Common.connect_signals(glade, self)
 
         self.__main_window = glade.get_widget("mainWindow")
-        self.__spinbutton1 = glade.get_widget("spinbutton1") # bar count 
+        self.__spinbutton1 = glade.get_widget("spinbutton1")  # bar count
         self.__notebook2 = glade.get_widget("notebook2")
         self.__notebook3 = glade.get_widget("notebook3")
 
@@ -545,4 +557,3 @@ class Gui:
 
         self.__do_new_file()
         gtk.main()
-

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -17,6 +19,7 @@
 
 import gobject
 import gtk
+
 from linuxband.glob import Glob
 from linuxband.gui.common import Common
 from linuxband.gui.events.groove import EventGroove
@@ -39,7 +42,7 @@ class EventsBar(object):
         self.__toggle_window_close_recursive = False
         # original label on toggle button just before opening the window
         self.__toggled_button_label = None
-        # event which is being edited in the toggleWindow    
+        # event which is being edited in the toggleWindow
         self.__curr_event = None
         self.__grooves = grooves
         self.__gui = gui
@@ -82,9 +85,9 @@ class EventsBar(object):
         self.__remove_from_triples(self.__toggled_triple[0])
         # remove button and close the window
         self.__hbox8.remove(self.__toggled_triple[0])
-        self.__toggle_window_close() # deletes the self.__toggled_triple
+        self.__toggle_window_close()  # deletes the self.__toggled_triple
         self.__refresh_globals()
-        self.__gui.refresh_current_field() # repetition
+        self.__gui.refresh_current_field()  # repetition
 
     def add_event_clicked_callback(self, button):
         """ Add event button pressed. """
@@ -102,7 +105,8 @@ class EventsBar(object):
                 # some other button is toggled
                 self.__toggle_window_close()
             for triple in self.__triples:
-                if triple[0] is button: break
+                if triple[0] is button:
+                    break
             self.__toggled_button_label = button.get_label()
             if button is self.__togglebutton1:
                 self.__curr_event = self.__song.get_data().get_bar_info(0).get_groove()
@@ -136,12 +140,14 @@ class EventsBar(object):
         else:
             self.__toggle_window_close(False)
             if button in [self.__togglebutton1, self.__togglebutton2]:
-                if not self.__curr_event: self.__song.get_data().get_bar_info(0).add_event(newEvent)
-                else: self.__song.get_data().get_bar_info(0).replace_event(self.__curr_event, newEvent)
+                if not self.__curr_event:
+                    self.__song.get_data().get_bar_info(0).add_event(newEvent)
+                else:
+                    self.__song.get_data().get_bar_info(0).replace_event(self.__curr_event, newEvent)
             else:
                 barNum = self.__gui.get_current_bar_number()
                 self.__song.get_data().get_bar_info(barNum).replace_event(self.__curr_event, newEvent)
-            self.refresh_all() # global groove or global tempo could have been changed
+            self.refresh_all()  # global groove or global tempo could have been changed
 
     def main_window_configure_event_callback(self, widget, event):
         """ Everytime the main window is moved or resised, move the toggle window with it. """
@@ -192,14 +198,16 @@ class EventsBar(object):
         # global buttons
         self.__eventGroove = EventGroove(glade, self.__grooves)
         self.__eventTempo = EventTempo(glade)
-        self.__triples.append([ self.__togglebutton1, groove_window, self.__eventGroove, None ])
-        self.__triples.append([ self.__togglebutton2, tempo_window, self.__eventTempo, None ])
+        self.__triples.append([self.__togglebutton1, groove_window, self.__eventGroove, None])
+        self.__triples.append([self.__togglebutton2, tempo_window, self.__eventTempo, None])
         # add event menu
-        event_items = { Glob.A_GROOVE: "Groove change",
-                      Glob.A_TEMPO: "Tempo change",
-                      Glob.A_REPEAT: "Repeat",
-                      Glob.A_REPEAT_ENDING: "RepeatEnding",
-                      Glob.A_REPEAT_END: "RepeatEnd" }
+        event_items = {
+            Glob.A_GROOVE:        "Groove change",
+            Glob.A_TEMPO:         "Tempo change",
+            Glob.A_REPEAT:        "Repeat",
+            Glob.A_REPEAT_ENDING: "RepeatEnding",
+            Glob.A_REPEAT_END:    "RepeatEnd"
+        }
         self.__addEventMenu = gtk.Menu()
         menu = self.__addEventMenu
         for key in Glob.EVENTS:
@@ -208,21 +216,26 @@ class EventsBar(object):
             menu.append(item)
         menu.show_all()
         # for dynamic event creation
-        self.__event_windows = { Glob.A_GROOVE: groove_window,
-                              Glob.A_TEMPO: tempo_window,
-                              Glob.A_REPEAT: repeat_window,
-                              Glob.A_REPEAT_ENDING: repeat_ending_window,
-                              Glob.A_REPEAT_END: repeat_end_window }
+        self.__event_windows = {
+            Glob.A_GROOVE:        groove_window,
+            Glob.A_TEMPO:         tempo_window,
+            Glob.A_REPEAT:        repeat_window,
+            Glob.A_REPEAT_ENDING: repeat_ending_window,
+            Glob.A_REPEAT_END:    repeat_end_window
+        }
 
-        self.__event_window_handlers = { Glob.A_GROOVE: self.__eventGroove, # reusing already existing object
-                                      Glob.A_TEMPO: self.__eventTempo,
-                                      Glob.A_REPEAT: EventRepeat(glade),
-                                      Glob.A_REPEAT_ENDING: EventRepeatEnding(glade),
-                                      Glob.A_REPEAT_END: EventRepeatEnd(glade) }
+        self.__event_window_handlers = {
+            Glob.A_GROOVE:        self.__eventGroove,
+            Glob.A_TEMPO:         self.__eventTempo,
+            Glob.A_REPEAT:        EventRepeat(glade),
+            Glob.A_REPEAT_ENDING: EventRepeatEnding(glade),
+            Glob.A_REPEAT_END:    EventRepeatEnd(glade)
+        }
 
     def __refresh_events_bar(self):
         """ Refresh events bar """
-        if self.__gui.is_cursor_on_bar_chords(): return
+        if self.__gui.is_cursor_on_bar_chords():
+            return
         barNum = self.__gui.get_current_bar_number()
         box = self.__hbox8
         children = box.get_children()
@@ -249,7 +262,7 @@ class EventsBar(object):
         event = BarInfo.create_event(key)
         self.__song.get_data().get_bar_info(barNum).add_event(event)
         self.refresh_all()
-        self.__gui.refresh_current_field() # repetition
+        self.__gui.refresh_current_field()  # repetition
         # open the new event window
         for triple in self.__triples:
             if triple[3] is event:
@@ -258,24 +271,25 @@ class EventsBar(object):
 
     def __remove_from_triples(self, button):
         for triple in self.__triples:
-            if triple[0] is button: break
+            if triple[0] is button:
+                break
         if triple[0] is button:
             self.__triples.remove(triple)
 
     def __move_window_underneath(self, gtkwindow, widget):
         """ Move window to appear directly under the toggled button """
         rect = widget.get_allocation()
-        rect2 = self.__main_window.get_allocation() # (0, 0, 1100, 700)
+        rect2 = self.__main_window.get_allocation()  # (0, 0, 1100, 700)
 
-        # black magic to get the correct values into rect3 
+        # black magic to get the correct values into rect3
         gtkwindow.realize()
         gtkwindow.window.get_root_origin()
 
         rect3 = gtkwindow.get_allocation()
 
         # this has a side effect that x, y on the following line are set properly
-        x1, y1 = self.__main_window.window.get_root_origin() # decoration window  @UnusedVariable
-        x, y = self.__main_window.window.get_origin() # our window
+        x1, y1 = self.__main_window.window.get_root_origin()  # decoration window  @UnusedVariable
+        x, y = self.__main_window.window.get_origin()  # our window
 
         wx = min(x + rect.x, x + rect2.width - rect3.width)
         wy = y + rect.y + rect.height
@@ -283,22 +297,22 @@ class EventsBar(object):
         gtkwindow.move(wx, wy)
 
     def __get_widget_xy_position(self, widget, gtkwindow):
-        #""" Move window to appear directly under the toggle button """
+        # Move window to appear directly under the toggle button
         rect = widget.get_allocation()
-        rect2 = self.__main_window.get_allocation() # (0, 0, 1100, 700)
+        rect2 = self.__main_window.get_allocation()  # (0, 0, 1100, 700)
 
-        # black magic to get the correct values into rect3 
+        # black magic to get the correct values into rect3
         gtkwindow.realize()
         gtkwindow.window.get_root_origin()
 
         rect3 = gtkwindow.get_allocation()
 
         # this has a side effect that x, y on the following line are set properly
-        x1, y1 = self.__main_window.window.get_root_origin() # decoration window  @UnusedVariable
-        x, y = self.__main_window.window.get_origin() # our window
+        x1, y1 = self.__main_window.window.get_root_origin()  # decoration window  @UnusedVariable
+        x, y = self.__main_window.window.get_origin()  # our window
 
         wx = min(x + rect.x, x + rect2.width - rect3.width)
-        wy = y + rect.y #+ rect.height
+        wy = y + rect.y
 
         return (wx, wy)
 
@@ -315,9 +329,11 @@ class EventsBar(object):
 
     def __toggle_window_close(self, restoreLabel=True):
         """ Close toggle window """
-        if self.__toggle_window_close_recursive: return
+        if self.__toggle_window_close_recursive:
+            return
         if self.__toggled_triple:
-            if restoreLabel: self.__toggled_triple[0].set_label(self.__toggled_button_label)
+            if restoreLabel:
+                self.__toggled_triple[0].set_label(self.__toggled_button_label)
             self.__toggled_triple[1].hide()
             # this will invoke on_togglebutton_clicked and then this method recursive again!
             self.__toggle_window_close_recursive = True

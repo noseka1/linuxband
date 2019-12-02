@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -17,6 +19,7 @@
 
 import copy
 import logging
+
 from linuxband.glob import Glob
 
 
@@ -44,12 +47,12 @@ class BarInfo:
     def get_events(self):
         return self.__events
 
-    # methods used by ChordSheet    
+    # methods used by ChordSheet
     def has_events(self):
         return True if len(self.__events) > 0 else False
 
     def has_repeat_begin(self):
-        return self.__lookup_action(Glob.A_REPEAT) != None
+        return self.__lookup_action(Glob.A_REPEAT) is not None
 
     def has_repeat_end(self):
         return self.__lookup_action(Glob.A_REPEAT_ENDING) or self.__lookup_action(Glob.A_REPEAT_END)
@@ -68,7 +71,7 @@ class BarInfo:
         return self.__lines
 
     def add_event(self, line):
-        if line[0] in [ Glob.A_REPEAT_END, Glob.A_REPEAT_ENDING ]:
+        if line[0] in [Glob.A_REPEAT_END, Glob.A_REPEAT_ENDING]:
             self.insert_line(line)
         else:
             self.add_line(line)
@@ -137,11 +140,13 @@ class BarInfo:
 
     @staticmethod
     def create_event(eventTitle):
-        eventsInit = { Glob.A_GROOVE:       [ Glob.A_GROOVE, "Groove", " ", "50sRock", "\n" ],
-                       Glob.A_TEMPO:        [ Glob.A_TEMPO, "Tempo", " ", "120", "\n" ],
-                       Glob.A_REPEAT:       [ Glob.A_REPEAT, "Repeat", "\n" ],
-                       Glob.A_REPEAT_ENDING: [ Glob.A_REPEAT_ENDING, "RepeatEnding", "\n" ],
-                       Glob.A_REPEAT_END:    [ Glob.A_REPEAT_END, "RepeatEnd", "\n" ] }
+        eventsInit = {
+            Glob.A_GROOVE: [Glob.A_GROOVE, "Groove", " ", "50sRock", "\n"],
+            Glob.A_TEMPO:  [Glob.A_TEMPO, "Tempo", " ", "120", "\n"],
+            Glob.A_REPEAT: [Glob.A_REPEAT, "Repeat", "\n"],
+            Glob.A_REPEAT_ENDING: [Glob.A_REPEAT_ENDING, "RepeatEnding", "\n"],
+            Glob.A_REPEAT_END:    [Glob.A_REPEAT_END, "RepeatEnd", "\n"]
+        }
         return copy.deepcopy(eventsInit[eventTitle])
 
     @staticmethod
@@ -163,13 +168,13 @@ class BarInfo:
     @staticmethod
     def set_repeat_end_value(line, count):
         # example line: ['REPEATEND', 'RepeatEnd', ' ', '2', '\n']
-        if len(line) > 3: # there is already some number
+        if len(line) > 3:  # there is already some number
             if count == 2:
                 line.pop(2)
                 line.pop(2)
             else:
                 line[3] = count
-        else: # no number yet, example: ['REPEATEND', 'RepeatEnd', '\n']
+        else:  # no number yet, example: ['REPEATEND', 'RepeatEnd', '\n']
             if count != 2:
                 line.insert(2, count)
                 line.insert(2, ' ')

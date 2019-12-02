@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,8 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from linuxband.gui.common import Common
 import gtk
+
+from linuxband.gui.common import Common
+
 
 class Preferences(object):
 
@@ -27,7 +31,7 @@ class Preferences(object):
         self.__init_gui(glade)
 
     def run(self):
-        self.__initWidgets();
+        self.__initWidgets()
         result = self.__preferencesdialog.run()
         self.__preferencesdialog.hide()
         if (result == gtk.RESPONSE_OK):

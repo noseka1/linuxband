@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -16,9 +18,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
+
 from linuxband.glob import Glob
-from linuxband.mma.bar_info import BarInfo
 from linuxband.gui.common import Common
+from linuxband.mma.bar_info import BarInfo
 
 
 class EventRepeatEnd(object):
@@ -31,7 +34,8 @@ class EventRepeatEnd(object):
     def on_comboboxentry1_changed_callback(self, widget):
         """ RepeatEnd value changed. """
         # called also when initializing the entries list
-        if not self.__toggled_button: return
+        if not self.__toggled_button:
+            return
         try:
             i = int(widget.child.get_text())
         except ValueError:
@@ -45,8 +49,10 @@ class EventRepeatEnd(object):
     def set_label_from_event(self, button, event):
         """ Sets the label of RepeatEnd button when the count has changed. """
         count = BarInfo.get_repeat_end_value(event)
-        if count == "2": label = "RepeatEnd"
-        else: label = "RepeatEnd " + count
+        if count == "2":
+            label = "RepeatEnd"
+        else:
+            label = "RepeatEnd " + count
         button.set_label(label)
 
     def get_new_event(self):

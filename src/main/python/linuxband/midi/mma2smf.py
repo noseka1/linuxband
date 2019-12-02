@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -15,12 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import os
 import select
-import subprocess
 import string
+import subprocess
+
 from linuxband.glob import Glob
-import logging
 
 
 class MidiGenerator(object):
@@ -33,17 +36,17 @@ class MidiGenerator(object):
         < -1 other error, = -1 MMA error unknown line, 0 is OK, > 0 MMA error line
         """
         mmainput = '/proc/self/fd/0'
-        command = [ self.__config.get_mma_path(), mmainput, '-n' ] # -n No generation of midi output
+        command = [self.__config.get_mma_path(), mmainput, '-n']  # -n No generation of midi output
         try:
             mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        except:
+        except subprocess.CalledProcessError:
             logging.exception("Failed to run command '" + ' '.join(command) + "'")
             return -2
         try:
             fout = mma.stdin
             fout.write(mma_data)
             fout.close()
-        except:
+        except IOError:
             logging.exception("Failed to send data to MMA")
             return -2
         exit_status = mma.wait()
@@ -65,11 +68,11 @@ class MidiGenerator(object):
         finally:
             try:
                 os.close(piper)
-            except:
+            except IOError:
                 pass
             try:
                 os.close(pipew)
-            except:
+            except IOError:
                 pass
         return res_and_midi
 
@@ -79,17 +82,17 @@ class MidiGenerator(object):
         """
         mmainput = '/proc/self/fd/0'
         mmaoutput = '/proc/' + str(Glob.PID) + '/fd/' + str(pipew)
-        command = [ self.__config.get_mma_path(), mmainput, '-f' , mmaoutput ]
+        command = [self.__config.get_mma_path(), mmainput, '-f', mmaoutput]
         try:
             mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        except:
+        except subprocess.CalledProcessError:
             logging.exception("Failed to run command '" + ' '.join(command) + "'")
             return (-2, '')
         try:
             fout = mma.stdin
             fout.write(mma_data)
             fout.close()
-        except:
+        except IOError:
             logging.exception("Failed to send data to MMA")
             return (-2, '')
         try:
@@ -100,9 +103,9 @@ class MidiGenerator(object):
                 outstr = mma.stdout.readlines()
                 logging.error(' '.join(outstr))
                 return (-1, '')
-            os.close(pipew) # close our write pipe end, now only MMA has it opened
+            os.close(pipew)  # close our write pipe end, now only MMA has it opened
             midi_data = fin.read()
-        except:
+        except IOError:
             logging.exception("Failed to read midi data from MMA")
         exit_status = mma.wait()
         if (exit_status != 0):
@@ -111,19 +114,23 @@ class MidiGenerator(object):
         return (0, midi_data)
 
     def __parse_error_line_number(self, lines):
-        """ 
+        """
         Parse out the error line number. Error line example: ERROR:<Line 23><File:/proc/self/fd/0>
         """
-        for i, line in enumerate(lines): #@UnusedVariable
+        for i, line in enumerate(lines):
             res = string.find(line, "ERROR")
-            if res != -1: break
-        if res == -1: return -1
+            if res != -1:
+                break
+        if res == -1:
+            return -1
         start = string.find(line, "<")
         end = string.find(line, ">")
-        if start == -1 or end == -1: return -1
+        if start == -1 or end == -1:
+            return -1
         lmidd = line[start + 1: end]
         midds = lmidd.split()
-        if len(midds) != 2: return -1
+        if len(midds) != 2:
+            return -1
         try:
             return int(midds[1])
         except TypeError:
