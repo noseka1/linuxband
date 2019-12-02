@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -153,7 +155,7 @@ def parse(inpath):
             while True:
                 wline.extend(get_wrapped_line(inpath, curline))
                 if not parse_seq: break
-                """ Count the number of { and } and if they don't match read more lines and 
+                """ Count the number of { and } and if they don't match read more lines and
                     append. If we get to the EOF then we're screwed and we error out. """
                 wline2 = ''.join(wline)
                 if wline2.count('{') == wline2.count('}'): break
@@ -197,8 +199,8 @@ def parse(inpath):
 
         """ We now have a valid line. It'll look something like:
 
-            'Cm', '/', 'z', 'F#@4.5' { lyrics } [ solo ] * 2 
-            
+            'Cm', '/', 'z', 'F#@4.5' { lyrics } [ solo ] * 2
+
 
             Special processing in needed for 'z' options in chords. A 'z' can
             be of the form 'CHORDzX', 'z!' or just 'z'.
@@ -226,7 +228,7 @@ def parse(inpath):
                         NOTE: lyric.extract() inserts previously created
                         data from LYRICS SET and inserts the chord names
                         if that flag is active.
-        
+
                     """
                     lyrics_count += 1
                 elif ch == '}':
@@ -296,7 +298,7 @@ def parse(inpath):
 def get_wrapped_line(inpath, curline):
     """
     Reads the whole wrapped line ('\' at the end) and stores it in a list.
-    
+
     The lines in the list are not modified and are the same as in the file
     """
     result = []
@@ -315,7 +317,7 @@ def get_wrapped_line_join(inpath, curline):
     """
     Reads the wrapped line and joins it into one.
 
-    Returns array of two strings: 
+    Returns array of two strings:
         1) the line content which will be further parsed
         2) comment with '\n' at the end
     If you join those strings you get exactly what was stored in the file
@@ -424,11 +426,11 @@ def parse_supported_block_action(block_action, begin_block):
 def tokenize_line(line, limit):
     """
     Split the line into tokens and characters in between.
-    
+
     Example:
     ['Time', ' ', '4', '\n']
     ['Timesig', ' ', '4', ' ', '4', '\n']
-    ['DefGroove', ' ', 'ModernJazz', '    ModernJazz with just a piano and guitar.\n'] 
+    ['DefGroove', ' ', 'ModernJazz', '    ModernJazz with just a piano and guitar.\n']
     """
     chars_between = '\t\n\\ '
     tokenized_line = []

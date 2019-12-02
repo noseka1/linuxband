@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -111,7 +113,7 @@ class MidiGenerator(object):
         return (0, midi_data)
 
     def __parse_error_line_number(self, lines):
-        """ 
+        """
         Parse out the error line number. Error line example: ERROR:<Line 23><File:/proc/self/fd/0>
         """
         for i, line in enumerate(lines): #@UnusedVariable

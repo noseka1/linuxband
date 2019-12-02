@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -32,7 +34,7 @@ class SongData(object):
         self.__bar_info = bar_info
         self.__bar_chords = bar_chords
         self.__bar_count = bar_count
-        self.__beats_per_bar = 4 # TODO Beats/bar, set with TIME        
+        self.__beats_per_bar = 4 # TODO Beats/bar, set with TIME
         self.__save_needed = False
         for bar_info in self.__bar_info:
             bar_info.set_song_data(self)
@@ -143,7 +145,7 @@ class SongData(object):
     def write_to_string_with_midi_marks(self):
         """
         Write the mma file which will be compiled by mma and played in midi player.
-        
+
         We use macros to wrap chords. It allows the tracking of which bar is played.
         """
         mma_array = []

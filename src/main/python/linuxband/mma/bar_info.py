@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -44,7 +46,7 @@ class BarInfo:
     def get_events(self):
         return self.__events
 
-    # methods used by ChordSheet    
+    # methods used by ChordSheet
     def has_events(self):
         return True if len(self.__events) > 0 else False
 

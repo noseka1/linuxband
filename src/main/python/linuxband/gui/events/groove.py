@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -81,7 +83,7 @@ class EventGroove(object):
         groove_window = glade.get_widget("grooveWindow")
         textview2 = glade.get_widget("textview2")
         self.__textbuffer2 = textview2.get_buffer()
-        # text colors      
+        # text colors
         colormap = groove_window.get_colormap()
         color = colormap.alloc_color('red')
         self.__textbuffer2.create_tag('fg_red', foreground_gdk=color)

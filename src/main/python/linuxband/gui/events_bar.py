@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -39,7 +41,7 @@ class EventsBar(object):
         self.__toggle_window_close_recursive = False
         # original label on toggle button just before opening the window
         self.__toggled_button_label = None
-        # event which is being edited in the toggleWindow    
+        # event which is being edited in the toggleWindow
         self.__curr_event = None
         self.__grooves = grooves
         self.__gui = gui
@@ -267,7 +269,7 @@ class EventsBar(object):
         rect = widget.get_allocation()
         rect2 = self.__main_window.get_allocation() # (0, 0, 1100, 700)
 
-        # black magic to get the correct values into rect3 
+        # black magic to get the correct values into rect3
         gtkwindow.realize()
         gtkwindow.window.get_root_origin()
 
@@ -287,7 +289,7 @@ class EventsBar(object):
         rect = widget.get_allocation()
         rect2 = self.__main_window.get_allocation() # (0, 0, 1100, 700)
 
-        # black magic to get the correct values into rect3 
+        # black magic to get the correct values into rect3
         gtkwindow.realize()
         gtkwindow.window.get_root_origin()
 

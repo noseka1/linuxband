@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -71,7 +73,7 @@ class Song(object):
         if res == 0: self.__do_write_to_file(file_name, midi)
 
     def write_to_string(self):
-        """ 
+        """
         If the mma was parsed correctly return it. Otherwise give the invalid mma data back.
         """
         if self.__invalid_mma_data == None:
@@ -80,9 +82,9 @@ class Song(object):
             return self.__invalid_mma_data
 
     def get_playback_midi_data(self):
-        """ 
+        """
         Get midi file which will be sent to the client.
-        
+
         Than create mma file with markers for tracking and generate the resulting midi from it.
         """
         mma_data_marks = self.__song_data.write_to_string_with_midi_marks()
@@ -91,10 +93,10 @@ class Song(object):
     def __clear_song(self):
         """
         Called when parsing of mma data failed.
-        
+
         E.g. during opening the new file or parsing data from the source editor.
         The song must have minimum one BarInfo on which the cursor is located.
-        
+
         bar_count = number of bar_chords in the song, number of bar_info is bar_count + 1
         """
         self.__song_data = SongData([ BarInfo() ], [], 0)

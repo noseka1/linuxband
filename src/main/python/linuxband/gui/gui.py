@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -186,7 +188,7 @@ class Gui:
     def change_song_bar_count(self, bar_count):
         """
         Set the count of song bars to bar_count.
-        
+
         Redraw affected fields
         Move cursor if it is necessary
         """
@@ -433,7 +435,7 @@ class Gui:
         # code here comes from http://lescannoniers.blogspot.com/2008/11/pygtk-recent-file-chooser.html
         # add a recent files menu item
         manager = gtk.recent_manager_get_default()
-        # define a RecentChooserMenu object 
+        # define a RecentChooserMenu object
         recent_menu_chooser = gtk.RecentChooserMenu(manager)
         # define a file filter, otherwise all file types will show up
         file_filter = gtk.RecentFilter()
@@ -481,7 +483,7 @@ class Gui:
         Common.connect_signals(glade, self)
 
         self.__main_window = glade.get_widget("mainWindow")
-        self.__spinbutton1 = glade.get_widget("spinbutton1") # bar count 
+        self.__spinbutton1 = glade.get_widget("spinbutton1") # bar count
         self.__notebook2 = glade.get_widget("notebook2")
         self.__notebook3 = glade.get_widget("notebook3")
 

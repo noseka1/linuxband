@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -152,7 +154,7 @@ class ChordEntries(object):
     def __get_chord_names(self):
         """
         Generate a list with all possible chords.
-        
+
         It is used for entry completion
         """
         base = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]

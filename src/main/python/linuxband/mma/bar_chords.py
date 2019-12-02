@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -63,9 +65,9 @@ class BarChords:
         return self.__eol
 
     def set_chord(self, beat_num, chord):
-        """ 
+        """
         Save one chord on given beat.
-        
+
         If chord == '' then actually delete the chord.
         """
         # [['Dm', ' '], ['/', ' '], ['AmzC@3.2', ' '], ['z!', '\n']]

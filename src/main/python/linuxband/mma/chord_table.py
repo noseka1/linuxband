@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -102,7 +104,7 @@ chordlist = {
     'm+7#9':  ((C, Eb, Gs, Bb, Ds+12),
                (C, Ds, Eb, F, Gs, Ab, Bb),
                "Augmented minor 7 plus sharp 9th."),
-    
+
     'mM7(add9)': ((C, Eb, G, B, D+12),
                  (C, D, Eb, F, G, Ab, B),
                  "Minor Triad plus Major 7th and 9th."),
@@ -130,7 +132,7 @@ chordlist = {
     'dim7': ((C,    Eb,       Gb,       Bbb ),
              (C, D, Eb, F, Gb, Ab, Bbb ),    # missing 8th note
              "Diminished seventh."),
-    
+
     'dim7(addM7)': ((C, Eb, Gb, A, B),
              (C, D, Eb, F, Gb, A, B),
              "Diminished tirad with added Major 7th."),
@@ -164,7 +166,7 @@ chordlist = {
              (C, D, E, F, G, A, Bb),
              "7th plus 9th."),
 
- 
+
 
     '9b5':    ((C,    E,    Gb,    Bb, D+12 ),
              (C, D, E, F, Gb, A, Bb),
@@ -218,7 +220,7 @@ chordlist = {
              (C, Ds, E, F, Gs, A, Bb),
              "7th with sharp 5th and sharp 9th."),
 
- 
+
     'aug7': ((C,    E,    Gs,    Bb ),
              (C, D, E, F, Gs, A, Bb),
              "An augmented chord (raised 5th) with a dominant 7th."),
@@ -351,7 +353,7 @@ chordlist = {
     '13#9':    ((C,    E,    G,    Bb, Ds+12,  A+12),
              (C, Ds, E, F, G, A, Bb),
              "7th (including 5th) plus 13th and sharp 9th (11th not voiced)."),
- 
+
     '13b9':  ((C,    E,    G,    Bb, Db+12,  A+12),
              (C, Db, E, F, G, A, Bb),
              "7th (including 5th) plus 13th and flat 9th (11th not voiced)."),

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -68,7 +70,7 @@ class Grooves(object):
                 march_sub_liststore.append(groove)
             elif index == 0 \
                     or not groove[0].upper().startswith(pgroove) \
-                    or groove[0].startswith('Metronome'):   # metronome hack    
+                    or groove[0].startswith('Metronome'):   # metronome hack
                 sub_liststore = gtk.ListStore(str, str, str, str, str, str)
                 grooves_model.append(groove + [ sub_liststore ])
                 pgroove = groove[0].upper()
@@ -80,9 +82,9 @@ class Grooves(object):
         return grooves_model
 
     def __load_grooves(self):
-        """ 
+        """
         Load grooves from /usr/share/mma/lib/stdlib (configurable).
-        
+
         Sort grooves and store them in grooves_list
         Call __create_grooves_model()
         """
@@ -95,7 +97,7 @@ class Grooves(object):
         """
         Load grooves and recurse into subdirectories.
         """
-        for dirname, dirnames, filenames in os.walk(path): #@UnusedVariable            
+        for dirname, dirnames, filenames in os.walk(path): #@UnusedVariable
             for name in filenames:
                 if fnmatch.fnmatch(name, '*.mma'):
                     full_name = os.path.join(dirname, name)
@@ -135,7 +137,7 @@ class Grooves(object):
     def __load_grooves_from_cache(self):
         """
         Load grooves from file or cache.
-        
+
         Call createGroovesModel()
         """
         fname = Grooves.__grooves_cache_file

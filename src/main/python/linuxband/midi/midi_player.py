@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -81,7 +83,7 @@ class MidiPlayer:
             os.close(piper)
             os.close(pipew)
             return
-        # sending data to midi player should not block    
+        # sending data to midi player should not block
         out = self.__player.stdin.fileno()
         flags = fcntl.fcntl(out, fcntl.F_GETFL)
         fcntl.fcntl(out, fcntl.F_SETFL, flags | os.O_NONBLOCK)
@@ -194,7 +196,7 @@ class MidiPlayer:
                 gobject.idle_add(self.__gui.move_playhead_to_bar, bar_num)
                 self.__playing = True
             elif token == MidiPlayer.__EVENT_LINE_NUM:
-                # move the playhead2 to the new position 
+                # move the playhead2 to the new position
                 lineNum = int(self.__read_token(self.__piper))
                 gobject.idle_add(self.__gui.move_playhead_to_line, lineNum - self.__mma_line_offset - 1)
                 self.__playing = True

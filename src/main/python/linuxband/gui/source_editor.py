@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -60,7 +62,7 @@ class SourceEditor(object):
             iter1 = buff.get_iter_at_line(line)
             iter2 = buff.get_iter_at_line(line + 1)
             buff.apply_tag_by_name("error", iter1, iter2)
-            # error marker    
+            # error marker
             it = buff.get_iter_at_line(line)
             buff.create_source_mark(None, self.ERROR_MARKER, it)
         self.__error_mark_pos = line
