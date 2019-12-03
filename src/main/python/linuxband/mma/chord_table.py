@@ -47,7 +47,7 @@ Es = F  = 5
 Fs = Gb = 6
 G       = 7
 Gs = Ab = 8
-A  = Bbb= 9
+A  = Bbb = 9
 As = Bb = 10
 B  = Cb = 11
 
@@ -451,9 +451,9 @@ aliases = (
     )
 
 for a, b, d in aliases:
-    n=chordlist[b][0]
-    s=chordlist[b][1]
+    n = chordlist[b][0]
+    s = chordlist[b][1]
     if not d:
-        d=chordlist[b][2]
+        d = chordlist[b][2]
 
     chordlist[a] = (n, s, d)
