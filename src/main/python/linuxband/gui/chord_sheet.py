@@ -67,7 +67,7 @@ class ChordSheet(object):
 
     def drawing_area_expose_event_callback(self, widget, event):
         """ Redraw the screen from the backing pixmap. """
-        x , y, width, height = event.area
+        x, y, width, height = event.area
         widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
         self.pixmap, x, y, x, y, width, height)
         return True
@@ -351,11 +351,11 @@ class ChordSheet(object):
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
         gc.set_foreground(color)
-        self.pixmap.draw_rectangle(gc, True, bar_x , bar_y, self.__bar_chords_width, ChordSheet.__bar_height)
+        self.pixmap.draw_rectangle(gc, True, bar_x, bar_y, self.__bar_chords_width, ChordSheet.__bar_height)
         if cursor: # black border
             color = self.__colormap.alloc_color("black")
             gc.set_foreground(color)
-            self.pixmap.draw_rectangle(gc, False, bar_x , bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1)
+            self.pixmap.draw_rectangle(gc, False, bar_x, bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1)
 
         if not chords:
             return
@@ -429,7 +429,7 @@ class ChordSheet(object):
         gc = self.drawable.new_gc()
         gc.copy(self.gc)
         gc.set_foreground(color)
-        self.pixmap.draw_rectangle(gc, True, x , y, self.__bar_info_width, ChordSheet.__bar_height)
+        self.pixmap.draw_rectangle(gc, True, x, y, self.__bar_info_width, ChordSheet.__bar_height)
         if cursor: # black border
             color = self.__colormap.alloc_color('black')
             gc.set_foreground(color)

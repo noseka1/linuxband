@@ -81,7 +81,7 @@ class MidiGenerator(object):
         """
         mmainput = '/proc/self/fd/0'
         mmaoutput = '/proc/' + str(Glob.PID) + '/fd/' + str(pipew)
-        command = [self.__config.get_mma_path(), mmainput, '-f' , mmaoutput]
+        command = [self.__config.get_mma_path(), mmainput, '-f', mmaoutput]
         try:
             mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         except:

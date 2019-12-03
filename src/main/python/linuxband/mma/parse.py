@@ -174,7 +174,7 @@ def parse(inpath):
         if wline[0].replace('\\\n', '').strip() == '':
             # line is a comment or empty wrapped line
             act = Glob.A_REMARK if wline[1].strip() else Glob.A_UNKNOWN
-            bar_info.add_line([act , wline[0], wline[1]])
+            bar_info.add_line([act, wline[0], wline[1]])
             continue
 
         l, eol = wline
