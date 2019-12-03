@@ -54,7 +54,7 @@ def parse(inpath):
 
         # EOF
         if not curline:
-            song_bar_info.append(bar_info) # song_bar_info has always one element more then song_bar_chords
+            song_bar_info.append(bar_info)  # song_bar_info has always one element more then song_bar_chords
             song_bar_count = bar_number
             return SongData(song_bar_info, song_bar_chords, song_bar_count)
 
@@ -144,7 +144,7 @@ def parse(inpath):
 
         # track function BASS/DRUM/APEGGIO/CHORD ...
         if '-' in action:
-            trk_class, ext = action.split('-', 1) #@UnusedVariable
+            trk_class, ext = action.split('-', 1)  #@UnusedVariable
         else:
             trk_class = action
 
@@ -178,7 +178,7 @@ def parse(inpath):
             continue
 
         l, eol = wline
-        ### Gotta be a chord data line!
+        # Gotta be a chord data line!
 
         """ A data line can have an optional bar number at the start
             of the line. Makes debugging input easier. The next
@@ -194,8 +194,8 @@ def parse(inpath):
             l = l2
             numstr = l.split()[0]
             bar_chords.set_number(int(numstr))
-            l = l[len(numstr):] # remove number
-            if len(l.strip()) == 0: # ignore empty lines
+            l = l[len(numstr):]  # remove number
+            if len(l.strip()) == 0:  # ignore empty lines
                 bar_info.add_line([Glob.A_UNKNOWN, wline[0] + wline[1]])
                 continue
 
@@ -246,13 +246,13 @@ def parse(inpath):
                         be at the end of bar in the form '* xx'.
                     """
                     pass
-                elif ch in '\t\n\\ 0123456789': # white spaces, \ and repeat count
+                elif ch in '\t\n\\ 0123456789':  # white spaces, \ and repeat count
                     pass
-                elif solo_count == 0 and lyrics_count == 0: # found beginning of the chord
+                elif solo_count == 0 and lyrics_count == 0:  # found beginning of the chord
                     break
                 chars += ch
                 i += 1
-            if i == len(l): # no more chord is coming
+            if i == len(l):  # no more chord is coming
                 if solo_count != 0:
                     raise ValueError(mismatched_solo)
                 if lyrics_count != 0:
@@ -263,7 +263,7 @@ def parse(inpath):
                     last_chord.append(chars)
                     ctable.append(last_chord)
                 break
-            else: # chord beginning
+            else:  # chord beginning
                 if after_number is None:
                     after_number = chars
                 else:
@@ -406,21 +406,21 @@ def parse_if_block(inpath, curline):
 
 def parse_supported_action(action, wline):
     line = []
-    if action == Glob.A_AUTHOR: # ['Author', ' Bob van der Poel\n']
+    if action == Glob.A_AUTHOR:  # ['Author', ' Bob van der Poel\n']
         line = tokenize_line(wline[0], 1)
-    elif action == Glob.A_DEF_GROOVE: # ['DefGroove', ' ', 'ModernJazz', '   ModernJazz with just a piano and guitar.\n']
+    elif action == Glob.A_DEF_GROOVE:  # ['DefGroove', ' ', 'ModernJazz', '   ModernJazz with just a piano and guitar.\n']
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_GROOVE: # ['Groove', ' ', 'Tango', ' LightTango LightTangoSus LightTango\n']
+    elif action == Glob.A_GROOVE:  # ['Groove', ' ', 'Tango', ' LightTango LightTangoSus LightTango\n']
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_REPEAT: # nothing to parse
+    elif action == Glob.A_REPEAT:  # nothing to parse
         line = [wline[0]]
-    elif action == Glob.A_REPEAT_END: # ['RepeatEnd', ' ', '2', '\n'] or ['RepeatEnd', '\n' ]
+    elif action == Glob.A_REPEAT_END:  # ['RepeatEnd', ' ', '2', '\n'] or ['RepeatEnd', '\n' ]
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_REPEAT_ENDING: #
+    elif action == Glob.A_REPEAT_ENDING:
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_TEMPO: # ['Tempo', ' ', '120', '\n']
+    elif action == Glob.A_TEMPO:  # ['Tempo', ' ', '120', '\n']
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_TIME: # ['Time', ' ', '4'. '\n' ]
+    elif action == Glob.A_TIME:  # ['Time', ' ', '4'. '\n' ]
         line = tokenize_line(wline[0], 2)
     line.append(wline[1])
     return line

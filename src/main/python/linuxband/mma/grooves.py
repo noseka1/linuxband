@@ -53,7 +53,7 @@ class Grooves(object):
             return 1
         elif a == b:
             return 0
-        else: # x<y
+        else:  # x<y
             return -1
 
     def __create_grooves_model(self, grooves_list):
@@ -97,7 +97,7 @@ class Grooves(object):
         """
         Load grooves and recurse into subdirectories.
         """
-        for dirname, dirnames, filenames in os.walk(path): #@UnusedVariable
+        for dirname, dirnames, filenames in os.walk(path):  #@UnusedVariable
             for name in filenames:
                 if fnmatch.fnmatch(name, '*.mma'):
                     full_name = os.path.join(dirname, name)

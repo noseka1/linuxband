@@ -28,7 +28,7 @@ class Glob:
     A_DEF_GROOVE = "DEFGROOVE"
     A_DOC = "DOC"
     A_GROOVE = "GROOVE"
-    A_REMARK = "REMARK" # comment line with song title
+    A_REMARK = "REMARK"  # comment line with song title
     A_REPEAT = "REPEAT"
     A_REPEAT_END = "REPEATEND"
     A_REPEAT_ENDING = "REPEATENDING"

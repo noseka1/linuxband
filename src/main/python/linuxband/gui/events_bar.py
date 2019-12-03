@@ -84,9 +84,9 @@ class EventsBar(object):
         self.__remove_from_triples(self.__toggled_triple[0])
         # remove button and close the window
         self.__hbox8.remove(self.__toggled_triple[0])
-        self.__toggle_window_close() # deletes the self.__toggled_triple
+        self.__toggle_window_close()  # deletes the self.__toggled_triple
         self.__refresh_globals()
-        self.__gui.refresh_current_field() # repetition
+        self.__gui.refresh_current_field()  # repetition
 
     def add_event_clicked_callback(self, button):
         """ Add event button pressed. """
@@ -146,7 +146,7 @@ class EventsBar(object):
             else:
                 barNum = self.__gui.get_current_bar_number()
                 self.__song.get_data().get_bar_info(barNum).replace_event(self.__curr_event, newEvent)
-            self.refresh_all() # global groove or global tempo could have been changed
+            self.refresh_all()  # global groove or global tempo could have been changed
 
     def main_window_configure_event_callback(self, widget, event):
         """ Everytime the main window is moved or resised, move the toggle window with it. """
@@ -219,7 +219,7 @@ class EventsBar(object):
                               Glob.A_REPEAT_ENDING: repeat_ending_window,
                               Glob.A_REPEAT_END: repeat_end_window}
 
-        self.__event_window_handlers = {Glob.A_GROOVE: self.__eventGroove, # reusing already existing object
+        self.__event_window_handlers = {Glob.A_GROOVE: self.__eventGroove,  # reusing already existing object
                                       Glob.A_TEMPO: self.__eventTempo,
                                       Glob.A_REPEAT: EventRepeat(glade),
                                       Glob.A_REPEAT_ENDING: EventRepeatEnding(glade),
@@ -255,7 +255,7 @@ class EventsBar(object):
         event = BarInfo.create_event(key)
         self.__song.get_data().get_bar_info(barNum).add_event(event)
         self.refresh_all()
-        self.__gui.refresh_current_field() # repetition
+        self.__gui.refresh_current_field()  # repetition
         # open the new event window
         for triple in self.__triples:
             if triple[3] is event:
@@ -272,7 +272,7 @@ class EventsBar(object):
     def __move_window_underneath(self, gtkwindow, widget):
         """ Move window to appear directly under the toggled button """
         rect = widget.get_allocation()
-        rect2 = self.__main_window.get_allocation() # (0, 0, 1100, 700)
+        rect2 = self.__main_window.get_allocation()  # (0, 0, 1100, 700)
 
         # black magic to get the correct values into rect3
         gtkwindow.realize()
@@ -281,8 +281,8 @@ class EventsBar(object):
         rect3 = gtkwindow.get_allocation()
 
         # this has a side effect that x, y on the following line are set properly
-        x1, y1 = self.__main_window.window.get_root_origin() # decoration window  @UnusedVariable
-        x, y = self.__main_window.window.get_origin() # our window
+        x1, y1 = self.__main_window.window.get_root_origin()  # decoration window  @UnusedVariable
+        x, y = self.__main_window.window.get_origin()  # our window
 
         wx = min(x + rect.x, x + rect2.width - rect3.width)
         wy = y + rect.y + rect.height
@@ -290,9 +290,9 @@ class EventsBar(object):
         gtkwindow.move(wx, wy)
 
     def __get_widget_xy_position(self, widget, gtkwindow):
-        #""" Move window to appear directly under the toggle button """
+        # Move window to appear directly under the toggle button
         rect = widget.get_allocation()
-        rect2 = self.__main_window.get_allocation() # (0, 0, 1100, 700)
+        rect2 = self.__main_window.get_allocation()  # (0, 0, 1100, 700)
 
         # black magic to get the correct values into rect3
         gtkwindow.realize()
@@ -301,11 +301,11 @@ class EventsBar(object):
         rect3 = gtkwindow.get_allocation()
 
         # this has a side effect that x, y on the following line are set properly
-        x1, y1 = self.__main_window.window.get_root_origin() # decoration window  @UnusedVariable
-        x, y = self.__main_window.window.get_origin() # our window
+        x1, y1 = self.__main_window.window.get_root_origin()  # decoration window  @UnusedVariable
+        x, y = self.__main_window.window.get_origin()  # our window
 
         wx = min(x + rect.x, x + rect2.width - rect3.width)
-        wy = y + rect.y #+ rect.height
+        wy = y + rect.y  #+ rect.height
 
         return (wx, wy)
 

@@ -165,13 +165,13 @@ class BarInfo:
     @staticmethod
     def set_repeat_end_value(line, count):
         # example line: ['REPEATEND', 'RepeatEnd', ' ', '2', '\n']
-        if len(line) > 3: # there is already some number
+        if len(line) > 3:  # there is already some number
             if count == 2:
                 line.pop(2)
                 line.pop(2)
             else:
                 line[3] = count
-        else: # no number yet, example: ['REPEATEND', 'RepeatEnd', '\n']
+        else:  # no number yet, example: ['REPEATEND', 'RepeatEnd', '\n']
             if count != 2:
                 line.insert(2, count)
                 line.insert(2, ' ')

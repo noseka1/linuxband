@@ -38,7 +38,7 @@ class EventGroove(object):
 
     def on_treeview1_cursor_changed_callback(self, treeview):
         """ User clicked on the groove in the first column. """
-        path, column = treeview.get_cursor() #@UnusedVariable
+        path, column = treeview.get_cursor()  #@UnusedVariable
         gr = self.__groovesModel[path[0]]
         self.__treeview2.set_model(gr[6])
         self.__update_groove_info(gr)
@@ -46,9 +46,9 @@ class EventGroove(object):
 
     def on_treeview2_cursor_changed_callback(self, treeview):
         """ User clicked on the variation of groove. """
-        path, column = self.__treeview1.get_cursor() #@UnusedVariable
+        path, column = self.__treeview1.get_cursor()  #@UnusedVariable
         model = self.__groovesModel[path[0]][6]
-        path, column = self.__treeview2.get_cursor() #@UnusedVariable
+        path, column = self.__treeview2.get_cursor()  #@UnusedVariable
         gr = model[path[0]]
         self.__update_groove_info(gr)
         self.__update_groove_event(gr[0])
@@ -118,7 +118,7 @@ class EventGroove(object):
         """ Update description, author ... of the currently selected groove. """
         tb = self.__textbuffer2
         tb.set_text('')
-        start, end = tb.get_bounds() #@UnusedVariable
+        start, end = tb.get_bounds()  #@UnusedVariable
         tb.insert_with_tags_by_name(end, gr[0] + '\n', 'fg_brown', 'bold')
         tb.insert(end, gr[1] + '\n\n')
         tb.insert_with_tags_by_name(end, gr[2] + '\n\n', 'bold')

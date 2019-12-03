@@ -159,7 +159,7 @@ class ChordSheet(object):
             self.__destroy_selection()
             old_pos = self.__cursor_pos
             new_pos = old_pos + length - 1
-            self.__move_cursor_to(new_pos) # if needed new fields will be appended
+            self.__move_cursor_to(new_pos)  # if needed new fields will be appended
             bar_num = old_pos / 2
             for field in clipboard:
                 if isinstance(field, BarChords):
@@ -167,9 +167,9 @@ class ChordSheet(object):
                     bar_num = bar_num + 1
                 else:
                     self.__song.get_data().set_bar_info(bar_num, field)
-            self.__adjust_selection(old_pos) # refreshes affected fields
+            self.__adjust_selection(old_pos)  # refreshes affected fields
             if old_pos > 0:
-                self.__render_field(old_pos - 1) # refresh barNumber
+                self.__render_field(old_pos - 1)  # refresh barNumber
 
     def delete_selection(self):
         """ Delete selected fields """
@@ -242,7 +242,7 @@ class ChordSheet(object):
         new_end = bar_count * 2
         if new_end == self.__end_position:
             return
-        elif new_end > self.__end_position: # render affected fields
+        elif new_end > self.__end_position:  # render affected fields
             fields_to_render = range(self.__end_position, new_end + 1)
             for field in fields_to_render:
                 self.__render_field(field)
@@ -286,7 +286,7 @@ class ChordSheet(object):
         return self.__cursor_pos / 2
 
     def new_song_loaded(self):
-        self.__move_cursor_to(0) # cursor on field 0 => global buttons get refreshed
+        self.__move_cursor_to(0)  # cursor on field 0 => global buttons get refreshed
         self.__destroy_selection()
 
     def render_current_field(self, chords=None):
@@ -315,9 +315,9 @@ class ChordSheet(object):
             color = self.__colormap.alloc_color('black')
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
-        #gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
+        # gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
         gc.set_foreground(color)
-        #self.pixmap.draw_rectangle(gc, False, x , y, width, height)
+        # self.pixmap.draw_rectangle(gc, False, x , y, width, height)
 
         pango_layout = self.__area.create_pango_layout("")
         pango_layout.set_text(chord)
@@ -332,7 +332,7 @@ class ChordSheet(object):
             if text_width <= width and text_height <= height:
                 break
 
-        ink, logical = pango_layout.get_pixel_extents() #@UnusedVariable
+        ink, logical = pango_layout.get_pixel_extents()  #@UnusedVariable
         self.pixmap.draw_layout(gc, x, y + (height - ink[1] - ink[3]), pango_layout)
 
     def __render_chords_xy(self, bar_num, chords, bar_x, bar_y, playhead, cursor, selection):
@@ -352,7 +352,7 @@ class ChordSheet(object):
         gc.copy(self.gc)
         gc.set_foreground(color)
         self.pixmap.draw_rectangle(gc, True, bar_x, bar_y, self.__bar_chords_width, ChordSheet.__bar_height)
-        if cursor: # black border
+        if cursor:  # black border
             color = self.__colormap.alloc_color("black")
             gc.set_foreground(color)
             self.pixmap.draw_rectangle(gc, False, bar_x, bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1)
@@ -430,7 +430,7 @@ class ChordSheet(object):
         gc.copy(self.gc)
         gc.set_foreground(color)
         self.pixmap.draw_rectangle(gc, True, x, y, self.__bar_info_width, ChordSheet.__bar_height)
-        if cursor: # black border
+        if cursor:  # black border
             color = self.__colormap.alloc_color('black')
             gc.set_foreground(color)
             self.pixmap.draw_rectangle(gc, False, x, y, self.__bar_info_width - 1, ChordSheet.__bar_height - 1)
@@ -439,18 +439,18 @@ class ChordSheet(object):
         gc.set_foreground(color)
         repeat_begin = bar_info.has_repeat_begin() if bar_info else False
         repeat_end = bar_info.has_repeat_end() if bar_info else False
-        if repeat_begin or repeat_end: # draw repetitions
+        if repeat_begin or repeat_end:  # draw repetitions
             if repeat_begin:
                 self.__draw_repetition(x, y, gc, False)
             if repeat_end:
                 self.__draw_repetition(x, y, gc, True)
         else:
-            if bar_num < self.__song.get_data().get_bar_count() and chord_num: # draw bar number
+            if bar_num < self.__song.get_data().get_bar_count() and chord_num:  # draw bar number
                 pango_layout = self.__area.create_pango_layout("")
                 pango_layout.set_text(str(chord_num))
                 fd = pango.FontDescription('Monospace Bold 8')
                 pango_layout.set_font_description(fd)
-                ink, logical = pango_layout.get_pixel_extents() #@UnusedVariable
+                ink, logical = pango_layout.get_pixel_extents()  #@UnusedVariable
                 self.pixmap.draw_layout(gc, x + ChordSheet.__cell_padding,
                                     y + (ChordSheet.__bar_height - ink[1] - ink[3]) - ChordSheet.__cell_padding, pango_layout)
 

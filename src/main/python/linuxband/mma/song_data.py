@@ -35,7 +35,7 @@ class SongData(object):
         self.__bar_info = bar_info
         self.__bar_chords = bar_chords
         self.__bar_count = bar_count
-        self.__beats_per_bar = 4 # TODO Beats/bar, set with TIME
+        self.__beats_per_bar = 4  # TODO Beats/bar, set with TIME
         self.__save_needed = False
         for bar_info in self.__bar_info:
             bar_info.set_song_data(self)
@@ -119,7 +119,7 @@ class SongData(object):
         if len(lines) > 0:
             if lines[0][0] == Glob.A_REMARK:
                 comm = lines[0][-1].strip()
-                comm = comm [2:] # remove '//'
+                comm = comm [2:]  # remove '//'
                 return comm.strip()
         return Glob.UNTITLED_SONG_NAME
 
@@ -158,7 +158,7 @@ class SongData(object):
             mma_array.extend(self.__bar_chords[i].get_as_string_list())
             if i == self.__bar_count - 1:
                 mma_array.extend("MidiMark END\n")
-            mma_array.extend("MSetEnd\n") # 5 lines
+            mma_array.extend("MSetEnd\n")  # 5 lines
         # write the song
         for i in range(0, self.__bar_count):
             mma_array.extend(self.__bar_info[i].get_as_string_list())

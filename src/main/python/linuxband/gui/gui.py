@@ -99,7 +99,7 @@ class Gui:
             if self.__chord_sheet.has_focus() and self.__chord_sheet.is_cursor_on_bar_chords():
                 self.__chord_entries.begin_writing(keyname)
                 return True
-        elif keyname == 'e' and self.__chord_sheet.has_focus(): # TODO: doesn't work
+        elif keyname == 'e' and self.__chord_sheet.has_focus():  # TODO: doesn't work
             self.__events_bar.grab_focus()
             return True
         elif (self.__chord_sheet.has_focus() or self.__notebook3.has_focus()) and keyname == 'space':
@@ -272,7 +272,7 @@ class Gui:
             if res == 0:
                 res, midi_data = self.__song.get_playback_midi_data()
                 player.playback_stop()
-                if res != 0: # generate SMF failed
+                if res != 0:  # generate SMF failed
                     if res > 0 or res == -1:
                         self.__show_mma_error(res)
                     return
@@ -308,7 +308,7 @@ class Gui:
     def switch_page_callback(self, notebook, page, pageNum):
         """ Called when clicked on notebook tab. """
         logging.debug("")
-        if pageNum == 1: # switching to source editor
+        if pageNum == 1:  # switching to source editor
             self.__source_editor.refresh_source(self.__song.write_to_string())
             self.__source_editor.grab_focus()
             self.__notebook2.set_current_page(pageNum)
@@ -317,7 +317,7 @@ class Gui:
                 Gui.__ignore_toggle2 = True
                 self.__menuitem7.set_active(True)
             self.__global_buttons.hide()
-        else: # switching to chord sheet
+        else:  # switching to chord sheet
             res = self.__compile_song(True)
             if res > 0 or res == -1:
                 logging.error("Cannot switch to chord sheet view. Fix the errors and try again.")
@@ -487,7 +487,7 @@ class Gui:
         Common.connect_signals(glade, self)
 
         self.__main_window = glade.get_widget("mainWindow")
-        self.__spinbutton1 = glade.get_widget("spinbutton1") # bar count
+        self.__spinbutton1 = glade.get_widget("spinbutton1")  # bar count
         self.__notebook2 = glade.get_widget("notebook2")
         self.__notebook3 = glade.get_widget("notebook3")
 

@@ -35,7 +35,7 @@ class MidiGenerator(object):
         < -1 other error, = -1 MMA error unknown line, 0 is OK, > 0 MMA error line
         """
         mmainput = '/proc/self/fd/0'
-        command = [self.__config.get_mma_path(), mmainput, '-n'] # -n No generation of midi output
+        command = [self.__config.get_mma_path(), mmainput, '-n']  # -n No generation of midi output
         try:
             mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         except:
@@ -102,7 +102,7 @@ class MidiGenerator(object):
                 outstr = mma.stdout.readlines()
                 logging.error(' '.join(outstr))
                 return (-1, '')
-            os.close(pipew) # close our write pipe end, now only MMA has it opened
+            os.close(pipew)  # close our write pipe end, now only MMA has it opened
             midi_data = fin.read()
         except:
             logging.exception("Failed to read midi data from MMA")
@@ -116,7 +116,7 @@ class MidiGenerator(object):
         """
         Parse out the error line number. Error line example: ERROR:<Line 23><File:/proc/self/fd/0>
         """
-        for i, line in enumerate(lines): #@UnusedVariable
+        for i, line in enumerate(lines):  #@UnusedVariable
             res = string.find(line, "ERROR")
             if res != -1:
                 break
