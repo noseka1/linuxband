@@ -156,6 +156,7 @@ class Gui:
         self.__preferences.run()
 
     __ignore_toggle2 = False
+
     def switch_view_callback(self, item=None):
         if Gui.__ignore_toggle2:
             Gui.__ignore_toggle2 = False
@@ -291,6 +292,7 @@ class Gui:
         self.__midi_player.playback_stop()
 
     __ignore_toggle = False
+
     def playback_pause_callback(self, button=None):
         """ Pause. """
         if Gui.__ignore_toggle:
@@ -547,4 +549,3 @@ class Gui:
 
         self.__do_new_file()
         gtk.main()
-

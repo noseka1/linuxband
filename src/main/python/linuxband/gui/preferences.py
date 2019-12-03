@@ -20,6 +20,7 @@
 from linuxband.gui.common import Common
 import gtk
 
+
 class Preferences(object):
 
     def __init__(self, glade, gui, config, grooves):

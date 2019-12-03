@@ -20,6 +20,7 @@
 import logging
 import sys
 
+
 class Logger(object):
 
     @staticmethod

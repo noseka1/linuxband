@@ -62,4 +62,3 @@ class Glob:
     LICENSE = ""
     PLAYER_PROGRAM = ""
     CONSOLE_LOG_LEVEL = None
-

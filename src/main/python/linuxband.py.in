@@ -38,6 +38,7 @@ PKG_LIB_DIR = "@pkglibdir@"
 PYTHON_MAJOR = 2
 PYTHON_MINOR = 5
 
+
 def main():
     if not check_python_version():
         sys.exit(1)
@@ -68,12 +69,14 @@ def main():
     from linuxband.gui.gui import Gui
     Gui()
 
+
 def check_python_version():
     if sys.version_info[0] != PYTHON_MAJOR or sys.version_info[1] < PYTHON_MINOR:
         print "This program requires Python version 2.x, where x >= %i" % PYTHON_MINOR
         print "Found Python version %s" % sys.version
         return False
     return True
+
 
 if __name__ == "__main__":
     main()

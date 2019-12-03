@@ -23,6 +23,7 @@ from linuxband.mma.parse import parse
 from linuxband.mma.song_data import SongData
 from linuxband.mma.bar_info import BarInfo
 
+
 class Song(object):
 
     def __init__(self, midi_generator):

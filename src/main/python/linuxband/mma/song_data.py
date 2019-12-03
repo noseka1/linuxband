@@ -23,6 +23,7 @@ from linuxband.mma.bar_info import BarInfo
 from linuxband.mma.bar_chords import BarChords
 from linuxband.glob import Glob
 
+
 class SongData(object):
 
     # how many additional lines are needed for one bar in the mma file

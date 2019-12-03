@@ -37,6 +37,7 @@ from linuxband.mma.song_data import SongData
 # File processing. Mostly jumps to pats
 ########################################
 
+
 def parse(inpath):
     """
     Process a mma input file.
@@ -74,7 +75,6 @@ def parse(inpath):
             wline.insert(0, Glob.A_UNKNOWN)
             bar_info.add_line(wline)
             continue
-
 
         """ Handle BEGIN and END here. This is outside of the Repeat/End
             and variable expand loops so SHOULD be pretty bullet proof.
@@ -361,6 +361,7 @@ def parse_begin_block(inpath, curline):
             break
     return result
 
+
 def parse_mset_block(inpath, curline):
     l = curline.split()
     if len(l) < 2:
@@ -378,6 +379,7 @@ def parse_mset_block(inpath, curline):
         if action in ("MSETEND", 'ENDMSET'):
             break
     return result
+
 
 def parse_if_block(inpath, curline):
     ifDepth = 1
@@ -398,6 +400,7 @@ def parse_if_block(inpath, curline):
         if ifDepth == 0:
             break
     return result
+
 
 def parse_supported_action(action, wline):
     line = []
@@ -420,8 +423,10 @@ def parse_supported_action(action, wline):
     line.append(wline[1])
     return line
 
+
 def parse_supported_block_action(block_action, begin_block):
     return [ begin_block[0], ''.join(begin_block[1:-1]), begin_block[-1] ]
+
 
 def tokenize_line(line, limit):
     """
@@ -454,6 +459,7 @@ def tokenize_line(line, limit):
         read_token = not read_token
         start = end
     return tokenized_line
+
 
 """ =================================================================
 

@@ -26,6 +26,7 @@ import gobject
 import logging
 from linuxband.glob import Glob
 
+
 class MidiPlayer:
 
     __COMM_LOAD = "LOAD"

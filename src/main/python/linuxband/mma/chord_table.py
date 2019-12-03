@@ -457,4 +457,3 @@ for a,b,d in aliases:
         d=chordlist[b][2]
 
     chordlist[a] = (n, s, d)
-

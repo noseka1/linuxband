@@ -28,5 +28,3 @@ class Common(object):
         for name, member in inspect.getmembers(obj):
             dicts[name] = member
         glade.signal_autoconnect(dicts)
-
-
