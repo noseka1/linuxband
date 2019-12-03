@@ -91,7 +91,7 @@ class ChordEntries(object):
         gobject.idle_add(self.__entries[num].grab_focus)
 
     def has_focus(self):
-        return self.__find_focused_entry() != None
+        return self.__find_focused_entry() is not None
 
     def hide(self):
         self.__hbox6.hide()

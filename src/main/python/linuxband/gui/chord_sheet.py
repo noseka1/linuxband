@@ -466,7 +466,7 @@ class ChordSheet(object):
         bar_num = field_num / 2
 
         if self.__is_bar_chords(field_num):
-            if chords == None and bar_num < self.__song.get_data().get_bar_count():
+            if chords is None and bar_num < self.__song.get_data().get_bar_count():
                 chords = self.__song.get_data().get_bar_chords(bar_num).get_chords()
 
             self.__render_chords_xy(bar_num, chords, field_x, field_y, playhead, cursor, selection)
@@ -516,7 +516,7 @@ class ChordSheet(object):
 
     def __adjust_selection(self, old_pos):
         """ Begins or adjusts field selection, redraws affected fields. """
-        if self.__selection_start == None:
+        if self.__selection_start is None:
             # beginning a new selection
             self.__selection_start = old_pos
             self.__selection = self.__get_selection_set(old_pos, self.__cursor_pos)
@@ -529,7 +529,7 @@ class ChordSheet(object):
 
     def __adjust_selection_bar_count_changed(self):
         """ Number of bars has changed, maybe destroy the selection or shorten it. """
-        if self.__selection_start == None:
+        if self.__selection_start is None:
             return
         elif self.__selection_start > self.__end_position:
             self.__destroy_selection()
@@ -538,7 +538,7 @@ class ChordSheet(object):
             self.__selection = set([elem for elem in self.__selection if elem <= self.__end_position])
 
     def __destroy_selection(self):
-        if self.__selection_start == None: return
+        if self.__selection_start is None: return
         old_selection = self.__selection
         self.__selection_start = None
         self.__selection = set([])

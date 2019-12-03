@@ -393,7 +393,7 @@ class Gui:
             return False
 
     def __do_save_file(self):
-        if self.__output_file == None:
+        if self.__output_file is None:
             return self.__do_save_as()
         else:
             self.__compile_song(False)

@@ -110,7 +110,7 @@ class BarChords:
     def get_as_string_list(self):
         res = []
         res.append(self.__before_number)
-        if self.get_number() != None:
+        if self.get_number() is not None:
             res.append(str(self.get_number()))
         res.append(self.__after_number)
         for full_chord in self.__chords:
