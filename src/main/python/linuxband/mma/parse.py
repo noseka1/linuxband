@@ -144,7 +144,7 @@ def parse(inpath):
 
         # track function BASS/DRUM/APEGGIO/CHORD ...
         if '-' in action:
-            trk_class, ext = action.split('-', 1)  #@UnusedVariable
+            trk_class, ext = action.split('-', 1)
         else:
             trk_class = action
 

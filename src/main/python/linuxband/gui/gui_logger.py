@@ -40,7 +40,7 @@ class GuiLogger(object):
             elif record.levelname == 'ERROR':
                 tag = 'fg_red'
 
-            start, end = self.__textBuffer.get_bounds()  #@UnusedVariable
+            start, end = self.__textBuffer.get_bounds()
             text = self.__textBuffer.get_text(start, end)
             eol = '' if text == '' else '\n'
 
@@ -55,7 +55,7 @@ class GuiLogger(object):
             logging.Formatter.__init__(self, fmt, datefmt)
 
         def formatException(self, ei):
-            excType, excValue, excTraceback = ei  #@UnusedVariable
+            excType, excValue, excTraceback = ei
             res = ''.join(traceback.format_exception_only(excType, excValue))
             if res[-1] == '\n':
                 res = res[:-1]

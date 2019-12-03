@@ -332,7 +332,7 @@ class ChordSheet(object):
             if text_width <= width and text_height <= height:
                 break
 
-        ink, logical = pango_layout.get_pixel_extents()  #@UnusedVariable
+        ink, logical = pango_layout.get_pixel_extents()
         self.pixmap.draw_layout(gc, x, y + (height - ink[1] - ink[3]), pango_layout)
 
     def __render_chords_xy(self, bar_num, chords, bar_x, bar_y, playhead, cursor, selection):
@@ -450,7 +450,7 @@ class ChordSheet(object):
                 pango_layout.set_text(str(chord_num))
                 fd = pango.FontDescription('Monospace Bold 8')
                 pango_layout.set_font_description(fd)
-                ink, logical = pango_layout.get_pixel_extents()  #@UnusedVariable
+                ink, logical = pango_layout.get_pixel_extents()
                 self.pixmap.draw_layout(gc, x + ChordSheet.__cell_padding,
                                     y + (ChordSheet.__bar_height - ink[1] - ink[3]) - ChordSheet.__cell_padding, pango_layout)
 

@@ -305,7 +305,7 @@ class EventsBar(object):
         x, y = self.__main_window.window.get_origin()  # our window
 
         wx = min(x + rect.x, x + rect2.width - rect3.width)
-        wy = y + rect.y  #+ rect.height
+        wy = y + rect.y
 
         return (wx, wy)
 

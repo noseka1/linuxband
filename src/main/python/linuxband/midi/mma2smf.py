@@ -116,7 +116,7 @@ class MidiGenerator(object):
         """
         Parse out the error line number. Error line example: ERROR:<Line 23><File:/proc/self/fd/0>
         """
-        for i, line in enumerate(lines):  #@UnusedVariable
+        for i, line in enumerate(lines):
             res = string.find(line, "ERROR")
             if res != -1:
                 break
