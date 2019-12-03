@@ -168,7 +168,8 @@ class ChordSheet(object):
                 else:
                     self.__song.get_data().set_bar_info(bar_num, field)
             self.__adjust_selection(old_pos) # refreshes affected fields
-            if old_pos > 0: self.__render_field(old_pos - 1) # refresh barNumber
+            if old_pos > 0:
+                self.__render_field(old_pos - 1) # refresh barNumber
 
     def delete_selection(self):
         """ Delete selected fields """
@@ -186,7 +187,8 @@ class ChordSheet(object):
         for field_num in sel:
             self.__render_field(field_num)
         m = min(sel)
-        if m > 0: self.__render_field(m - 1)
+        if m > 0:
+            self.__render_field(m - 1)
         # if deleted bars from the end, shorten the song
         if max(sel) == self.__end_position:
             first = min(sel)
@@ -242,10 +244,12 @@ class ChordSheet(object):
             return
         elif new_end > self.__end_position: # render affected fields
             fields_to_render = range(self.__end_position, new_end + 1)
-            for field in fields_to_render: self.__render_field(field)
+            for field in fields_to_render:
+                self.__render_field(field)
         elif new_end < self.__end_position:
             fields_to_render = range(new_end, self.__end_position + 1)
-            for field in fields_to_render: self.__render_field(field)
+            for field in fields_to_render:
+                self.__render_field(field)
         self.__end_position = new_end
 
         if new_end == 0:
@@ -260,7 +264,8 @@ class ChordSheet(object):
         new_end = bar_count * 2
         maxlast = max(self.__end_position, new_end)
         fields_to_render = range(0, maxlast + 1)
-        for field in fields_to_render: self.__render_field(field)
+        for field in fields_to_render:
+            self.__render_field(field)
         self.__end_position = new_end
 
         if new_end == 0:
@@ -304,8 +309,10 @@ class ChordSheet(object):
 
     def __render_chord_xy(self, chord, x, y, width, height, playhead):
         """ Render one chord on position x,y. """
-        if playhead: color = self.__colormap.alloc_color('white')
-        else: color = self.__colormap.alloc_color('black')
+        if playhead:
+            color = self.__colormap.alloc_color('white')
+        else:
+            color = self.__colormap.alloc_color('black')
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
         #gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
@@ -398,8 +405,10 @@ class ChordSheet(object):
         point_size = ChordSheet.__cell_padding * 2
         upper_y = y + ChordSheet.__bar_height / 4
         lower_y = y + ChordSheet.__bar_height * 3 / 4 - point_size
-        if end: x = x + self.__bar_info_width / 5
-        else: x = x + self.__bar_info_width * 4 / 5 - point_size
+        if end:
+            x = x + self.__bar_info_width / 5
+        else:
+            x = x + self.__bar_info_width * 4 / 5 - point_size
         self.pixmap.draw_arc(self.gc, True, x, upper_y, point_size, point_size, 0, 360 * 64)
         self.pixmap.draw_arc(self.gc, True, x, lower_y, point_size, point_size, 0, 360 * 64)
 
@@ -431,8 +440,10 @@ class ChordSheet(object):
         repeat_begin = bar_info.has_repeat_begin() if bar_info else False
         repeat_end = bar_info.has_repeat_end() if bar_info else False
         if repeat_begin or repeat_end: # draw repetitions
-            if repeat_begin: self.__draw_repetition(x, y, gc, False)
-            if repeat_end: self.__draw_repetition(x, y, gc, True)
+            if repeat_begin:
+                self.__draw_repetition(x, y, gc, False)
+            if repeat_end:
+                self.__draw_repetition(x, y, gc, True)
         else:
             if bar_num < self.__song.get_data().get_bar_count() and chord_num: # draw bar number
                 pango_layout = self.__area.create_pango_layout("")
@@ -538,7 +549,8 @@ class ChordSheet(object):
             self.__selection = set([elem for elem in self.__selection if elem <= self.__end_position])
 
     def __destroy_selection(self):
-        if self.__selection_start is None: return
+        if self.__selection_start is None:
+            return
         old_selection = self.__selection
         self.__selection_start = None
         self.__selection = set([])

@@ -118,14 +118,18 @@ class MidiGenerator(object):
         """
         for i, line in enumerate(lines): #@UnusedVariable
             res = string.find(line, "ERROR")
-            if res != -1: break
-        if res == -1: return -1
+            if res != -1:
+                break
+        if res == -1:
+            return -1
         start = string.find(line, "<")
         end = string.find(line, ">")
-        if start == -1 or end == -1: return -1
+        if start == -1 or end == -1:
+            return -1
         lmidd = line[start + 1: end]
         midds = lmidd.split()
-        if len(midds) != 2: return -1
+        if len(midds) != 2:
+            return -1
         try:
             return int(midds[1])
         except TypeError:

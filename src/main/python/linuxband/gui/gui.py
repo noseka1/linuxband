@@ -273,7 +273,8 @@ class Gui:
                 res, midi_data = self.__song.get_playback_midi_data()
                 player.playback_stop()
                 if res != 0: # generate SMF failed
-                    if res > 0 or res == -1: self.__show_mma_error(res)
+                    if res > 0 or res == -1:
+                        self.__show_mma_error(res)
                     return
                 player.load_smf_data(midi_data, self.__song.get_data().get_mma_line_offset())
             else:
@@ -374,7 +375,8 @@ class Gui:
         self.__source_editor.new_song_loaded(self.__song.write_to_string())
         self.refresh_chord_sheet()
         self.__refresh_song_title()
-        if res > 0 or res == -1: self.__show_mma_error(res)
+        if res > 0 or res == -1:
+            self.__show_mma_error(res)
 
     def __do_save_as(self):
         if (self.__save_as_dialog.get_current_folder() <> self.__config.get_work_dir()):

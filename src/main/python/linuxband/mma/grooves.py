@@ -102,7 +102,8 @@ class Grooves(object):
                 if fnmatch.fnmatch(name, '*.mma'):
                     full_name = os.path.join(dirname, name)
                     song_data = self.__parseGrooves(full_name)
-                    if not song_data: continue
+                    if not song_data:
+                        continue
                     song_bar_info = song_data.get_bar_info_all()
                     doc = author = time = ''
                     for line in song_bar_info[0].get_lines():

@@ -34,7 +34,8 @@ class ChordEntries(object):
 
     def refresh(self):
         """ Refresh chord entries. """
-        if self.__chord_sheet.is_cursor_on_bar_info(): return
+        if self.__chord_sheet.is_cursor_on_bar_info():
+            return
         barnum = self.__chord_sheet.get_current_bar_number()
 
         for entry in self.__entries:

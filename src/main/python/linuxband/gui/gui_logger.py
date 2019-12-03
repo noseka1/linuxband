@@ -33,9 +33,12 @@ class GuiLogger(object):
         def emit(self, record):
             record.exc_text = None # is needed to formatException to be called
 
-            if record.levelname == 'INFO': tag = 'fg_black'
-            elif record.levelname == 'WARNING': tag = 'fg_brown'
-            elif record.levelname == 'ERROR': tag = 'fg_red'
+            if record.levelname == 'INFO':
+                tag = 'fg_black'
+            elif record.levelname == 'WARNING':
+                tag = 'fg_brown'
+            elif record.levelname == 'ERROR':
+                tag = 'fg_red'
 
             start, end = self.__textBuffer.get_bounds() #@UnusedVariable
             text = self.__textBuffer.get_text(start, end)

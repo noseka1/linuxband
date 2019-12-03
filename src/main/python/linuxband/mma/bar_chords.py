@@ -77,7 +77,8 @@ class BarChords:
             return
         if beat_num + 1 < len(chords): # there's a chord after this beat
             full_chord = chords[beat_num]
-            if not chord: chord = '/'
+            if not chord:
+                chord = '/'
             if full_chord[0] != chord:
                 full_chord[0] = chord
                 song_data.changed()
@@ -103,7 +104,8 @@ class BarChords:
                     last_full_chord = chords[len(chords) - 1]
                     if len(last_full_chord[1]) == len(last_full_chord[1].rstrip()):
                         last_full_chord[1] = last_full_chord[1] + ' '
-                    while len(chords) < beat_num: chords.append(['/', ' '])
+                    while len(chords) < beat_num:
+                        chords.append(['/', ' '])
                     chords.append([chord, ''])
                     song_data.changed()
 

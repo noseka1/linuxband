@@ -104,7 +104,8 @@ class EventsBar(object):
                 # some other button is toggled
                 self.__toggle_window_close()
             for triple in self.__triples:
-                if triple[0] is button: break
+                if triple[0] is button:
+                    break
             self.__toggled_button_label = button.get_label()
             if button is self.__togglebutton1:
                 self.__curr_event = self.__song.get_data().get_bar_info(0).get_groove()
@@ -138,8 +139,10 @@ class EventsBar(object):
         else:
             self.__toggle_window_close(False)
             if button in [self.__togglebutton1, self.__togglebutton2]:
-                if not self.__curr_event: self.__song.get_data().get_bar_info(0).add_event(newEvent)
-                else: self.__song.get_data().get_bar_info(0).replace_event(self.__curr_event, newEvent)
+                if not self.__curr_event:
+                    self.__song.get_data().get_bar_info(0).add_event(newEvent)
+                else:
+                    self.__song.get_data().get_bar_info(0).replace_event(self.__curr_event, newEvent)
             else:
                 barNum = self.__gui.get_current_bar_number()
                 self.__song.get_data().get_bar_info(barNum).replace_event(self.__curr_event, newEvent)
@@ -224,7 +227,8 @@ class EventsBar(object):
 
     def __refresh_events_bar(self):
         """ Refresh events bar """
-        if self.__gui.is_cursor_on_bar_chords(): return
+        if self.__gui.is_cursor_on_bar_chords():
+            return
         barNum = self.__gui.get_current_bar_number()
         box = self.__hbox8
         children = box.get_children()
@@ -260,7 +264,8 @@ class EventsBar(object):
 
     def __remove_from_triples(self, button):
         for triple in self.__triples:
-            if triple[0] is button: break
+            if triple[0] is button:
+                break
         if triple[0] is button:
             self.__triples.remove(triple)
 
@@ -317,9 +322,11 @@ class EventsBar(object):
 
     def __toggle_window_close(self, restoreLabel=True):
         """ Close toggle window """
-        if self.__toggle_window_close_recursive: return
+        if self.__toggle_window_close_recursive:
+            return
         if self.__toggled_triple:
-            if restoreLabel: self.__toggled_triple[0].set_label(self.__toggled_button_label)
+            if restoreLabel:
+                self.__toggled_triple[0].set_label(self.__toggled_button_label)
             self.__toggled_triple[1].hide()
             # this will invoke on_togglebutton_clicked and then this method recursive again!
             self.__toggle_window_close_recursive = True

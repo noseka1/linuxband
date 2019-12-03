@@ -56,16 +56,20 @@ class EventGroove(object):
     def set_label_from_event(self, button, event):
         """ Sets the label of groove button correctly
             even if the event in the self.__song.get_data().get_bar_info(0) is missing. """
-        if event: button.set_label(BarInfo.get_groove_value(event))
-        else: button.set_label(EventGroove.__GROOVE_UNDEFINED)
+        if event:
+            button.set_label(BarInfo.get_groove_value(event))
+        else:
+            button.set_label(EventGroove.__GROOVE_UNDEFINED)
 
     def get_new_event(self):
         return self.__new_event
 
     def init_window(self, button, event):
         # hide back, forward, remove buttons
-        if button is self.__togglebutton1: self.__alignment12.hide()
-        else: self.__alignment12.show()
+        if button is self.__togglebutton1:
+            self.__alignment12.hide()
+        else:
+            self.__alignment12.show()
         self.__toggled_button = button
         self.__curr_event = event
         self.__new_event = None

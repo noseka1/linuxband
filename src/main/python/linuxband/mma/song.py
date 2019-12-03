@@ -71,7 +71,8 @@ class Song(object):
     def write_to_midi_file(self, file_name):
         mma_data = self.write_to_string()
         res, midi = self.__midi_generator.generate_smf(mma_data)
-        if res == 0: self.__do_write_to_file(file_name, midi)
+        if res == 0:
+            self.__do_write_to_file(file_name, midi)
 
     def write_to_string(self):
         """

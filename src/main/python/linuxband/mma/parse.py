@@ -154,11 +154,13 @@ def parse(inpath):
             wline = []
             while True:
                 wline.extend(get_wrapped_line(inpath, curline))
-                if not parse_seq: break
+                if not parse_seq:
+                    break
                 """ Count the number of { and } and if they don't match read more lines and
                     append. If we get to the EOF then we're screwed and we error out. """
                 wline2 = ''.join(wline)
-                if wline2.count('{') == wline2.count('}'): break
+                if wline2.count('{') == wline2.count('}'):
+                    break
                 curline = inpath.readline()
                 if not curline:
                     raise ValueError("Reached EOF, Sequence {}s do not match")

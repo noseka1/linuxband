@@ -34,7 +34,8 @@ class EventRepeatEnding(object):
     def on_comboboxentry2_changed_callback(self, widget):
         """ RepeatEnding value changed """
         # called also when initializing the entries list
-        if not self.__toggled_button: return
+        if not self.__toggled_button:
+            return
         try:
             i = int(widget.child.get_text())
         except ValueError:
@@ -48,8 +49,10 @@ class EventRepeatEnding(object):
     def set_label_from_event(self, button, event):
         """ Sets the label of RepeatEnding button when the count was changed """
         count = BarInfo.get_repeat_ending_value(event)
-        if count == "2": label = "RepeatEnding"
-        else: label = "RepeatEnding " + count
+        if count == "2":
+            label = "RepeatEnding"
+        else:
+            label = "RepeatEnding " + count
         button.set_label(label)
 
     def get_new_event(self):

@@ -54,8 +54,10 @@ class EventTempo(object):
 
     def init_window(self, button, event):
         # hide back, forward, remove buttons
-        if button is self.__togglebutton2: self.__alignment15.hide()
-        else: self.__alignment15.show()
+        if button is self.__togglebutton2:
+            self.__alignment15.hide()
+        else:
+            self.__alignment15.show()
         self.__toggled_button = button
         self.__curr_event = event
         self.__new_event = None
