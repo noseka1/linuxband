@@ -70,7 +70,7 @@ class BarInfo:
         return self.__lines
 
     def add_event(self, line):
-        if line[0] in [ Glob.A_REPEAT_END, Glob.A_REPEAT_ENDING ]:
+        if line[0] in [Glob.A_REPEAT_END, Glob.A_REPEAT_ENDING]:
             self.insert_line(line)
         else:
             self.add_line(line)
@@ -139,11 +139,11 @@ class BarInfo:
 
     @staticmethod
     def create_event(eventTitle):
-        eventsInit = { Glob.A_GROOVE:       [ Glob.A_GROOVE, "Groove", " ", "50sRock", "\n" ],
-                       Glob.A_TEMPO:        [ Glob.A_TEMPO, "Tempo", " ", "120", "\n" ],
-                       Glob.A_REPEAT:       [ Glob.A_REPEAT, "Repeat", "\n" ],
-                       Glob.A_REPEAT_ENDING: [ Glob.A_REPEAT_ENDING, "RepeatEnding", "\n" ],
-                       Glob.A_REPEAT_END:    [ Glob.A_REPEAT_END, "RepeatEnd", "\n" ] }
+        eventsInit = {Glob.A_GROOVE:        [Glob.A_GROOVE, "Groove", " ", "50sRock", "\n"],
+                      Glob.A_TEMPO:         [Glob.A_TEMPO, "Tempo", " ", "120", "\n"],
+                      Glob.A_REPEAT:        [Glob.A_REPEAT, "Repeat", "\n"],
+                      Glob.A_REPEAT_ENDING: [Glob.A_REPEAT_ENDING, "RepeatEnding", "\n"],
+                      Glob.A_REPEAT_END:    [Glob.A_REPEAT_END, "RepeatEnd", "\n"]}
         return copy.deepcopy(eventsInit[eventTitle])
 
     @staticmethod

@@ -74,7 +74,7 @@ class MidiPlayer:
         self.__pipew = pipew
 
         pipeName = '/proc/' + str(Glob.PID) + '/fd/' + str(pipew)
-        command = [ Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName ]
+        command = [Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName]
         if Glob.CONSOLE_LOG_LEVEL == logging.DEBUG:
             command.insert(1, '-d')
         try:

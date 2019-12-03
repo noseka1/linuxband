@@ -38,7 +38,7 @@ class Glob:
     A_UNKNOWN = "UNKNOWN"
 
     # list of supported events, order of Add event menulist
-    EVENTS = [ A_GROOVE, A_TEMPO, A_REPEAT, A_REPEAT_ENDING, A_REPEAT_END ]
+    EVENTS = [A_GROOVE, A_TEMPO, A_REPEAT, A_REPEAT_ENDING, A_REPEAT_END]
 
     OUTPUT_FILE_DEFAULT = "untitled.mma"
     UNTITLED_SONG_NAME = "Untitled Song"

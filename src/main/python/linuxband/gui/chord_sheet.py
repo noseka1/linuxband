@@ -113,15 +113,15 @@ class ChordSheet(object):
                 self.__move_cursor_to(self.__cursor_pos + 2)
                 self.__destroy_selection()
         # adjust selection
-        if key in [ gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up, gtk.keysyms.Down,
-                         gtk.keysyms.Home, gtk.keysyms.End ]:
+        if key in [gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up, gtk.keysyms.Down,
+                         gtk.keysyms.Home, gtk.keysyms.End]:
             if event.state & SHIFT_MASK:
                 self.__adjust_selection(old_pos)
             else:
                 self.__destroy_selection()
-        if key in [ gtk.keysyms.H, gtk.keysyms.L, gtk.keysyms.K, gtk.keysyms.J ]:
+        if key in [gtk.keysyms.H, gtk.keysyms.L, gtk.keysyms.K, gtk.keysyms.J]:
             self.__adjust_selection(old_pos)
-        if key in [ gtk.keysyms.h, gtk.keysyms.l, gtk.keysyms.k, gtk.keysyms.j ]:
+        if key in [gtk.keysyms.h, gtk.keysyms.l, gtk.keysyms.k, gtk.keysyms.j]:
             self.__destroy_selection()
         # the event has been handled
         return True

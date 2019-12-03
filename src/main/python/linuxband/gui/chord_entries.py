@@ -123,14 +123,14 @@ class ChordEntries(object):
     def __init_gui(self, glade, chord_names):
         Common.connect_signals(glade, self)
         self.__hbox6 = glade.get_widget("hbox6")
-        self.__entries = [ glade.get_widget("entry1"),
+        self.__entries = [glade.get_widget("entry1"),
                          glade.get_widget("entry2"),
                          glade.get_widget("entry3"),
                          glade.get_widget("entry4"),
                          glade.get_widget("entry5"),
                          glade.get_widget("entry6"),
                          glade.get_widget("entry7"),
-                         glade.get_widget("entry8") ]
+                         glade.get_widget("entry8")]
         # Initialize chord entry completion
         model = gtk.ListStore(str)
         for chord in chord_names:
@@ -158,7 +158,7 @@ class ChordEntries(object):
 
         It is used for entry completion
         """
-        base = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
+        base = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
         base_ext = []
         for c in base:
             base_ext.append(c)

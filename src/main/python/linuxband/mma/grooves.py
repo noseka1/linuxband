@@ -72,7 +72,7 @@ class Grooves(object):
                     or not groove[0].upper().startswith(pgroove) \
                     or groove[0].startswith('Metronome'):   # metronome hack
                 sub_liststore = gtk.ListStore(str, str, str, str, str, str)
-                grooves_model.append(groove + [ sub_liststore ])
+                grooves_model.append(groove + [sub_liststore])
                 pgroove = groove[0].upper()
                 # March hack
                 if groove[0] == 'March':

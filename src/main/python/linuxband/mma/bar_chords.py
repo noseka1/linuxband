@@ -28,7 +28,7 @@ class BarChords:
         self.__before_number = ''
         self.__number = None
         self.__after_number = ' '
-        self.__chords = [[ '/', '' ]] # one chord is always there
+        self.__chords = [['/', '']] # one chord is always there
         self.__eol = '\n'
 
     def set_song_data(self, song_data):

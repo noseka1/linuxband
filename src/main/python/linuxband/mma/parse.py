@@ -196,7 +196,7 @@ def parse(inpath):
             bar_chords.set_number(int(numstr))
             l = l[len(numstr):] # remove number
             if len(l.strip()) == 0: # ignore empty lines
-                bar_info.add_line([ Glob.A_UNKNOWN, wline[0] + wline[1] ])
+                bar_info.add_line([Glob.A_UNKNOWN, wline[0] + wline[1]])
                 continue
 
         """ We now have a valid line. It'll look something like:
@@ -277,7 +277,7 @@ def parse(inpath):
                     i += 1
                 # chord examples: '/', 'z', 'Am7@2', 'Am6zC@3'
                 c = l[chord_begin:i]
-                last_chord = [ c ]
+                last_chord = [c]
         # the trailing string of the last chord can possibly include '\n' after which
         # it would be difficult to add further chords. Therefore move the trailing string
         # of the last chord to eol
@@ -340,12 +340,12 @@ def get_wrapped_line_join(inpath, curline):
             else:
                 line = line + l
         i = i + 1
-    return [ line, comment ]
+    return [line, comment]
 
 
 def parse_begin_block(inpath, curline):
     beginDepth = 1
-    result = [ curline ]
+    result = [curline]
     while True:
         curline = inpath.readline()
         if not curline:
@@ -368,7 +368,7 @@ def parse_mset_block(inpath, curline):
     l = curline.split()
     if len(l) < 2:
         raise ValueError("Use: MSET VARIABLE_NAME <lines> MsetEnd")
-    result = [ curline ]
+    result = [curline]
     while True:
         curline = inpath.readline()
         if not curline:
@@ -385,7 +385,7 @@ def parse_mset_block(inpath, curline):
 
 def parse_if_block(inpath, curline):
     ifDepth = 1
-    result = [ curline ]
+    result = [curline]
     while True:
         curline = inpath.readline()
         if not curline:
@@ -413,7 +413,7 @@ def parse_supported_action(action, wline):
     elif action == Glob.A_GROOVE: # ['Groove', ' ', 'Tango', ' LightTango LightTangoSus LightTango\n']
         line = tokenize_line(wline[0], 2)
     elif action == Glob.A_REPEAT: # nothing to parse
-        line = [ wline[0] ]
+        line = [wline[0]]
     elif action == Glob.A_REPEAT_END: # ['RepeatEnd', ' ', '2', '\n'] or ['RepeatEnd', '\n' ]
         line = tokenize_line(wline[0], 2)
     elif action == Glob.A_REPEAT_ENDING: #
@@ -427,7 +427,7 @@ def parse_supported_action(action, wline):
 
 
 def parse_supported_block_action(block_action, begin_block):
-    return [ begin_block[0], ''.join(begin_block[1:-1]), begin_block[-1] ]
+    return [begin_block[0], ''.join(begin_block[1:-1]), begin_block[-1]]
 
 
 def tokenize_line(line, limit):

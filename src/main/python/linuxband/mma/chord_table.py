@@ -52,12 +52,12 @@ As = Bb = 10
 B  = Cb = 11
 
 chordlist = {
-    'M':    ((C,    E,      G ),
+    'M':    ((C,    E,      G),
              (C, D, E, F, G, A, B),
              "Major triad. This is the default and is used in  "
              "the absense of any other chord type specification."),
 
-    '(b5)':  ((C,    E,      Gb ),
+    '(b5)':  ((C,    E,      Gb),
              (C, D, E, F, Gb, A, B),
              "Major triad with flat 5th."),
 
@@ -65,32 +65,32 @@ chordlist = {
              (C, D, E, F, G, A, D+12),
              "Major chord plus 9th (no 7th.)"),
 
-    'm':    ((C,    Eb,    G ),
+    'm':    ((C,    Eb,    G),
              (C, D, Eb, F, G, Ab, Bb),
              "Minor triad."),
 
-    'mb5':    ((C,    Eb,       Gb ),
+    'mb5':    ((C,    Eb,       Gb),
              (C, D, Eb, F, Gb, Ab, Bb),
              "Minor triad with flat 5th (aka dim)."),
 
-    'm#5':    ((C,    Eb,       Gs ),
+    'm#5':    ((C,    Eb,       Gs),
              (C, D, Eb, F, Gs, Ab, Bb),
              "Minor triad with augmented 5th."),
 
-    'm6':    ((C,    Eb,       G, A ),
+    'm6':    ((C,    Eb,       G, A),
              (C, D, Eb, F, G, A, Bb),
              "Minor 6th (flat 3rd plus a 6th)."),
 
     'm6(add9)':    ((C, Eb, G, D+12, A+12),
              (C, D, Eb, F, G, A, Bb),
              "Minor 6th with added 9th. This is sometimes notated as a slash chord "
-             "in the form ``m6/9''." ),
+             "in the form ``m6/9''."),
 
-    'm7':    ((C,    Eb,       G,      Bb ),
+    'm7':    ((C,    Eb,       G,      Bb),
              (C, D, Eb, F, G, Ab, Bb),
              "Minor 7th (flat 3rd plus dominant 7th)."),
 
-    'mM7':    ((C,    Eb,      G,      B ),
+    'mM7':    ((C,    Eb,      G,      B),
              (C, D, Eb, F, G, Ab, B),
              "Minor Triad plus Major 7th. You will also see this printed "
              "as ``m(maj7)'', ``m+7'', ``min(maj7)'' and ``min$\sharp$7'' "
@@ -109,39 +109,39 @@ chordlist = {
                  (C, D, Eb, F, G, Ab, B),
                  "Minor Triad plus Major 7th and 9th."),
 
-    'm7b5': ((C,    Eb,       Gb,       Bb ),
+    'm7b5': ((C,    Eb,       Gb,       Bb),
              (C, D, Eb, F, Gb, Ab, Bb),
              "Minor 7th, flat 5 (aka 1/2 diminished). "),
 
-    'm7b9': ((C,     Eb,    G,     Bb, Db+12 ),
+    'm7b9': ((C,     Eb,    G,     Bb, Db+12),
              (C, Db, Eb, F, G, Ab, Bb),
              "Minor 7th with added flat 9th."),
 
-    'm7#9': ((C,     Eb,    G,     Bb, Ds+12 ),
+    'm7#9': ((C,     Eb,    G,     Bb, Ds+12),
              (C, Ds, Eb, F, G, Ab, Bb),
              "Minor 7th with added sharp 9th."),
 
-    '7':    ((C,    E,      G,    Bb ),
+    '7':    ((C,    E,      G,    Bb),
              (C, D, E, F, G, A, Bb),
              "7th."),
 
-    '7b5':    ((C,    E,      Gb,    Bb ),
+    '7b5':    ((C,    E,      Gb,    Bb),
              (C, D, E, F, Gb, A, Bb),
              "7th, flat 5."),
 
-    'dim7': ((C,    Eb,       Gb,       Bbb ),
-             (C, D, Eb, F, Gb, Ab, Bbb ),    # missing 8th note
+    'dim7': ((C,    Eb,       Gb,       Bbb),
+             (C, D, Eb, F, Gb, Ab, Bbb),    # missing 8th note
              "Diminished seventh."),
 
     'dim7(addM7)': ((C, Eb, Gb, A, B),
              (C, D, Eb, F, Gb, A, B),
              "Diminished tirad with added Major 7th."),
 
-    'aug':    ((C,    E,      Gs ),
-             (C, D, E, F, Gs, A, B ),
+    'aug':    ((C,    E,      Gs),
+             (C, D, E, F, Gs, A, B),
              "Augmented triad."),
 
-    '6':    ((C,    E,      G, A ),
+    '6':    ((C,    E,      G, A),
              (C, D, E, F, G, A, B),
              "Major tiad with added 6th."),
 
@@ -158,21 +158,21 @@ chordlist = {
              (C, D, E, F, Gs, A, B),
              "Major 7th with sharp 5th."),
 
-    'M7b5': ((C,    E,      Gb,    B ),
-             (C, D, E, F, Gb, A, B ),
+    'M7b5': ((C,    E,      Gb,    B),
+             (C, D, E, F, Gb, A, B),
              "Major 7th with a flat 5th."),
 
-    '9':    ((C,    E,    G,    Bb, D+12 ),
+    '9':    ((C,    E,    G,    Bb, D+12),
              (C, D, E, F, G, A, Bb),
              "7th plus 9th."),
 
 
 
-    '9b5':    ((C,    E,    Gb,    Bb, D+12 ),
+    '9b5':    ((C,    E,    Gb,    Bb, D+12),
              (C, D, E, F, Gb, A, Bb),
              "7th plus 9th with flat 5th."),
 
-    'm9':    ((C,    Eb,       G,      Bb, D+12 ),
+    'm9':    ((C,    Eb,       G,      Bb, D+12),
              (C, D, Eb, F, G, Ab, Bb),
              "Minor triad plus 7th and 9th."),
 
@@ -180,15 +180,15 @@ chordlist = {
                (C, Db, Eb, F, Gb, Ab, Bb),
                "Minor 7th with flat 5th and flat 9th."),
 
-    'm9b5': ((C,    Eb,    Gb, Bb, D+12 ),
+    'm9b5': ((C,    Eb,    Gb, Bb, D+12),
              (C, D, Eb, F, Gb, Ab, Bb),
              "Minor triad, flat 5, plus 7th and 9th."),
 
-    'm(sus9)':((C,      Eb,    G,     D+12 ),
+    'm(sus9)':((C,      Eb,    G,     D+12),
                (C, D, Eb, F, G, Ab, D+12),
                "Minor triad plus 9th (no 7th)."),
 
-    'M9':    ((C,    E,    G,    B, D+12 ),
+    'M9':    ((C,    E,    G,    B, D+12),
              (C, D, E, F, G, A, B),
              "Major 7th plus 9th."),
 
@@ -196,44 +196,44 @@ chordlist = {
               (C, D, E, Fs, G, A, B),
               "Major 9th plus sharp 11th."),
 
-    '7b9':    ((C,     E,    G,    Bb, Db+12 ),
+    '7b9':    ((C,     E,    G,    Bb, Db+12),
              (C, Db, E, F, G, A, Bb),
              "7th with flat 9th."),
 
-    '7#9':    ((C,     E,    G,    Bb, Ds+12 ),
+    '7#9':    ((C,     E,    G,    Bb, Ds+12),
              (C, Ds, E, F, G, A, Bb),
              "7th with sharp 9th."),
 
-    '7#9b13':    ((C,     E,    G,    Bb, Ds+12, Ab+12 ),
+    '7#9b13':    ((C,     E,    G,    Bb, Ds+12, Ab+12),
              (C, Ds, E, F, G, Ab, Bb),
              "7th with sharp 9th and flat 13th."),
 
-    '7b5b9':((C,     E,    Gb,    Bb, Db+12 ),
+    '7b5b9':((C,     E,    Gb,    Bb, Db+12),
              (C, Db, E, F, Gb, A, Bb),
              "7th with flat 5th and flat 9th."),
 
-    '7b5#9':((C,     E,    Gb,    Bb, Ds+12 ),
+    '7b5#9':((C,     E,    Gb,    Bb, Ds+12),
              (C, Ds, E, F, Gb, A, Bb),
              "7th with flat 5th and sharp 9th."),
 
-    '7#5#9':((C,     E,    Gs,    Bb, Ds+12 ),
+    '7#5#9':((C,     E,    Gs,    Bb, Ds+12),
              (C, Ds, E, F, Gs, A, Bb),
              "7th with sharp 5th and sharp 9th."),
 
 
-    'aug7': ((C,    E,    Gs,    Bb ),
+    'aug7': ((C,    E,    Gs,    Bb),
              (C, D, E, F, Gs, A, Bb),
              "An augmented chord (raised 5th) with a dominant 7th."),
 
-    'aug7b9':((C,     E,    Gs,    Bb, Db+12 ),
+    'aug7b9':((C,     E,    Gs,    Bb, Db+12),
               (C, Db, E, F, Gs, A, Bb),
               "An augmented chord (raised 5th) with a dominant 7th and flat 9th."),
 
-    'aug7#9':((C,     E,    Gs,    Bb, Ds+12 ),
+    'aug7#9':((C,     E,    Gs,    Bb, Ds+12),
               (C, Ds, E, F, Gs, A, Bb),
               "An augmented chord (raised 5th) with a dominant 7th and sharp 9th."),
 
-    'aug9M7':((C,     E,    Gs,    B, D+12 ),
+    'aug9M7':((C,     E,    Gs,    B, D+12),
               (C, D, E, F, Gs, A, B),
               "An augmented chord (raised 5th) with a major 7th and 9th."),
 
@@ -245,15 +245,15 @@ chordlist = {
                 (C, Db, Eb, Fs, Gs, A, Bb),
                 "Augmented minor 7th with flat 9th and sharp 11th."),
 
-    '11':    ((C,   C,    G,    Bb, D+12, F+12 ),
+    '11':    ((C,   C,    G,    Bb, D+12, F+12),
              (C, D, E, F, G, A, Bb),
              "9th chord plus 11th (3rd not voiced)."),
 
-    'm11':    ((C,    Eb,    G,     Bb, D+12, F+12 ),
+    'm11':    ((C,    Eb,    G,     Bb, D+12, F+12),
              (C, D, Eb, F, G, Ab, Bb),
              "9th with minor 3rd,  plus 11th."),
 
-    'm7(add11)':    ((C,    Eb,    G,    Bb, F+12 ),
+    'm7(add11)':    ((C,    Eb,    G,    Bb, F+12),
              (C, D, Eb, F, G, Ab, Bb),
              "Minor 7th  plus 11th."),
 
@@ -265,35 +265,35 @@ chordlist = {
                 (C, Db, Eb, Fs, G, A, Bb),
                 "Minor 7th plus flat 9th and sharp 11th."),
 
-    'm7(add13)':    ((C,    Eb,    G,    Bb, A+12 ),
+    'm7(add13)':    ((C,    Eb,    G,    Bb, A+12),
              (C, D, Eb, F, G, A, Bb),
              "Minor 7th  plus 13th."),
 
-    '11b9': ((C,     E,    G,    Bb, Db+12, F+12 ),
+    '11b9': ((C,     E,    G,    Bb, Db+12, F+12),
              (C, Db, E, F, G, A, Bb),
              "7th chord plus flat 9th and 11th."),
 
-    '9#5':    ((C,    E,    Gs,    Bb, D+12 ),
+    '9#5':    ((C,    E,    Gs,    Bb, D+12),
              (C, D, E, F, Gs, A, Bb),
              "7th plus 9th with sharp 5th (same as aug9)."),
 
-    '9#11': ((C,    E,     G,    Bb, D+12, Fs+12 ),
+    '9#11': ((C,    E,     G,    Bb, D+12, Fs+12),
              (C, D, E, Fs, G, A, Bb),
              "7th plus 9th and sharp 11th."),
 
-    '7#9#11':((C,     E,     G,    Bb, Ds+12, Fs+12 ),
+    '7#9#11':((C,     E,     G,    Bb, Ds+12, Fs+12),
               (C, Ds, E, Fs, G, A, Bb),
               "7th plus sharp 9th and sharp 11th."),
 
-    '7b9#11': ((C,     E,     G,    Bb, Db+12, Fs+12 ),
+    '7b9#11': ((C,     E,     G,    Bb, Db+12, Fs+12),
               (C, Db, E, Fs, G, A, Bb),
               "7th plus flat 9th and sharp 11th."),
 
-    '7#11':((C,    E,     G,    Bb,  Fs+12 ),
+    '7#11':((C,    E,     G,    Bb,  Fs+12),
              (C, D, E, Fs, G, A, Bb),
              "7th plus sharp 11th (9th omitted)."),
 
-    'M7#11':((C,    E,     G,    B,  Fs+12 ),
+    'M7#11':((C,    E,     G,    B,  Fs+12),
              (C, D, E, Fs, G, A, B),
              "Major 7th plus sharp 11th (9th omitted)."),
 
@@ -304,11 +304,11 @@ chordlist = {
     # Sus chords. Not sure what to do with the associated scales. For
     # now just duplicating the 2nd or 3rd in the scale seems to make sense.
 
-    'sus4': ((C,    F,    G ),
+    'sus4': ((C,    F,    G),
              (C, D, F, F, G, A, B),
              "Suspended 4th, major triad with the 3rd raised half tone."),
 
-    '7sus': ((C,    F,    G,    Bb ),
+    '7sus': ((C,    F,    G,    Bb),
              (C, D, F, F, G, A, Bb),
              "7th with suspended 4th, dominant 7th with 3rd "
              "raised half tone."),
@@ -317,12 +317,12 @@ chordlist = {
                (C, Db, F, F, G, A, Bb),
                "7th with suspended 4th and flat 9th."),
 
-    'sus2': ((C,    D,    G ),
+    'sus2': ((C,    D,    G),
              (C, D, D, F, G, A, B),
              "Suspended 2nd, major triad with the major 2nd above the "
              "root substituted for 3rd."),
 
-    '7sus2':((C,    D,    G,    Bb ),
+    '7sus2':((C,    D,    G,    Bb),
              (C, D, D, F, G, A, Bb),
              "A sus2 with dominant 7th added."),
 
@@ -378,7 +378,7 @@ chordlist = {
     # or a varient, we duplicate the root into the position of the 3rd ... and
     # to make the sound even we duplicate the 5th into the 4th position as well.
 
-    '5':    ((C, C,    G, G ),
+    '5':    ((C, C,    G, G),
              (C, D, E, F, G, A, B),
              "Altered Fifth or Power Chord; root and 5th only."),
 
