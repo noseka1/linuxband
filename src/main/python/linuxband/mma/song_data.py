@@ -77,7 +77,7 @@ class SongData(object):
         return self.__save_needed
 
     def changed(self):
-        logging.debug('Song changed');
+        logging.debug('Song changed')
         self.__save_needed = True
 
     def create_bar_info(self):

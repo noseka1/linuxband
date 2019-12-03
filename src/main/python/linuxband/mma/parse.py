@@ -64,7 +64,7 @@ def parse(inpath):
 
         # empty line
         if curline.rstrip('\n').strip() == '':
-            bar_info.add_line([Glob.A_UNKNOWN, curline]);
+            bar_info.add_line([Glob.A_UNKNOWN, curline])
             continue
 
         l = curline.split()

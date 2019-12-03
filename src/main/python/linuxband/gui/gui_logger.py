@@ -73,9 +73,9 @@ class GuiLogger(object):
         colormap = textView.get_colormap()
         color = colormap.alloc_color('red')
         textBuffer.create_tag('fg_red', foreground_gdk=color)
-        color = colormap.alloc_color('brown');
+        color = colormap.alloc_color('brown')
         textBuffer.create_tag('fg_brown', foreground_gdk=color)
-        color = colormap.alloc_color('black');
+        color = colormap.alloc_color('black')
         textBuffer.create_tag('fg_black', foreground_gdk=color)
 
     @staticmethod
@@ -85,5 +85,5 @@ class GuiLogger(object):
         textBufferHandler = GuiLogger.__TextBufferHandler(textView, textBuffer)
         textBufferHandler.setLevel(logging.INFO)
         textBufferHandler.setFormatter(GuiLogger.__MyFormatter(guiFormat, dateFormat))
-        rootLogger = logging.getLogger();
+        rootLogger = logging.getLogger()
         rootLogger.addHandler(textBufferHandler)

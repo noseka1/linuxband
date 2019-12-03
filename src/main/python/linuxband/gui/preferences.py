@@ -30,7 +30,7 @@ class Preferences(object):
         self.__init_gui(glade)
 
     def run(self):
-        self.__initWidgets();
+        self.__initWidgets()
         result = self.__preferencesdialog.run()
         self.__preferencesdialog.hide()
         if (result == gtk.RESPONSE_OK):

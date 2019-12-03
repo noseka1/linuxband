@@ -91,9 +91,9 @@ class EventGroove(object):
         colormap = groove_window.get_colormap()
         color = colormap.alloc_color('red')
         self.__textbuffer2.create_tag('fg_red', foreground_gdk=color)
-        color = colormap.alloc_color('brown');
+        color = colormap.alloc_color('brown')
         self.__textbuffer2.create_tag('fg_brown', foreground_gdk=color)
-        color = colormap.alloc_color('black');
+        color = colormap.alloc_color('black')
         self.__textbuffer2.create_tag('fg_black', foreground_gdk=color)
         self.__textbuffer2.create_tag("bold", weight=pango.WEIGHT_BOLD)
         self.__togglebutton1 = glade.get_widget("togglebutton1")

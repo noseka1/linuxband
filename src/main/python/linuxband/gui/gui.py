@@ -279,7 +279,7 @@ class Gui:
                 player.load_smf_data(midi_data, self.__song.get_data().get_mma_line_offset())
             else:
                 return
-            self.__enable_pause_button();
+            self.__enable_pause_button()
             if event.state & gtk.gdk.CONTROL_MASK:
                 player.playback_start_bar(self.__chord_sheet.get_current_bar_number())
             elif event.state & gtk.gdk.SHIFT_MASK:
@@ -289,7 +289,7 @@ class Gui:
 
     def playback_stop_callback(self, button=None):
         """ Stop. """
-        self.__enable_pause_button();
+        self.__enable_pause_button()
         self.__midi_player.playback_stop()
 
     __ignore_toggle = False
@@ -299,11 +299,11 @@ class Gui:
         if Gui.__ignore_toggle:
             Gui.__ignore_toggle = False
         else:
-            self.__midi_player.set_pause(button.get_active());
+            self.__midi_player.set_pause(button.get_active())
 
     def jack_reconnect_callback(self, button):
         self.__midi_player.shutdown()
-        self.__midi_player.startup();
+        self.__midi_player.startup()
 
     def switch_page_callback(self, notebook, page, pageNum):
         """ Called when clicked on notebook tab. """
@@ -334,7 +334,7 @@ class Gui:
 
     def loop_toggle_callback(self, button):
         """ Loop check button. """
-        self.__midi_player.set_loop(button.get_active());
+        self.__midi_player.set_loop(button.get_active())
         self.__config.set_loop(button.get_active())
 
     def jack_transport_toggle_callback(self, button):
