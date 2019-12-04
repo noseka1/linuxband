@@ -65,7 +65,7 @@ def main():
     Glob.CONSOLE_LOG_LEVEL = console_log_level
     Logger.initLogging(console_log_level)
     logging.debug("%s %s" % (PACKAGE_NAME, PACKAGE_VERSION))
-	# start the gui
+    # start the gui
     from linuxband.gui.gui import Gui
     Gui()
 
