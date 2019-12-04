@@ -67,10 +67,10 @@ def parse(inpath):
             bar_info.add_line([Glob.A_UNKNOWN, curline])
             continue
 
-        l = curline.split()
+        line = curline.split()
 
         # line beginning with macro
-        if l[0][0] == '$':
+        if line[0][0] == '$':
             wline = get_wrapped_line(inpath, curline)
             wline.insert(0, Glob.A_UNKNOWN)
             bar_info.add_line(wline)
@@ -92,11 +92,11 @@ def parse(inpath):
             begin[] stuff have to be here, in this order.
         """
 
-        action = l[0].upper()      # 1st arg in line
+        action = line[0].upper()      # 1st arg in line
 
         # parse BEGIN and END block
         if action == 'BEGIN':
-            block_action = l[1].upper()
+            block_action = line[1].upper()
             begin_block = parse_begin_block(inpath, curline)
             if block_action in supported_block_actions:
                 tokens = parse_supported_block_action(block_action, begin_block)
@@ -150,7 +150,7 @@ def parse(inpath):
 
         if trk_class in trk_classes:
             # parsing track sequence ?
-            parse_seq = len(l) >= 1 and l[1].upper() == 'SEQUENCE'
+            parse_seq = len(line) >= 1 and line[1].upper() == 'SEQUENCE'
             wline = []
             while True:
                 wline.extend(get_wrapped_line(inpath, curline))
@@ -177,7 +177,7 @@ def parse(inpath):
             bar_info.add_line([act, wline[0], wline[1]])
             continue
 
-        l, eol = wline
+        line, eol = wline
         # Gotta be a chord data line!
 
         """ A data line can have an optional bar number at the start
@@ -188,14 +188,14 @@ def parse(inpath):
 
         before_number = ''
         if action.isdigit():   # isdigit() matches '1', '1234' but not '1a'!
-            l2 = l.lstrip()
-            before_number_len = len(l) - len(l2)
-            before_number = l[0:before_number_len]
-            l = l2
-            numstr = l.split()[0]
+            l2 = line.lstrip()
+            before_number_len = len(line) - len(l2)
+            before_number = line[0:before_number_len]
+            line = l2
+            numstr = line.split()[0]
             bar_chords.set_number(int(numstr))
-            l = l[len(numstr):]  # remove number
-            if len(l.strip()) == 0:  # ignore empty lines
+            line = line[len(numstr):]  # remove number
+            if len(line.strip()) == 0:  # ignore empty lines
                 bar_info.add_line([Glob.A_UNKNOWN, wline[0] + wline[1]])
                 continue
 
@@ -217,8 +217,8 @@ def parse(inpath):
         mismatched_lyrics = "Mismatched []s for lyrics found in chord line"
         while True:
             chars = ''
-            while i < len(l):
-                ch = l[i]
+            while i < len(line):
+                ch = line[i]
                 if ch == '{':
                     """ Extract solo(s) from line ... this is anything in {}s.
                         The solo data is pushed into RIFFs and discarded from
@@ -252,7 +252,7 @@ def parse(inpath):
                     break
                 chars += ch
                 i += 1
-            if i == len(l):  # no more chord is coming
+            if i == len(line):  # no more chord is coming
                 if solo_count != 0:
                     raise ValueError(mismatched_solo)
                 if lyrics_count != 0:
@@ -271,12 +271,12 @@ def parse(inpath):
                     ctable.append(last_chord)
                 chord_begin = i
                 # find the end of the chord
-                while i < len(l):
-                    if l[i] in '{}[]*\t\n\\ ':
+                while i < len(line):
+                    if line[i] in '{}[]*\t\n\\ ':
                         break
                     i += 1
                 # chord examples: '/', 'z', 'Am7@2', 'Am6zC@3'
-                c = l[chord_begin:i]
+                c = line[chord_begin:i]
                 last_chord = [c]
         # the trailing string of the last chord can possibly include '\n' after which
         # it would be difficult to add further chords. Therefore move the trailing string
@@ -329,16 +329,16 @@ def get_wrapped_line_join(inpath, curline):
     comment = ''
     i = 0
     while i < len(wrapped):
-        l = wrapped[i]
+        wrapped_line = wrapped[i]
         if comment:
-            comment = comment + l
+            comment = comment + wrapped_line
         else:
-            if '//' in l:
-                l, comm = l.split('//', 1)
+            if '//' in wrapped_line:
+                wrapped_line, comm = wrapped_line.split('//', 1)
                 comment = '//' + comm
-                line = line + l
+                line = line + wrapped_line
             else:
-                line = line + l
+                line = line + wrapped_line
         i = i + 1
     return [line, comment]
 
@@ -350,10 +350,10 @@ def parse_begin_block(inpath, curline):
         curline = inpath.readline()
         if not curline:
             raise ValueError("Reached EOF while looking for End")
-        l = curline.split()
+        line = curline.split()
         action = None
-        if len(l) > 0:
-            action = l[0].upper()
+        if len(line) > 0:
+            action = line[0].upper()
         if action == 'BEGIN':
             beginDepth = beginDepth + 1
         if action == 'END':
@@ -365,18 +365,18 @@ def parse_begin_block(inpath, curline):
 
 
 def parse_mset_block(inpath, curline):
-    l = curline.split()
-    if len(l) < 2:
+    line = curline.split()
+    if len(line) < 2:
         raise ValueError("Use: MSET VARIABLE_NAME <lines> MsetEnd")
     result = [curline]
     while True:
         curline = inpath.readline()
         if not curline:
             raise ValueError("Reached EOF while looking for MSetEnd")
-        l = curline.split()
+        line = curline.split()
         action = None
-        if len(l) > 0:
-            action = l[0].upper()
+        if len(line) > 0:
+            action = line[0].upper()
         result.append(curline)
         if action in ("MSETEND", 'ENDMSET'):
             break
@@ -390,10 +390,10 @@ def parse_if_block(inpath, curline):
         curline = inpath.readline()
         if not curline:
             raise ValueError("Reached EOF while looking for EndIf")
-        l = curline.split()
+        line = curline.split()
         action = None
-        if len(l) > 0:
-            action = l[0].upper()
+        if len(line) > 0:
+            action = line[0].upper()
         if action == 'IF':
             ifDepth = ifDepth + 1
         if action in ('ENDIF', 'IFEND'):
