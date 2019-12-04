@@ -72,7 +72,7 @@ class ChordSheet(object):
         """ Redraw the screen from the backing pixmap. """
         x, y, width, height = event.area
         widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
-        self.pixmap, x, y, x, y, width, height)
+                                    self.pixmap, x, y, x, y, width, height)
         return True
 
     def move_playhead_to(self, pos):
@@ -116,8 +116,8 @@ class ChordSheet(object):
                 self.__move_cursor_to(self.__cursor_pos + 2)
                 self.__destroy_selection()
         # adjust selection
-        if key in [gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up, gtk.keysyms.Down,
-                         gtk.keysyms.Home, gtk.keysyms.End]:
+        if key in [gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up,
+                   gtk.keysyms.Down, gtk.keysyms.Home, gtk.keysyms.End]:
             if event.state & SHIFT_MASK:
                 self.__adjust_selection(old_pos)
             else:
@@ -378,23 +378,27 @@ class ChordSheet(object):
                 i = i + 1
                 continue
             # there is a chord on this beat
-            if i % 2 == 0 \
-                and i + 1 < self.__song.get_data().get_beats_per_bar() \
-                and (i + 1 >= len(chords) or chords[i + 1][0] == '/' or chords[i + 1][0] == ''):
+            if (i % 2 == 0
+                    and i + 1 < self.__song.get_data().get_beats_per_bar()
+                    and (i + 1 >= len(chords) or chords[i + 1][0] == '/' or chords[i + 1][0] == '')):
                 # the next beat has no chord we can expand us
-                self.__render_chord_xy(chords[i][0],
-                                bar_x + (chord_width + ChordSheet.__cell_padding) * i,
-                                bar_y + ChordSheet.__cell_padding,
-                                chord_width + ChordSheet.__cell_padding + chord_width,
-                                bar_chords_height,
-                                playhead)
+                self.__render_chord_xy(
+                    chords[i][0],
+                    bar_x + (chord_width + ChordSheet.__cell_padding) * i,
+                    bar_y + ChordSheet.__cell_padding,
+                    chord_width + ChordSheet.__cell_padding + chord_width,
+                    bar_chords_height,
+                    playhead
+                )
             else:
-                self.__render_chord_xy(chords[i][0],
-                                bar_x + (chord_width + ChordSheet.__cell_padding) * i,
-                                bar_y + ChordSheet.__cell_padding,
-                                chord_width,
-                                bar_chords_height,
-                                playhead)
+                self.__render_chord_xy(
+                    chords[i][0],
+                    bar_x + (chord_width + ChordSheet.__cell_padding) * i,
+                    bar_y + ChordSheet.__cell_padding,
+                    chord_width,
+                    bar_chords_height,
+                    playhead
+                )
             i = i + 1
 
     def __draw_repetition(self, x, y, gc, end):
@@ -454,12 +458,15 @@ class ChordSheet(object):
                 fd = pango.FontDescription('Monospace Bold 8')
                 pango_layout.set_font_description(fd)
                 ink, logical = pango_layout.get_pixel_extents()
-                self.pixmap.draw_layout(gc, x + ChordSheet.__cell_padding,
-                                    y + (ChordSheet.__bar_height - ink[1] - ink[3]) - ChordSheet.__cell_padding, pango_layout)
+                self.pixmap.draw_layout(
+                    gc, x + ChordSheet.__cell_padding,
+                    y + (ChordSheet.__bar_height - ink[1] - ink[3]) - ChordSheet.__cell_padding,
+                    pango_layout
+                )
 
     def __get_pos_x(self, pos):
-        return (pos / 2 % ChordSheet.__bars_per_line) * self.__bar_width \
-                                        + (pos % 2 * self.__bar_info_width)
+        return ((pos / 2 % ChordSheet.__bars_per_line) * self.__bar_width
+                + (pos % 2 * self.__bar_info_width))
 
     def __get_pos_y(self, pos):
         return (pos / 2 / ChordSheet.__bars_per_line) * ChordSheet.__bar_height

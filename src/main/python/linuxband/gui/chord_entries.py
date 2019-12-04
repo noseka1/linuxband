@@ -57,8 +57,8 @@ class ChordEntries(object):
 
     def on_entry_key_release_event_callback(self, widget, event):
         key = event.keyval
-        if key == gtk.keysyms.Escape \
-            or (event.state & CONTROL_MASK and key == gtk.keysyms.bracketright):
+        if (key == gtk.keysyms.Escape
+                or (event.state & CONTROL_MASK and key == gtk.keysyms.bracketright)):
             # cancel chord editing
             self.__chord_sheet.render_current_field()
             self.refresh()
@@ -125,14 +125,16 @@ class ChordEntries(object):
     def __init_gui(self, glade, chord_names):
         Common.connect_signals(glade, self)
         self.__hbox6 = glade.get_widget("hbox6")
-        self.__entries = [glade.get_widget("entry1"),
-                         glade.get_widget("entry2"),
-                         glade.get_widget("entry3"),
-                         glade.get_widget("entry4"),
-                         glade.get_widget("entry5"),
-                         glade.get_widget("entry6"),
-                         glade.get_widget("entry7"),
-                         glade.get_widget("entry8")]
+        self.__entries = [
+            glade.get_widget("entry1"),
+            glade.get_widget("entry2"),
+            glade.get_widget("entry3"),
+            glade.get_widget("entry4"),
+            glade.get_widget("entry5"),
+            glade.get_widget("entry6"),
+            glade.get_widget("entry7"),
+            glade.get_widget("entry8")
+        ]
         # Initialize chord entry completion
         model = gtk.ListStore(str)
         for chord in chord_names:

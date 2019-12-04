@@ -201,11 +201,13 @@ class EventsBar(object):
         self.__triples.append([self.__togglebutton1, groove_window, self.__eventGroove, None])
         self.__triples.append([self.__togglebutton2, tempo_window, self.__eventTempo, None])
         # add event menu
-        event_items = {Glob.A_GROOVE: "Groove change",
-                      Glob.A_TEMPO: "Tempo change",
-                      Glob.A_REPEAT: "Repeat",
-                      Glob.A_REPEAT_ENDING: "RepeatEnding",
-                      Glob.A_REPEAT_END: "RepeatEnd"}
+        event_items = {
+            Glob.A_GROOVE:        "Groove change",
+            Glob.A_TEMPO:         "Tempo change",
+            Glob.A_REPEAT:        "Repeat",
+            Glob.A_REPEAT_ENDING: "RepeatEnding",
+            Glob.A_REPEAT_END:    "RepeatEnd"
+        }
         self.__addEventMenu = gtk.Menu()
         menu = self.__addEventMenu
         for key in Glob.EVENTS:
@@ -214,17 +216,21 @@ class EventsBar(object):
             menu.append(item)
         menu.show_all()
         # for dynamic event creation
-        self.__event_windows = {Glob.A_GROOVE: groove_window,
-                              Glob.A_TEMPO: tempo_window,
-                              Glob.A_REPEAT: repeat_window,
-                              Glob.A_REPEAT_ENDING: repeat_ending_window,
-                              Glob.A_REPEAT_END: repeat_end_window}
+        self.__event_windows = {
+            Glob.A_GROOVE:        groove_window,
+            Glob.A_TEMPO:         tempo_window,
+            Glob.A_REPEAT:        repeat_window,
+            Glob.A_REPEAT_ENDING: repeat_ending_window,
+            Glob.A_REPEAT_END:    repeat_end_window
+        }
 
-        self.__event_window_handlers = {Glob.A_GROOVE: self.__eventGroove,  # reusing already existing object
-                                      Glob.A_TEMPO: self.__eventTempo,
-                                      Glob.A_REPEAT: EventRepeat(glade),
-                                      Glob.A_REPEAT_ENDING: EventRepeatEnding(glade),
-                                      Glob.A_REPEAT_END: EventRepeatEnd(glade)}
+        self.__event_window_handlers = {
+            Glob.A_GROOVE:        self.__eventGroove,
+            Glob.A_TEMPO:         self.__eventTempo,
+            Glob.A_REPEAT:        EventRepeat(glade),
+            Glob.A_REPEAT_ENDING: EventRepeatEnding(glade),
+            Glob.A_REPEAT_END:    EventRepeatEnd(glade)
+        }
 
     def __refresh_events_bar(self):
         """ Refresh events bar """
