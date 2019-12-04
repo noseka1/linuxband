@@ -39,7 +39,7 @@ class AboutDialog(object):
                 license_text = infile.read()
             finally:
                 infile.close()
-        except:
+        except IOError:
             logging.exception("Unable to read license file '" + fname + "'")
         dialog.set_license(license_text)
         Common.connect_signals(glade, self)

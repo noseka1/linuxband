@@ -42,7 +42,7 @@ class Song(object):
                 mma_data = mma_file.read()
             finally:
                 mma_file.close()
-        except:
+        except IOError:
             logging.exception("Unable to open '" + file_name + "' for input")
             return -2
         self.__pending_mma_data = mma_data
@@ -133,5 +133,5 @@ class Song(object):
                 f.write(data)
             finally:
                 f.close()
-        except:
+        except IOError:
             logging.exception("Failed to save data to '" + file_name + "'.")

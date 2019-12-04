@@ -81,7 +81,7 @@ class MidiPlayer:
             command.insert(1, '-d')
         try:
             self.__player = subprocess.Popen(command, stdin=subprocess.PIPE)
-        except:
+        except subprocess.CalledProcessError:
             logging.exception("Failed to run command '%s'", ' '.join(command))
             os.close(piper)
             os.close(pipew)
@@ -110,15 +110,15 @@ class MidiPlayer:
         # descriptors could have been already closed
         try:
             os.close(self.__piper)
-        except:
+        except IOError:
             pass
         try:
             os.close(self.__pipew)
-        except:
+        except IOError:
             pass
         try:
             os.close(self.__pout)
-        except:
+        except IOError:
             pass
 
     def load_smf_data(self, midi_data, offset):
@@ -228,7 +228,7 @@ class MidiPlayer:
                                   str(timeout) + " seconds.")
                 else:
                     os.write(self.__pout, data)
-            except:
+            except IOError:
                 logging.error("Failed to send data to midi player. Ensure the JACK server is running and hit the JACK reconnect button.")
         else:
             logging.debug("Not yet connected.")

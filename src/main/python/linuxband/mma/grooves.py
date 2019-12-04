@@ -133,7 +133,7 @@ class Grooves(object):
             except ValueError:
                 logging.exception("Failed to parse the file.")
             mma_file.close()
-        except:
+        except IOError:
             logging.exception("Failed to load grooves from file '" + file_name + "'")
         return song_data
 
@@ -150,7 +150,7 @@ class Grooves(object):
                 grooves_list = pickle.load(infile)
             finally:
                 infile.close()
-        except:
+        except IOError:
             logging.exception("Unable to load grooves from cache '" + fname + "'")
             return
         logging.info("Loaded %d groove patterns from cache '%s'" % (len(grooves_list), fname))
@@ -168,5 +168,5 @@ class Grooves(object):
                 pickle.dump(grooves_list, outfile, True)
             finally:
                 outfile.close()
-        except:
+        except IOError:
             logging.exception("Unable to store grooves into cache '" + fname + "'")

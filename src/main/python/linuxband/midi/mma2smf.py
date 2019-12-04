@@ -39,14 +39,14 @@ class MidiGenerator(object):
         command = [self.__config.get_mma_path(), mmainput, '-n']  # -n No generation of midi output
         try:
             mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        except:
+        except subprocess.CalledProcessError:
             logging.exception("Failed to run command '" + ' '.join(command) + "'")
             return -2
         try:
             fout = mma.stdin
             fout.write(mma_data)
             fout.close()
-        except:
+        except IOError:
             logging.exception("Failed to send data to MMA")
             return -2
         exit_status = mma.wait()
@@ -68,11 +68,11 @@ class MidiGenerator(object):
         finally:
             try:
                 os.close(piper)
-            except:
+            except IOError:
                 pass
             try:
                 os.close(pipew)
-            except:
+            except IOError:
                 pass
         return res_and_midi
 
@@ -85,14 +85,14 @@ class MidiGenerator(object):
         command = [self.__config.get_mma_path(), mmainput, '-f', mmaoutput]
         try:
             mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        except:
+        except subprocess.CalledProcessError:
             logging.exception("Failed to run command '" + ' '.join(command) + "'")
             return (-2, '')
         try:
             fout = mma.stdin
             fout.write(mma_data)
             fout.close()
-        except:
+        except IOError:
             logging.exception("Failed to send data to MMA")
             return (-2, '')
         try:
@@ -105,7 +105,7 @@ class MidiGenerator(object):
                 return (-1, '')
             os.close(pipew)  # close our write pipe end, now only MMA has it opened
             midi_data = fin.read()
-        except:
+        except IOError:
             logging.exception("Failed to read midi data from MMA")
         exit_status = mma.wait()
         if (exit_status != 0):
