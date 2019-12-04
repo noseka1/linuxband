@@ -93,9 +93,9 @@ chordlist = {
     'mM7':    ((C,    Eb,      G,      B),
              (C, D, Eb, F, G, Ab, B),
              "Minor Triad plus Major 7th. You will also see this printed "
-             "as ``m(maj7)'', ``m+7'', ``min(maj7)'' and ``min$\sharp$7'' "
-             "(which \mma\ accepts); as well as the \mma\ \emph{invalid} "
-             "forms: ``-($\Delta$7)'', and ``min$\\natural$7''."),
+             "as ``m(maj7)'', ``m+7'', ``min(maj7)'' and ``min♯7'' "
+             "(which mma accepts); as well as the mma invalid "
+             "forms: ``-(Δ7)'', and ``min♮7''."),
 
     'm+7b9':  ((C, Eb, Gs, Bb, Db+12),
                (C, Db, Eb, F, Gs, Ab, Bb),
