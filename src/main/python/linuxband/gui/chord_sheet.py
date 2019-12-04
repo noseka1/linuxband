@@ -78,7 +78,7 @@ class ChordSheet(object):
     def move_playhead_to(self, pos):
         new_pos = pos * 2 + 1 if pos > -1 else -1
         old_pos = self.__playhead_pos
-        if  old_pos != new_pos:
+        if old_pos != new_pos:
             self.__playhead_pos = new_pos
             self.__render_field(old_pos)
             self.__render_field(new_pos)
