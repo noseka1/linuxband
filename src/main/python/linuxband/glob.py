@@ -43,7 +43,7 @@ class Glob:
     OUTPUT_FILE_DEFAULT = "untitled.mma"
     UNTITLED_SONG_NAME = "Untitled Song"
 
-        # user's home dir - works for windows/unix/linux
+    # user's home dir - works for windows/unix/linux
     HOME_DIR = os.getenv('USERPROFILE') or os.getenv('HOME')
     CONFIG_DIR = HOME_DIR + '/.linuxband'
 
