@@ -17,14 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
-import pickle
-import logging
 import fnmatch
+import logging
 import os
+import pickle
+
+import gtk
+
 from linuxband.glob import Glob
-from linuxband.mma.parse import parse
 from linuxband.mma.bar_info import BarInfo
+from linuxband.mma.parse import parse
 
 
 class Grooves(object):

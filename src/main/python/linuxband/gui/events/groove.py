@@ -17,12 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import gobject
 import gtk
 import pango
-import gobject
+
 from linuxband.glob import Glob
-from linuxband.mma.bar_info import BarInfo
 from linuxband.gui.common import Common
+from linuxband.mma.bar_info import BarInfo
 
 
 class EventGroove(object):

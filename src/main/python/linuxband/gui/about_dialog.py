@@ -18,8 +18,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-from linuxband.gui.common import Common
+
 from linuxband.glob import Glob
+from linuxband.gui.common import Common
 
 
 class AboutDialog(object):

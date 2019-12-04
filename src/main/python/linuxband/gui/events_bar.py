@@ -19,6 +19,7 @@
 
 import gobject
 import gtk
+
 from linuxband.glob import Glob
 from linuxband.gui.common import Common
 from linuxband.gui.events.groove import EventGroove
