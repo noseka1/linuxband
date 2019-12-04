@@ -119,7 +119,7 @@ class SongData(object):
         if len(lines) > 0:
             if lines[0][0] == Glob.A_REMARK:
                 comm = lines[0][-1].strip()
-                comm = comm [2:]  # remove '//'
+                comm = comm[2:]  # remove '//'
                 return comm.strip()
         return Glob.UNTITLED_SONG_NAME
 
