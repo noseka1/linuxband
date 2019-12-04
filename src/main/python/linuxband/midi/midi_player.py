@@ -229,6 +229,8 @@ class MidiPlayer:
                 else:
                     os.write(self.__pout, data)
             except IOError:
-                logging.error("Failed to send data to midi player. Ensure the JACK server is running and hit the JACK reconnect button.")
+                logging.error("Failed to send data to midi player. Ensure the "
+                              "JACK server is running and hit the JACK reconnect "
+                              "button.")
         else:
             logging.debug("Not yet connected.")

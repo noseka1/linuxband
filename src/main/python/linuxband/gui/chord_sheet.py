@@ -354,11 +354,15 @@ class ChordSheet(object):
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
         gc.set_foreground(color)
-        self.pixmap.draw_rectangle(gc, True, bar_x, bar_y, self.__bar_chords_width, ChordSheet.__bar_height)
+        self.pixmap.draw_rectangle(
+            gc, True, bar_x, bar_y, self.__bar_chords_width, ChordSheet.__bar_height
+        )
         if cursor:  # black border
             color = self.__colormap.alloc_color("black")
             gc.set_foreground(color)
-            self.pixmap.draw_rectangle(gc, False, bar_x, bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1)
+            self.pixmap.draw_rectangle(
+                gc, False, bar_x, bar_y, self.__bar_chords_width - 1, ChordSheet.__bar_height - 1
+            )
 
         if not chords:
             return
@@ -369,7 +373,9 @@ class ChordSheet(object):
             color = self.__colormap.alloc_color("black")
         gc.set_foreground(color)
 
-        bar_chords_width = self.__bar_chords_width - (self.__song.get_data().get_beats_per_bar()) * ChordSheet.__cell_padding
+        bar_chords_width = (self.__bar_chords_width
+                            - (self.__song.get_data().get_beats_per_bar())
+                            * ChordSheet.__cell_padding)
         bar_chords_height = ChordSheet.__bar_height - 2 * ChordSheet.__cell_padding
         chord_width = bar_chords_width / self.__song.get_data().get_beats_per_bar()
         i = 0

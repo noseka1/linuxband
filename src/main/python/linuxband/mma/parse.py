@@ -406,21 +406,28 @@ def parse_if_block(inpath, curline):
 
 def parse_supported_action(action, wline):
     line = []
-    if action == Glob.A_AUTHOR:  # ['Author', ' Bob van der Poel\n']
+    if action == Glob.A_AUTHOR:
+        # ['Author', ' Bob van der Poel\n']
         line = tokenize_line(wline[0], 1)
-    elif action == Glob.A_DEF_GROOVE:  # ['DefGroove', ' ', 'ModernJazz', '   ModernJazz with just a piano and guitar.\n']
+    elif action == Glob.A_DEF_GROOVE:
+        # ['DefGroove', ' ', 'ModernJazz', '   ModernJazz with just a piano and guitar.\n']
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_GROOVE:  # ['Groove', ' ', 'Tango', ' LightTango LightTangoSus LightTango\n']
+    elif action == Glob.A_GROOVE:
+        # ['Groove', ' ', 'Tango', ' LightTango LightTangoSus LightTango\n']
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_REPEAT:  # nothing to parse
+    elif action == Glob.A_REPEAT:
+        # Nothing to parse
         line = [wline[0]]
-    elif action == Glob.A_REPEAT_END:  # ['RepeatEnd', ' ', '2', '\n'] or ['RepeatEnd', '\n' ]
+    elif action == Glob.A_REPEAT_END:
+        # ['RepeatEnd', ' ', '2', '\n'] or ['RepeatEnd', '\n' ]
         line = tokenize_line(wline[0], 2)
     elif action == Glob.A_REPEAT_ENDING:
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_TEMPO:  # ['Tempo', ' ', '120', '\n']
+    elif action == Glob.A_TEMPO:
+        # ['Tempo', ' ', '120', '\n']
         line = tokenize_line(wline[0], 2)
-    elif action == Glob.A_TIME:  # ['Time', ' ', '4'. '\n' ]
+    elif action == Glob.A_TIME:
+        # ['Time', ' ', '4'. '\n' ]
         line = tokenize_line(wline[0], 2)
     line.append(wline[1])
     return line

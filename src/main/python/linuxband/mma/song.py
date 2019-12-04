@@ -53,7 +53,9 @@ class Song(object):
         self.__song_data.set_save_needed(True)
 
     def compile_song(self):
-        if not self.__song_data.is_save_needed() and self.__pending_mma_data is None and self.__invalid_mma_data is None:
+        if (not self.__song_data.is_save_needed()
+                and self.__pending_mma_data is None
+                and self.__invalid_mma_data is None):
             logging.debug('No compilation needed')
             return self.__last_compile_result
         if self.__pending_mma_data is None:

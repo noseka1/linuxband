@@ -406,8 +406,12 @@ class Gui:
 
     def __handle_unsaved_changes(self):
         if self.__song.get_data().is_save_needed():
-            self.__save_changes_dialog.set_property("text", "Save changes to " + self.__song.get_data().get_title() + "?")
-            self.__save_changes_dialog.set_property("secondary_text", "Your changes will be lost if you don't save them.")
+            self.__save_changes_dialog.set_property(
+                "text", "Save changes to " + self.__song.get_data().get_title() + "?"
+            )
+            self.__save_changes_dialog.set_property(
+                "secondary_text", "Your changes will be lost if you don't save them."
+            )
             result = self.__save_changes_dialog.run()
             self.__save_changes_dialog.hide()
             if (result == gtk.RESPONSE_YES):
