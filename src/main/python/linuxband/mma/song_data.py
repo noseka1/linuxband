@@ -127,7 +127,7 @@ class SongData(object):
         bar_info = self.__bar_info[0]
         # get first line
         lines = bar_info.get_lines()
-        if len(lines) == 0 or lines[0][0] <> Glob.A_REMARK:
+        if len(lines) == 0 or lines[0][0] != Glob.A_REMARK:
             line = [Glob.A_REMARK, ""]
             bar_info.insert_line(line)
         else:

@@ -213,7 +213,7 @@ class Gui:
     def open_file_callback(self, menutime):
         """ Open. """
         if self.__handle_unsaved_changes():
-            if (self.__open_file_dialog.get_current_folder() <> self.__config.get_work_dir()):
+            if (self.__open_file_dialog.get_current_folder() != self.__config.get_work_dir()):
                 self.__open_file_dialog.set_current_folder(self.__config.get_work_dir())
             result = self.__open_file_dialog.run()
             self.__open_file_dialog.hide()
@@ -247,7 +247,7 @@ class Gui:
     def export_midi_callback(self, menuitem):
         """ Export MIDI. """
         if self.__compile_song(True) == 0:
-            if (self.__export_midi_dialog.get_current_folder() <> self.__config.get_work_dir()):
+            if (self.__export_midi_dialog.get_current_folder() != self.__config.get_work_dir()):
                 self.__export_midi_dialog.set_current_folder(self.__config.get_work_dir())
             out_file = self.__output_file if self.__output_file else Glob.OUTPUT_FILE_DEFAULT
             out_file = self.__change_extension(out_file, "mid")
@@ -379,7 +379,7 @@ class Gui:
             self.__show_mma_error(res)
 
     def __do_save_as(self):
-        if (self.__save_as_dialog.get_current_folder() <> self.__config.get_work_dir()):
+        if (self.__save_as_dialog.get_current_folder() != self.__config.get_work_dir()):
             self.__save_as_dialog.set_current_folder(self.__config.get_work_dir())
         self.__save_as_dialog.set_current_name(Glob.OUTPUT_FILE_DEFAULT)
         result = self.__save_as_dialog.run()
