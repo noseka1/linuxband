@@ -457,7 +457,7 @@ aliases = (
     ('dim3',        'mb5',      'Diminished triad (non-standard notation).'),
     ('omit3(add9)', 'omit3add9', ''),
     ('9sus4',       'sus9',     '')
-    )
+)
 
 for a, b, d in aliases:
     n = chordlist[b][0]
