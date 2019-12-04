@@ -224,8 +224,8 @@ class MidiPlayer:
             try:
                 timeout = 2
                 if not select.select([], [self.__pout], [], timeout)[1]:
-                    logging.error("Cannot send data to midi player. Timeout after "
-                              + str(timeout) + " seconds.")
+                    logging.error("Cannot send data to midi player. Timeout after " +
+                                  str(timeout) + " seconds.")
                 else:
                     os.write(self.__pout, data)
             except:
