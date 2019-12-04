@@ -57,7 +57,7 @@ class ChordSheet(object):
         self.drawable = self.__area.window
         self.gc = self.drawable.new_gc()
         # Create a new backing pixmap of the appropriate size
-        self.pixmap = gtk.gdk.Pixmap(self.drawable, self.__drawing_area_width, self.__drawing_area_height, depth= -1)
+        self.pixmap = gtk.gdk.Pixmap(self.drawable, self.__drawing_area_width, self.__drawing_area_height, depth=-1)
         gc = self.drawable.new_gc()
         gc.copy(self.gc)
         green = self.__colormap.alloc_color(ChordSheet.__color_no_song, True, True)
