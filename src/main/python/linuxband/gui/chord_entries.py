@@ -171,7 +171,7 @@ class ChordEntries(object):
 
         chord_names = []
         for c in base_ext:
-            for k, v in chordlist.iteritems():
+            for k in chordlist.iterkeys():
                 chord_names.append(c + k)
 
         chord_names.sort()
