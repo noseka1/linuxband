@@ -38,20 +38,21 @@ class MidiGenerator(object):
         mmainput = '/proc/self/fd/0'
         command = [self.__config.get_mma_path(), mmainput, '-n']  # -n No generation of midi output
         try:
-            mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        except subprocess.CalledProcessError:
-            logging.exception("Failed to run command '" + ' '.join(command) + "'")
+            mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except OSError as e:
+            logging.exception("Failed to run command '%s':\n%s", ' '.join(command), e.strerror)
             return -2
+        
         try:
             fout = mma.stdin
             fout.write(mma_data)
             fout.close()
-        except IOError:
-            logging.exception("Failed to send data to MMA")
+        except OSError as e:
+            logging.exception("Failed to send data to MMA:\n%s", e.strerror)
             return -2
-        exit_status = mma.wait()
-        if (exit_status != 0):
-            logging.error("Failed generating midi data. MMA returned status code " + str(exit_status))
+        
+        if (mma.wait() != 0):
+            logging.error("Failed generating midi data. MMA returned status code %s", mma.returncode)
             outstr = mma.stdout.readlines()
             num = self.__parse_error_line_number(outstr)
             logging.error(''.join(outstr))
@@ -68,11 +69,11 @@ class MidiGenerator(object):
         finally:
             try:
                 os.close(piper)
-            except IOError:
+            except OSError:
                 pass
             try:
                 os.close(pipew)
-            except IOError:
+            except OSError:
                 pass
         return res_and_midi
 
@@ -83,18 +84,21 @@ class MidiGenerator(object):
         mmainput = '/proc/self/fd/0'
         mmaoutput = '/proc/' + str(Glob.PID) + '/fd/' + str(pipew)
         command = [self.__config.get_mma_path(), mmainput, '-f', mmaoutput]
+        
         try:
-            mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        except subprocess.CalledProcessError:
-            logging.exception("Failed to run command '" + ' '.join(command) + "'")
+            mma = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except OSError as e:
+            logging.exception("Failed to run command '%s':\n%s", ' '.join(command), e.strerror)
             return (-2, '')
+        
         try:
             fout = mma.stdin
             fout.write(mma_data)
             fout.close()
-        except IOError:
-            logging.exception("Failed to send data to MMA")
+        except OSError as e:
+            logging.exception("Failed to send data to MMA:\n%s", e.strerror)
             return (-2, '')
+        
         try:
             fin = os.fdopen(piper, 'r')
             timeout = 2
@@ -105,12 +109,13 @@ class MidiGenerator(object):
                 return (-1, '')
             os.close(pipew)  # close our write pipe end, now only MMA has it opened
             midi_data = fin.read()
-        except IOError:
-            logging.exception("Failed to read midi data from MMA")
-        exit_status = mma.wait()
-        if (exit_status != 0):
-            logging.error("Failed generating midi data. MMA returned status code " + str(exit_status))
+        except OSError as e:
+            logging.exception("Failed to read midi data from MMA:\n%s", e.strerror)
+        
+        if (mma.wait() != 0):
+            logging.error("Failed generating midi data. MMA returned status code %s", mma.returncode)
             return (-2, '')
+        
         return (0, midi_data)
 
     def __parse_error_line_number(self, lines):

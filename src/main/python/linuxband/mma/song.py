@@ -37,16 +37,21 @@ class Song(object):
     def load_from_file(self, file_name):
         logging.info("Loading file '%s'", file_name)
         try:
-            mma_file = file(file_name, 'r')
+            mma_file = open(file_name, 'r')
             try:
                 mma_data = mma_file.read()
+
             finally:
                 mma_file.close()
-        except IOError:
-            logging.exception("Unable to open '" + file_name + "' for input")
-            return -2
-        self.__pending_mma_data = mma_data
-        self.__song_data.set_save_needed(False)
+        
+        except IOError as e:
+            logging.exception("Unable to read '%s' for input:\n%s", file_name, e.strerror)
+        else:
+            self.__pending_mma_data = mma_data
+            self.__song_data.set_save_needed(False)
+        
+
+
 
     def load_from_string(self, mma_data):
         self.__pending_mma_data = mma_data
@@ -130,10 +135,11 @@ class Song(object):
     def __do_write_to_file(self, file_name, data):
         logging.info('Opening output file %s', file_name)
         try:
-            f = file(file_name, 'w')
+            f = open(file_name, 'w')
             try:
                 f.write(data)
             finally:
                 f.close()
-        except IOError:
-            logging.exception("Failed to save data to '" + file_name + "'.")
+        
+        except IOError as e:
+            logging.exception("Failed to save data to '%s':\n%s", file_name, e.strerror)

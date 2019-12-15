@@ -79,46 +79,59 @@ class MidiPlayer:
         command = [Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName]
         if Glob.CONSOLE_LOG_LEVEL == logging.DEBUG:
             command.insert(1, '-d')
+        
         try:
-            self.__player = subprocess.Popen(command, stdin=subprocess.PIPE)
-        except subprocess.CalledProcessError:
-            logging.exception("Failed to run command '%s'", ' '.join(command))
+            self.__player = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        except OSError as e:
+            logging.exception("Failed to run command '%s':\n%s", ' '.join(command), e.strerror)
             os.close(piper)
             os.close(pipew)
-            return
-        # sending data to midi player should not block
-        out = self.__player.stdin.fileno()
-        flags = fcntl.fcntl(out, fcntl.F_GETFL)
-        fcntl.fcntl(out, fcntl.F_SETFL, flags | os.O_NONBLOCK)
-        self.__pout = out
-        # start receive thread listening for incoming events
-        self.__receive_thread = threading.Thread(target=self.__receive_data)
-        self.__receive_thread.start()
-        self.__connected = True
-        self.__resend_data()
+        
+        else:
+            # Ensure command hasn't terminated with error code
+            if self.__player.returncode is not None and self.__player.returncode != 0:
+                logging.exception("Command '%s' failed with:\n%s", ' '.join(command), self.__player.stderr)
+                return
+
+            # Sending data to midi player should not block
+            out = self.__player.stdin.fileno()
+            flags = fcntl.fcntl(out, fcntl.F_GETFL)
+            fcntl.fcntl(out, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+            self.__pout = out
+
+            # Start receive thread listening for incoming events
+            self.__receive_thread = threading.Thread(target=self.__receive_data)
+            self.__receive_thread.start()
+            self.__connected = True
+            self.__resend_data()
 
     def shutdown(self):
         if self.__receive_thread:
             os.write(self.__pipew, MidiPlayer.__COMM_FINISH + MidiPlayer.__SEPARATOR)
             self.__receive_thread.join()
             self.__receive_thread = None
+        
         if self.__player:
             self.playback_stop()
             self.__send_token(MidiPlayer.__COMM_FINISH)
             self.__player.wait()
             self.__player = None
-        # descriptors could have been already closed
+        
+        # Descriptors could have been already closed
         try:
             os.close(self.__piper)
-        except IOError:
+        except OSError:
             pass
+        
         try:
             os.close(self.__pipew)
-        except IOError:
+        except OSError:
             pass
+        
         try:
             os.close(self.__pout)
-        except IOError:
+        except OSError:
             pass
 
     def load_smf_data(self, midi_data, offset):
@@ -228,7 +241,7 @@ class MidiPlayer:
                                   "after " + str(timeout) + " seconds.")
                 else:
                     os.write(self.__pout, data)
-            except IOError:
+            except OSError:
                 logging.error("Failed to send data to midi player. Ensure the "
                               "JACK server is running and hit the JACK reconnect "
                               "button.")

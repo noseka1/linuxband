@@ -47,11 +47,11 @@ class Config(object):
 
     def load_config(self):
         if self.__ensure_dir(Glob.CONFIG_DIR):
+            logging.debug("Opening config")
             try:
-                logging.debug("Opening config")
                 self.__config.read(Config.__rc_file)
-            except IOError:
-                logging.exception("Error reading configuration file '%s', loading defaults." % Config.__rc_file)
+            except ConfigParser.Error as e:
+                logging.exception("Error reading configuration file '%s': %s.\nLoading defaults." % Config.__rc_file, e)
                 self.__load_default_config()
         else:
             self.__load_default_config()
@@ -64,13 +64,22 @@ class Config(object):
         fname = Config.__rc_file
         logging.info("Saving configuration to '" + fname + "'")
         try:
-            out_file = file(fname, 'w')
+            out_file = open(fname, 'w')
             try:
                 self.__config.write(out_file)
+            
+            except ConfigParser.Error as e:
+                logging.exception("Error writing configuration file '%s':\n%s", fname, e)
+            
             finally:
                 out_file.close()
-        except IOError:
-            logging.exception("Unable to save configuration file '" + fname + "'")
+        
+        except IOError as e:
+            logging.exception("Cannot open configuration file '%s' for writing:\n%s", fname, e.strerror)
+
+                
+            
+            
 
     def get_work_dir(self):
         return self.__config.get(Config.__SAVED, Config.__WORK_DIR)
@@ -130,8 +139,8 @@ class Config(object):
         try:
             self.__config.read(Config.__default_config)
             self.set_work_dir(Config.__home_dir)
-        except IOError:
-            logging.exception("Failed to read default configuration from '" + Config.__default_config + "'")
+        except ConfigParser.Error as e:
+            logging.exception("Failed to read default configuration from '%s':\n%s", Config.__default_config, e)
 
     def __ensure_dir(self, newdir):
         """
@@ -141,6 +150,6 @@ class Config(object):
             return True
         try:
             os.mkdir(newdir)
-        except OSError:
-            logging.exception("Unable to create directory '" + newdir + "'")
+        except OSError as e:
+            logging.exception("Unable to create directory '%s':\n%s", newdir, e.strerror)
         return False

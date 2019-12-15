@@ -127,14 +127,19 @@ class Grooves(object):
         song_data = None
         logging.debug("Opening groove file '%s'" % file_name)
         try:
-            mma_file = file(file_name, 'r')
+            mma_file = open(file_name, 'r')
             try:
                 song_data = parse(mma_file)
-            except ValueError:
-                logging.exception("Failed to parse the file.")
-            mma_file.close()
-        except IOError:
-            logging.exception("Failed to load grooves from file '" + file_name + "'")
+        
+            except ValueError as e:
+                logging.exception("Error parsing groove file '%s':\n%s", file_name, e.strerror)
+        
+            finally:
+                mma_file.close()
+        
+        except IOError as e:
+            logging.exception("Failed to load grooves from '%s':\n%s", file_name, e.strerror)
+        
         return song_data
 
     def __load_grooves_from_cache(self):
@@ -145,28 +150,32 @@ class Grooves(object):
         """
         fname = Grooves.__grooves_cache_file
         try:
-            infile = file(fname, 'r')
+            infile = open(fname, 'r')
             try:
                 grooves_list = pickle.load(infile)
             finally:
                 infile.close()
-        except IOError:
-            logging.exception("Unable to load grooves from cache '" + fname + "'")
-            return
-        logging.info("Loaded %d groove patterns from cache '%s'" % (len(grooves_list), fname))
-        return self.__create_grooves_model(grooves_list)
+        
+        except Exception as e:
+            logging.exception("Failed to read grooves from '%s'", fname)
+        
+        else:
+            logging.info("Loaded %d groove patterns from cache '%s'" % (len(grooves_list), fname))
+            return self.__create_grooves_model(grooves_list)
 
     def __cache_grooves(self, grooves_list):
         """
         Store the grooves_list into cache file.
         """
         fname = Grooves.__grooves_cache_file
-        logging.info("Stored %d groove patterns in cache '%s'" % (len(grooves_list), fname))
         try:
-            outfile = file(fname, 'w')
+            outfile = open(fname, 'w')
             try:
                 pickle.dump(grooves_list, outfile, True)
             finally:
                 outfile.close()
-        except IOError:
+
+        except Exception:
             logging.exception("Unable to store grooves into cache '" + fname + "'")
+        else:
+            logging.info("Stored %d groove patterns in cache '%s'" % (len(grooves_list), fname))
