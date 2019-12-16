@@ -119,7 +119,7 @@ class EventGroove(object):
         """ Update description, author ... of the currently selected groove. """
         tb = self.__textbuffer2
         tb.set_text('')
-        start, end = tb.get_bounds()[0]
+        end = tb.get_bounds()[1]
         tb.insert_with_tags_by_name(end, gr[0] + '\n', 'fg_brown', 'bold')
         tb.insert(end, gr[1] + '\n\n')
         tb.insert_with_tags_by_name(end, gr[2] + '\n\n', 'bold')
