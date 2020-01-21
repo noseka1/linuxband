@@ -30,7 +30,7 @@ AC_TYPE_SIGNAL
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([gettimeofday memset pow strdup strerror strtol])
 
-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32.0)
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 
