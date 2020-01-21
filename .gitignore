@@ -1,7 +1,18 @@
+# Python byte code
 *.pyc
+
+# Automake artifacts
+autom4te.cache
 aclocal.m4
 config.h.in
 config.status
 configure
 install-sh
+
+# Configure artifacts 
 Makefile
+config.h
+config.log
+
+# Make artifacts
+target
