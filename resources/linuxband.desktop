@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Linuxband
+GenericName=Linuxband
+Comment=Musical companion
+Comment[fr]=Accompagnateur musical
+Keywords=audio;sound;jackd,
+Icon=linuxband-logo
+Exec=linuxband
+Terminal=false
+Categories=AudioVideo;Audio;Midi;Music;GTK;
