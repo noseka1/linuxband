@@ -90,6 +90,8 @@ check:
 install: all
 	${INSTALL} -d ${DESTDIR}${bindir}
 	${INSTALL} -d ${DESTDIR}${pkglibdir}
+	${INSTALL} -d ${DESTDIR}${datarootdir}/applications
+	${INSTALL} -d ${DESTDIR}${datarootdir}/icons
 	${INSTALL} -d ${DESTDIR}${pkgdatadir}
 	${INSTALL} -t ${DESTDIR}${bindir} ${TARGET_DIR}/linuxband
 	${INSTALL} -t ${DESTDIR}${pkglibdir} ${TARGET_DIR}/linuxband-player
@@ -100,12 +102,16 @@ install: all
 	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${CONFIG_DIR}/default.mma
 	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${GLADE_DIR}/gui.glade
 	${INSTALL} COPYING ${DESTDIR}${pkgdatadir}/license.txt
-	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${RESOURCES_DIR}/*
+	${INSTALL} -t ${DESTDIR}${pkgdatadir} ${RESOURCES_DIR}/error-pointer.png ${RESOURCES_DIR}/line-pointer.png
+	${INSTALL} -t ${DESTDIR}${datarootdir}/applications ${RESOURCES_DIR}/linuxband.desktop
+	${INSTALL} -t ${DESTDIR}${datarootdir}/icons ${RESOURCES_DIR}/linuxband-logo.png
 
 uninstall:
-	rm ${DESTDIR}${bindir}/linuxband
+	rm -f ${DESTDIR}${bindir}/linuxband
 	rm -rf ${DESTDIR}${pkglibdir}
 	rm -rf ${DESTDIR}${pkgdatadir}
+	rm -f ${DESTDIR}${datarootdir}/applications/linuxband.desktop
+	rm -f ${DESTDIR}${datarootdir}/icons/linuxband-logo.png
 
 dist:
 	@mkdir -p ${DIST_DIR}/${PACKAGE_FULL_NAME}
