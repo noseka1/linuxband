@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -143,7 +145,7 @@ class SongData(object):
     def write_to_string_with_midi_marks(self):
         """
         Write the mma file which will be compiled by mma and played in midi player.
-        
+
         We use macros to wrap chords. It allows the tracking of which bar is played.
         """
         mma_array = []

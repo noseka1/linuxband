@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -564,4 +566,3 @@ class ChordSheet(object):
         pos = self.__song.get_data().get_beats_per_bar() * 2 * bar_y + bar_x * 2 + bar_chords
 
         return pos
-

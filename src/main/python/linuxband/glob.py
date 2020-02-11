@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -60,4 +62,3 @@ class Glob:
     LICENSE = ""
     PLAYER_PROGRAM = ""
     CONSOLE_LOG_LEVEL = None
-

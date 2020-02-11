@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -17,6 +19,7 @@
 
 import copy
 import logging
+
 from linuxband.glob import Glob
 
 

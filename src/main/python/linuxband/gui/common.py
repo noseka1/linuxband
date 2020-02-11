@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -26,5 +28,3 @@ class Common(object):
         for name, member in inspect.getmembers(obj):
             dicts[name] = member
         glade.signal_autoconnect(dicts)
-
-

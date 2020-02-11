@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -34,6 +36,7 @@ from linuxband.mma.song_data import SongData
 ########################################
 # File processing. Mostly jumps to pats
 ########################################
+
 
 def parse(inpath):
     """
@@ -226,7 +229,7 @@ def parse(inpath):
                         NOTE: lyric.extract() inserts previously created
                         data from LYRICS SET and inserts the chord names
                         if that flag is active.
-        
+
                     """
                     lyrics_count += 1
                 elif ch == '}':
@@ -296,7 +299,7 @@ def parse(inpath):
 def get_wrapped_line(inpath, curline):
     """
     Reads the whole wrapped line ('\' at the end) and stores it in a list.
-    
+
     The lines in the list are not modified and are the same as in the file
     """
     result = []
@@ -452,6 +455,7 @@ def tokenize_line(line, limit):
         read_token = not read_token
         start = end
     return tokenized_line
+
 
 """ =================================================================
 

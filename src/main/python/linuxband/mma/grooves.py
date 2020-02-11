@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -80,9 +82,9 @@ class Grooves(object):
         return grooves_model
 
     def __load_grooves(self):
-        """ 
+        """
         Load grooves from /usr/share/mma/lib/stdlib (configurable).
-        
+
         Sort grooves and store them in grooves_list
         Call __create_grooves_model()
         """

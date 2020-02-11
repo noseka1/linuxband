@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2012 Ales Nosek <ales.nosek@gmail.com>
 #
 # This file is part of LinuxBand.
@@ -154,6 +156,7 @@ class Gui:
         self.__preferences.run()
 
     __ignore_toggle2 = False
+
     def switch_view_callback(self, item=None):
         if Gui.__ignore_toggle2:
             Gui.__ignore_toggle2 = False
@@ -186,7 +189,7 @@ class Gui:
     def change_song_bar_count(self, bar_count):
         """
         Set the count of song bars to bar_count.
-        
+
         Redraw affected fields
         Move cursor if it is necessary
         """
@@ -545,4 +548,3 @@ class Gui:
 
         self.__do_new_file()
         gtk.main()
-
