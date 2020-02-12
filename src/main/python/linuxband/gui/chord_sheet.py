@@ -17,14 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import copy
+import logging
+
 import gtk
 import pango
-import copy
+
 from gtk.gdk import CONTROL_MASK, SHIFT_MASK, BUTTON1_MASK
-import logging
+
+from linuxband.gui.common import Common
 from linuxband.mma.bar_chords import BarChords
 from linuxband.mma.bar_info import BarInfo
-from linuxband.gui.common import Common
 
 
 class ChordSheet(object):

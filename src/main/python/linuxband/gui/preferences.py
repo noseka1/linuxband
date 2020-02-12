@@ -17,8 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from linuxband.gui.common import Common
 import gtk
+
+from linuxband.gui.common import Common
+
 
 class Preferences(object):
 

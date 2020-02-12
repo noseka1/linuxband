@@ -18,8 +18,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from linuxband.glob import Glob
-from linuxband.mma.bar_info import BarInfo
 from linuxband.gui.common import Common
+from linuxband.mma.bar_info import BarInfo
 
 
 class EventTempo(object):

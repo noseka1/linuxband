@@ -19,9 +19,11 @@
 
 import copy
 import logging
+
+from linuxband.glob import Glob
 from linuxband.mma.bar_info import BarInfo
 from linuxband.mma.bar_chords import BarChords
-from linuxband.glob import Glob
+
 
 class SongData(object):
 

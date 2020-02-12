@@ -17,9 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
 import gobject
+import gtk
+
 from gtk.gdk import CONTROL_MASK
+
 from linuxband.gui.common import Common
 from linuxband.mma.chord_table import chordlist
 

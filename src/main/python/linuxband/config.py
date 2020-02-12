@@ -19,8 +19,9 @@
 
 import ConfigParser
 import logging
-from linuxband.glob import Glob
 import os
+
+from linuxband.glob import Glob
 
 
 class Config(object):

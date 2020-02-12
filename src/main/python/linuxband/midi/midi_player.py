@@ -17,14 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import threading
-import os
 import fcntl
+import logging
+import os
 import select
 import subprocess
+import threading
+
 import gobject
-import logging
+
 from linuxband.glob import Glob
+
 
 class MidiPlayer:
 

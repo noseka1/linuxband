@@ -17,25 +17,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import pango
 import logging
-import gtk.glade
+
 import gobject
-from linuxband.glob import Glob
-from linuxband.gui.gui_logger import GuiLogger
+import gtk.glade
+import pango
+
 from linuxband.config import Config
-from linuxband.midi.midi_player import MidiPlayer
-from linuxband.gui.chord_sheet import ChordSheet
-from linuxband.gui.source_editor import SourceEditor
+from linuxband.glob import Glob
+from linuxband.gui.about_dialog import AboutDialog
 from linuxband.gui.chord_entries import ChordEntries
-from linuxband.gui.events_bar import EventsBar
+from linuxband.gui.chord_sheet import ChordSheet
 from linuxband.gui.common import Common
+from linuxband.gui.gui_logger import GuiLogger
+from linuxband.gui.events_bar import EventsBar
+from linuxband.gui.save_button_status import SaveButtonStatus
+from linuxband.gui.source_editor import SourceEditor
+from linuxband.gui.preferences import Preferences
+from linuxband.midi.midi_player import MidiPlayer
+from linuxband.midi.mma2smf import MidiGenerator
 from linuxband.mma.song import Song
 from linuxband.mma.grooves import Grooves
-from linuxband.gui.about_dialog import AboutDialog
-from linuxband.midi.mma2smf import MidiGenerator
-from linuxband.gui.preferences import Preferences
-from linuxband.gui.save_button_status import SaveButtonStatus
 
 
 class Gui:
