@@ -46,7 +46,7 @@ class ChordEntries(object):
             chords = self.__song.get_data().get_bar_chords(barnum).get_chords()
             for i in range(len(chords)):
                 chord = chords[i][0]
-                if chord == '/': # don't show '/' as chord
+                if chord == '/':  # don't show '/' as chord
                     self.__entries[i].set_text('')
                 else:
                     self.__entries[i].set_text(chord)
@@ -159,7 +159,7 @@ class ChordEntries(object):
         
         It is used for entry completion
         """
-        base = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
+        base = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
         base_ext = []
         for c in base:
             base_ext.append(c)

@@ -54,7 +54,7 @@ def parse(inpath):
 
         # EOF
         if not curline:
-            song_bar_info.append(bar_info) # song_bar_info has always one element more then song_bar_chords
+            song_bar_info.append(bar_info)  # song_bar_info has always one element more then song_bar_chords
             song_bar_count = bar_number
             return SongData(song_bar_info, song_bar_chords, song_bar_count)
 
@@ -64,7 +64,7 @@ def parse(inpath):
 
         # empty line
         if curline.rstrip('\n').strip() == '':
-            bar_info.add_line([Glob.A_UNKNOWN, curline]);
+            bar_info.add_line([Glob.A_UNKNOWN, curline])
             continue
 
         l = curline.split()
@@ -173,7 +173,7 @@ def parse(inpath):
         if wline[0].replace('\\\n', '').strip() == '':
             # line is a comment or empty wrapped line
             act = Glob.A_REMARK if wline[1].strip() else Glob.A_UNKNOWN
-            bar_info.add_line([act , wline[0], wline[1]])
+            bar_info.add_line([act, wline[0], wline[1]])
             continue
 
         l, eol = wline
@@ -245,9 +245,9 @@ def parse(inpath):
                         be at the end of bar in the form '* xx'.
                     """
                     pass
-                elif ch in '\t\n\\ 0123456789': # white spaces, \ and repeat count
+                elif ch in '\t\n\\ 0123456789':  # white spaces, \ and repeat count
                     pass
-                elif solo_count == 0 and lyrics_count == 0: # found beginning of the chord
+                elif solo_count == 0 and lyrics_count == 0:  # found beginning of the chord
                     break
                 chars += ch
                 i += 1
@@ -339,7 +339,7 @@ def get_wrapped_line_join(inpath, curline):
             else:
                 line = line + l
         i = i + 1
-    return [ line, comment ]
+    return [line, comment]
 
 
 def parse_begin_block(inpath, curline):
@@ -362,11 +362,12 @@ def parse_begin_block(inpath, curline):
             break
     return result
 
+
 def parse_mset_block(inpath, curline):
     l = curline.split()
     if len(l) < 2:
         raise ValueError("Use: MSET VARIABLE_NAME <lines> MsetEnd")
-    result = [ curline ]
+    result = [curline]
     while True:
         curline = inpath.readline()
         if not curline:
@@ -380,9 +381,10 @@ def parse_mset_block(inpath, curline):
             break
     return result
 
+
 def parse_if_block(inpath, curline):
     ifDepth = 1
-    result = [ curline ]
+    result = [curline]
     while True:
         curline = inpath.readline()
         if not curline:
@@ -399,6 +401,7 @@ def parse_if_block(inpath, curline):
         if ifDepth == 0:
             break
     return result
+
 
 def parse_supported_action(action, wline):
     line = []
@@ -420,6 +423,7 @@ def parse_supported_action(action, wline):
         line = tokenize_line(wline[0], 2)
     line.append(wline[1])
     return line
+
 
 def parse_supported_block_action(block_action, begin_block):
     return [ begin_block[0], ''.join(begin_block[1:-1]), begin_block[-1] ]

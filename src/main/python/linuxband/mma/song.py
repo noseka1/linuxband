@@ -101,7 +101,7 @@ class Song(object):
         
         bar_count = number of bar_chords in the song, number of bar_info is bar_count + 1
         """
-        self.__song_data = SongData([ BarInfo() ], [], 0)
+        self.__song_data = SongData([BarInfo()], [], 0)
         self.__invalid_mma_data = None
         self.__pending_mma_data = None
         self.__last_compile_result = None

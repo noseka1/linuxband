@@ -101,7 +101,7 @@ class Gui:
             if self.__chord_sheet.has_focus() and self.__chord_sheet.is_cursor_on_bar_chords():
                 self.__chord_entries.begin_writing(keyname)
                 return True
-        elif keyname == 'e' and self.__chord_sheet.has_focus(): # TODO: doesn't work
+        elif keyname == 'e' and self.__chord_sheet.has_focus():  # TODO: doesn't work
             self.__events_bar.grab_focus()
             return True
         elif (self.__chord_sheet.has_focus() or self.__notebook3.has_focus()) and keyname == 'space':
@@ -280,7 +280,7 @@ class Gui:
                 player.load_smf_data(midi_data, self.__song.get_data().get_mma_line_offset())
             else:
                 return
-            self.__enable_pause_button();
+            self.__enable_pause_button()
             if event.state & gtk.gdk.CONTROL_MASK:
                 player.playback_start_bar(self.__chord_sheet.get_current_bar_number())
             elif event.state & gtk.gdk.SHIFT_MASK:
@@ -290,25 +290,26 @@ class Gui:
 
     def playback_stop_callback(self, button=None):
         """ Stop. """
-        self.__enable_pause_button();
+        self.__enable_pause_button()
         self.__midi_player.playback_stop()
 
     __ignore_toggle = False
+
     def playback_pause_callback(self, button=None):
         """ Pause. """
         if Gui.__ignore_toggle:
             Gui.__ignore_toggle = False
         else:
-            self.__midi_player.set_pause(button.get_active());
+            self.__midi_player.set_pause(button.get_active())
 
     def jack_reconnect_callback(self, button):
         self.__midi_player.shutdown()
-        self.__midi_player.startup();
+        self.__midi_player.startup()
 
     def switch_page_callback(self, notebook, page, pageNum):
         """ Called when clicked on notebook tab. """
         logging.debug("")
-        if pageNum == 1: # switching to source editor
+        if pageNum == 1:  # switching to source editor
             self.__source_editor.refresh_source(self.__song.write_to_string())
             self.__source_editor.grab_focus()
             self.__notebook2.set_current_page(pageNum)
@@ -317,7 +318,7 @@ class Gui:
                 Gui.__ignore_toggle2 = True
                 self.__menuitem7.set_active(True)
             self.__global_buttons.hide()
-        else: # switching to chord sheet
+        else:  # switching to chord sheet
             res = self.__compile_song(True)
             if res > 0 or res == -1:
                 logging.error("Cannot switch to chord sheet view. Fix the errors and try again.")
@@ -334,7 +335,7 @@ class Gui:
 
     def loop_toggle_callback(self, button):
         """ Loop check button. """
-        self.__midi_player.set_loop(button.get_active());
+        self.__midi_player.set_loop(button.get_active())
         self.__config.set_loop(button.get_active())
 
     def jack_transport_toggle_callback(self, button):
@@ -486,7 +487,7 @@ class Gui:
         Common.connect_signals(glade, self)
 
         self.__main_window = glade.get_widget("mainWindow")
-        self.__spinbutton1 = glade.get_widget("spinbutton1") # bar count 
+        self.__spinbutton1 = glade.get_widget("spinbutton1")  # bar count
         self.__notebook2 = glade.get_widget("notebook2")
         self.__notebook3 = glade.get_widget("notebook3")
 

@@ -28,7 +28,7 @@ class BarChords:
         self.__before_number = ''
         self.__number = None
         self.__after_number = ' '
-        self.__chords = [[ '/', '' ]] # one chord is always there
+        self.__chords = [['/', '']]  # one chord is always there
         self.__eol = '\n'
 
     def set_song_data(self, song_data):
@@ -75,31 +75,31 @@ class BarChords:
         song_data = self.__song_data
         if chord == '' and beat_num >= len(self.__chords):
             return
-        if beat_num + 1 < len(chords): # there's a chord after this beat
+        if beat_num + 1 < len(chords):  # there's a chord after this beat
             full_chord = chords[beat_num]
             if not chord: chord = '/'
             if full_chord[0] != chord:
                 full_chord[0] = chord
                 song_data.changed()
         else:
-            if not chord: # delete a chord
+            if not chord:  # delete a chord
                 full_chord = chords[beat_num]
-                if beat_num > 0: # there is some chord before us
+                if beat_num > 0:  # there is some chord before us
                     # possibly move trailing string from our chord to eol
                     self.__eol = ''.join(full_chord[1:]) + self.__eol
                     chords.pop(beat_num)
                     song_data.changed()
-                else: # the only chord on the line
+                else:  # the only chord on the line
                     if full_chord[0] != '/':
                         full_chord[0] = '/'
                         song_data.changed()
-            else: # add or replace chord
-                if beat_num < len(chords): # replace an existing chord
+            else:  # add or replace chord
+                if beat_num < len(chords):  # replace an existing chord
                     full_chord = chords[beat_num]
                     if full_chord[0] != chord:
                         full_chord[0] = chord
                         song_data.changed()
-                else: # append a chord
+                else:  # append a chord
                     last_full_chord = chords[len(chords) - 1]
                     if len(last_full_chord[1]) == len(last_full_chord[1].rstrip()):
                         last_full_chord[1] = last_full_chord[1] + ' '

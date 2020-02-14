@@ -32,6 +32,6 @@ class SaveButtonStatus(object):
         save_needed = song.get_data().is_save_needed()
         button.set_sensitive(save_needed)
         menuitem.set_sensitive(save_needed)
-        prefix = "*"  if save_needed else ""
+        prefix = "*" if save_needed else ""
         mainwindow.set_title(prefix + song.get_data().get_title() + " | Linux Band")
         return True

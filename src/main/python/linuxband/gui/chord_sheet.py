@@ -60,7 +60,7 @@ class ChordSheet(object):
         self.drawable = self.__area.window
         self.gc = self.drawable.new_gc()
         # Create a new backing pixmap of the appropriate size
-        self.pixmap = gtk.gdk.Pixmap(self.drawable, self.__drawing_area_width, self.__drawing_area_height, depth= -1)
+        self.pixmap = gtk.gdk.Pixmap(self.drawable, self.__drawing_area_width, self.__drawing_area_height, depth=-1)
         gc = self.drawable.new_gc()
         gc.copy(self.gc)
         green = self.__colormap.alloc_color(ChordSheet.__color_no_song, True, True)
@@ -70,7 +70,7 @@ class ChordSheet(object):
 
     def drawing_area_expose_event_callback(self, widget, event):
         """ Redraw the screen from the backing pixmap. """
-        x , y, width, height = event.area
+        x, y, width, height = event.area
         widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
         self.pixmap, x, y, x, y, width, height)
         return True
@@ -78,7 +78,7 @@ class ChordSheet(object):
     def move_playhead_to(self, pos):
         new_pos = pos * 2 + 1 if pos > -1 else -1
         old_pos = self.__playhead_pos
-        if  old_pos != new_pos:
+        if old_pos != new_pos:
             self.__playhead_pos = new_pos
             self.__render_field(old_pos)
             self.__render_field(new_pos)
@@ -116,15 +116,15 @@ class ChordSheet(object):
                 self.__move_cursor_to(self.__cursor_pos + 2)
                 self.__destroy_selection()
         # adjust selection
-        if key in [ gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up, gtk.keysyms.Down,
-                         gtk.keysyms.Home, gtk.keysyms.End ]:
+        if key in [gtk.keysyms.Left, gtk.keysyms.Right, gtk.keysyms.Up,
+                   gtk.keysyms.Down, gtk.keysyms.Home, gtk.keysyms.End]:
             if event.state & SHIFT_MASK:
                 self.__adjust_selection(old_pos)
             else:
                 self.__destroy_selection()
-        if key in [ gtk.keysyms.H, gtk.keysyms.L, gtk.keysyms.K, gtk.keysyms.J ]:
+        if key in [gtk.keysyms.H, gtk.keysyms.L, gtk.keysyms.K, gtk.keysyms.J]:
             self.__adjust_selection(old_pos)
-        if key in [ gtk.keysyms.h, gtk.keysyms.l, gtk.keysyms.k, gtk.keysyms.j ]:
+        if key in [gtk.keysyms.h, gtk.keysyms.l, gtk.keysyms.k, gtk.keysyms.j]:
             self.__destroy_selection()
         # the event has been handled
         return True
@@ -162,7 +162,7 @@ class ChordSheet(object):
             self.__destroy_selection()
             old_pos = self.__cursor_pos
             new_pos = old_pos + length - 1
-            self.__move_cursor_to(new_pos) # if needed new fields will be appended
+            self.__move_cursor_to(new_pos)  # if needed new fields will be appended
             bar_num = old_pos / 2
             for field in clipboard:
                 if isinstance(field, BarChords):
@@ -243,7 +243,7 @@ class ChordSheet(object):
         new_end = bar_count * 2
         if new_end == self.__end_position:
             return
-        elif new_end > self.__end_position: # render affected fields
+        elif new_end > self.__end_position:  # render affected fields
             fields_to_render = range(self.__end_position, new_end + 1)
             for field in fields_to_render: self.__render_field(field)
         elif new_end < self.__end_position:
@@ -284,7 +284,7 @@ class ChordSheet(object):
         return self.__cursor_pos / 2
 
     def new_song_loaded(self):
-        self.__move_cursor_to(0) # cursor on field 0 => global buttons get refreshed
+        self.__move_cursor_to(0)  # cursor on field 0 => global buttons get refreshed
         self.__destroy_selection()
 
     def render_current_field(self, chords=None):
@@ -311,9 +311,9 @@ class ChordSheet(object):
         else: color = self.__colormap.alloc_color('black')
         gc = self.pixmap.new_gc()
         gc.copy(self.gc)
-        #gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
+        # gc.set_line_attributes(1, gtk.gdk.LINE_SOLID, gtk.gdk.CAP_ROUND, gtk.gdk.JOIN_ROUND)
         gc.set_foreground(color)
-        #self.pixmap.draw_rectangle(gc, False, x , y, width, height)
+        # self.pixmap.draw_rectangle(gc, False, x , y, width, height)
 
         pango_layout = self.__area.create_pango_layout("")
         pango_layout.set_text(chord)
@@ -423,8 +423,8 @@ class ChordSheet(object):
         gc = self.drawable.new_gc()
         gc.copy(self.gc)
         gc.set_foreground(color)
-        self.pixmap.draw_rectangle(gc, True, x , y, self.__bar_info_width, ChordSheet.__bar_height)
-        if cursor: # black border
+        self.pixmap.draw_rectangle(gc, True, x, y, self.__bar_info_width, ChordSheet.__bar_height)
+        if cursor:  # black border
             color = self.__colormap.alloc_color('black')
             gc.set_foreground(color)
             self.pixmap.draw_rectangle(gc, False, x, y, self.__bar_info_width - 1, ChordSheet.__bar_height - 1)
@@ -437,7 +437,7 @@ class ChordSheet(object):
             if repeat_begin: self.__draw_repetition(x, y, gc, False)
             if repeat_end: self.__draw_repetition(x, y, gc, True)
         else:
-            if bar_num < self.__song.get_data().get_bar_count() and chord_num: # draw bar number
+            if bar_num < self.__song.get_data().get_bar_count() and chord_num:  # draw bar number
                 pango_layout = self.__area.create_pango_layout("")
                 pango_layout.set_text(str(chord_num))
                 fd = pango.FontDescription('Monospace Bold 8')

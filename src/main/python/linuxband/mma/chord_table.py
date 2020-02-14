@@ -450,11 +450,10 @@ aliases = (
     ('9sus4',    'sus9',     '')
     )
 
-for a,b,d in aliases:
-    n=chordlist[b][0]
-    s=chordlist[b][1]
+for a, b, d in aliases:
+    n = chordlist[b][0]
+    s = chordlist[b][1]
     if not d:
-        d=chordlist[b][2]
+        d = chordlist[b][2]
 
     chordlist[a] = (n, s, d)
-
