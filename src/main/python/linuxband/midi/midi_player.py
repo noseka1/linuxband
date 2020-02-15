@@ -76,9 +76,10 @@ class MidiPlayer:
         self.__pipew = pipew
 
         pipeName = '/proc/' + str(Glob.PID) + '/fd/' + str(pipew)
-        command = [ Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName ]
+        command = [Glob.PLAYER_PROGRAM, '-s', '-n', '-x', pipeName]
         if Glob.CONSOLE_LOG_LEVEL == logging.DEBUG:
             command.insert(1, '-d')
+
         try:
             self.__player = subprocess.Popen(command, stdin=subprocess.PIPE)
         except:
@@ -86,12 +87,14 @@ class MidiPlayer:
             os.close(piper)
             os.close(pipew)
             return
-        # sending data to midi player should not block    
+
+            # Sending data to midi player should not block
         out = self.__player.stdin.fileno()
         flags = fcntl.fcntl(out, fcntl.F_GETFL)
         fcntl.fcntl(out, fcntl.F_SETFL, flags | os.O_NONBLOCK)
         self.__pout = out
-        # start receive thread listening for incoming events
+
+            # Start receive thread listening for incoming events
         self.__receive_thread = threading.Thread(target=self.__receive_data)
         self.__receive_thread.start()
         self.__connected = True
@@ -102,12 +105,14 @@ class MidiPlayer:
             os.write(self.__pipew, MidiPlayer.__COMM_FINISH + MidiPlayer.__SEPARATOR)
             self.__receive_thread.join()
             self.__receive_thread = None
+
         if self.__player:
             self.playback_stop()
             self.__send_token(MidiPlayer.__COMM_FINISH)
             self.__player.wait()
             self.__player = None
-        # descriptors could have been already closed
+
+        # Descriptors could have been already closed
         try:
             os.close(self.__piper)
         except:
@@ -199,7 +204,7 @@ class MidiPlayer:
                 gobject.idle_add(self.__gui.move_playhead_to_bar, bar_num)
                 self.__playing = True
             elif token == MidiPlayer.__EVENT_LINE_NUM:
-                # move the playhead2 to the new position 
+                # move the playhead2 to the new position
                 lineNum = int(self.__read_token(self.__piper))
                 gobject.idle_add(self.__gui.move_playhead_to_line, lineNum - self.__mma_line_offset - 1)
                 self.__playing = True

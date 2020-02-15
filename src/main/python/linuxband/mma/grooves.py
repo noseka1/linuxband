@@ -55,7 +55,7 @@ class Grooves(object):
             return 1
         elif a == b:
             return 0
-        else: # x<y
+        else:  # x<y
             return -1
 
     def __create_grooves_model(self, grooves_list):
@@ -74,7 +74,7 @@ class Grooves(object):
                     or not groove[0].upper().startswith(pgroove) \
                     or groove[0].startswith('Metronome'):   # metronome hack    
                 sub_liststore = gtk.ListStore(str, str, str, str, str, str)
-                grooves_model.append(groove + [ sub_liststore ])
+                grooves_model.append(groove + [sub_liststore])
                 pgroove = groove[0].upper()
                 # March hack
                 if groove[0] == 'March':
@@ -99,7 +99,7 @@ class Grooves(object):
         """
         Load grooves and recurse into subdirectories.
         """
-        for dirname, dirnames, filenames in os.walk(path): #@UnusedVariable            
+        for dirname, dirnames, filenames in os.walk(path):
             for name in filenames:
                 if fnmatch.fnmatch(name, '*.mma'):
                     full_name = os.path.join(dirname, name)

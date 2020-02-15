@@ -71,7 +71,7 @@ class BarInfo:
         return self.__lines
 
     def add_event(self, line):
-        if line[0] in [ Glob.A_REPEAT_END, Glob.A_REPEAT_ENDING ]:
+        if line[0] in [Glob.A_REPEAT_END, Glob.A_REPEAT_ENDING]:
             self.insert_line(line)
         else:
             self.add_line(line)
@@ -166,13 +166,13 @@ class BarInfo:
     @staticmethod
     def set_repeat_end_value(line, count):
         # example line: ['REPEATEND', 'RepeatEnd', ' ', '2', '\n']
-        if len(line) > 3: # there is already some number
+        if len(line) > 3:  # there is already some number
             if count == 2:
                 line.pop(2)
                 line.pop(2)
             else:
                 line[3] = count
-        else: # no number yet, example: ['REPEATEND', 'RepeatEnd', '\n']
+        else:  # no number yet, example: ['REPEATEND', 'RepeatEnd', '\n']
             if count != 2:
                 line.insert(2, count)
                 line.insert(2, ' ')
