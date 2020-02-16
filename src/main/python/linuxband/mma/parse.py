@@ -256,14 +256,14 @@ def parse(inpath):
                     raise ValueError(mismatched_solo)
                 if lyrics_count != 0:
                     raise ValueError(mismatched_lyrics)
-                if after_number == None:
+                if after_number is None:
                     after_number = chars
                 else:
                     last_chord.append(chars)
                     ctable.append(last_chord)
                 break
-            else: # chord beginning
-                if after_number == None:
+            else:  # chord beginning
+                if after_number is None:
                     after_number = chars
                 else:
                     last_chord.append(chars)

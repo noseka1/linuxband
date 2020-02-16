@@ -56,7 +56,7 @@ class Song(object):
         if not self.__song_data.is_save_needed() and self.__pending_mma_data == None and self.__invalid_mma_data == None:
             logging.debug('No compilation needed')
             return self.__last_compile_result
-        if self.__pending_mma_data == None:
+        if self.__pending_mma_data is None:
             mma_data = self.write_to_string()
             res = self.__midi_generator.check_mma_syntax(mma_data)
         else:
@@ -78,7 +78,7 @@ class Song(object):
         """ 
         If the mma was parsed correctly return it. Otherwise give the invalid mma data back.
         """
-        if self.__invalid_mma_data == None:
+        if self.__invalid_mma_data is None:
             return self.__song_data.write_to_string()
         else:
             return self.__invalid_mma_data

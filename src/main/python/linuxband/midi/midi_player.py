@@ -177,7 +177,7 @@ class MidiPlayer:
         return self.__playing
 
     def __resend_data(self):
-        if self.__saved_midi_data != None:
+        if self.__saved_midi_data is not None:
             self.load_smf_data(self.__saved_midi_data, self.__saved_offset)
         self.set_intro_length(self.__saved_intro_length)
         self.set_pause(self.__saved_pause)

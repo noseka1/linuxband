@@ -52,7 +52,7 @@ class BarInfo:
         return True if len(self.__events) > 0 else False
 
     def has_repeat_begin(self):
-        return self.__lookup_action(Glob.A_REPEAT) != None
+        return self.__lookup_action(Glob.A_REPEAT) is not None
 
     def has_repeat_end(self):
         return self.__lookup_action(Glob.A_REPEAT_ENDING) or self.__lookup_action(Glob.A_REPEAT_END)
