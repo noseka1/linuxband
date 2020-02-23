@@ -52,7 +52,7 @@ class GuiLogger(object):
             logging.Formatter.__init__(self, fmt, datefmt)
 
         def formatException(self, ei):
-            excType, excValue, excTraceback = ei #@UnusedVariable
+            excType, excValue, _ = ei
             res = ''.join(traceback.format_exception_only(excType, excValue))
             if res[-1] == '\n':
                 res = res[:-1]
