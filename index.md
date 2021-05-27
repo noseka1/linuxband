@@ -6,7 +6,7 @@ tagline: GUI front-end for MMA
 {% include JB/setup %}
 <img style="float:right" src="assets/images/linuxband_chord_sheet_small.png" />
 
-**As of May 26, 2021, LinuxBand project is no longer supported, please consider using [JJazzLab-X](https://github.com/jjazzboss/JJazzLab-X) instead.**
+**As of May 26, 2021, LinuxBand project is no longer supported, please consider using [JJazzLab-X](https://github.com/jjazzboss/JJazzLab-X) instead. This linuxband.org site will be removed by Feb 8, 2024. LinuxBand project repository on GitHub will remain.**
 
 LinuxBand is a GUI front-end for <a href="http://www.mellowood.ca/mma/">MMA (Musical MIDI Accompaniment)</a>. Type in the chords, choose the groove and LinuxBand will play a musical accompaniment for you.<br />It's an open source alternative to Band-in-a-Box featuring:
 <ul>
