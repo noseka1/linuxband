@@ -1,3 +1,7 @@
+# DEPRECATED !!!
+
+** As of May 26, 2021, LinuxBand project is no longer supported, please consider using [JJazzLab-X](https://github.com/jjazzboss/JJazzLab-X) instead. **
+
 # LinuxBand
 
 LinuxBand: A GUI front-end for MMA
